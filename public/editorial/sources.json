@@ -1,0 +1,16 @@
+{
+  "tokyo-light-trails": {
+    "source": "https://unsplash.com/photos/city-street-at-night-with-light-trails-4vsiys6R4Jk",
+    "image": "https://images.unsplash.com/photo-1764943018532-ef55c0316226",
+    "photographer": "Leongsan",
+    "license": "Unsplash License",
+    "location": "Shibuya, Tokyo, Japan"
+  },
+  "japan-architecture": {
+    "source": "https://unsplash.com/photos/modern-architectural-passage-with-sunlight-and-shadows-XnAubvnRnYU",
+    "image": "https://images.unsplash.com/photo-1773549760309-9ed383225d68",
+    "photographer": "Anastashia Nadya Angkasa",
+    "license": "Unsplash License",
+    "location": "Setre Marina Lake Biwako, Moriyama, Shiga, Japan"
+  }
+}

@@ -1,0 +1,7 @@
+.next/
+.next-verification/
+node_modules/
+test-results/
+playwright-report/
+tests/e2e/__screenshots__/
+.env*

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="#111">
+  <g id="aster-petals">
+    <path id="petal" d="M21 4h6l2 12-5 5-5-5Z"/>
+    <use href="#petal" transform="rotate(60 24 24)"/>
+    <use href="#petal" transform="rotate(120 24 24)"/>
+    <use href="#petal" transform="rotate(180 24 24)"/>
+    <use href="#petal" transform="rotate(240 24 24)"/>
+    <use href="#petal" transform="rotate(300 24 24)"/>
+  </g>
+</svg>

@@ -1,0 +1,138 @@
+/* Homepage editorial refinements, scoped to the existing section system. */
+.site-nav .nav-brand svg { width: 64px; height: auto; }
+.invoice-letterhead .supplier-symbol { width: 28px; height: 28px; object-fit: contain; }
+.hero-baseline { flex-direction: column; gap: 4px; }
+.hero-baseline > span { max-width: none; }
+.hero-baseline a { font-family: var(--font-sans); font-size: 12px; }
+.japac-roster li { height: 68px; }
+.story-art { height: 370px; padding: 20px; }
+.story-sheet { width: min(100%, 330px); flex-shrink: 1; padding: 20px; border-radius: 5px; transform: rotate(-2deg); box-shadow: var(--shadow-md); }
+.sheet-letterhead { display: flex; align-items: center; gap: 8px; padding-bottom: 14px; border-bottom: var(--rule-page); }
+.sheet-letterhead img { width: 24px; height: 24px; }
+.sheet-letterhead strong { font-size: 12px; font-weight: 600; letter-spacing: -.025em; }
+.sheet-letterhead > span { margin-left: auto; font: 9px var(--font-mono); color: var(--color-grey-500); }
+.sheet-heading { margin: 16px 0; font-size: 21px; }
+.sheet-heading .nm-icon { width: 16px; }
+.sheet-row { font-size: 11px; padding: 9px 0; }
+.sheet-proof { padding: 12px 0 0; margin-top: 6px; background: none; border-top: var(--rule-page); font-family: var(--font-sans); font-size: 11px; }
+.sheet-proof .agent-portrait { width: 28px; height: 28px; }
+.sheet-proof small { display: block; margin-top: 2px; font-size: 9px; color: var(--color-grey-500); }
+.sheet-proof > .nm-icon { margin-left: auto; width: 16px; }
+.account-stack { width: min(100% - 12px, 306px); transform: rotate(3deg); margin-top: -14px; }
+.account-stack > div { gap: 14px; padding: 16px; margin-top: 12px; min-height: 78px; border-radius: 7px; }
+.account-stack > div:nth-child(2) { transform: translateX(-12px); }
+.account-logo { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; flex-shrink: 0; background: var(--color-grey-50); border: var(--rule-page); border-radius: 6px; }
+.account-logo img { width: 28px; height: 28px; }
+.account-logo-aster-labs { background: var(--color-paper); }
+.account-logo-kanso-studio { background: var(--color-grey-100); }
+.account-name { font-size: 14px; font-weight: 500; letter-spacing: -.025em; }
+.account-stack small { font-size: 11px; font-weight: 400; letter-spacing: 0; margin-top: 4px; }
+.account-stack > div > .nm-icon { width: 15px; height: 15px; }
+.sales-art-label { bottom: 18px; font-size: 9px; letter-spacing: .035em; }
+.story-content p { font-size: 16px; }
+.story-note { font-size: 10px; text-align: left; padding-top: 16px; }
+.story-content .text-link { font-size: 13px; }
+.integration-hub { gap: 16px; padding: 24px 20px; }
+.integration-hub > svg { height: 22px; flex-shrink: 0; }
+.integration-hub .micro-label { font-size: 9px; }
+.integration-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.integration-tool { position: relative; display: block; padding: 20px 16px; min-width: 0; border-right: var(--rule-page); }
+.integration-tool:nth-child(even) { border-right: 0; }
+.integration-tool:nth-last-child(-n + 2) { border-bottom: 0; }
+.tool-mark { width: 36px; height: 36px; border: 0; border-radius: 0; justify-content: flex-start; }
+.tool-mark img { width: 30px; height: 30px; object-fit: contain; }
+.integration-tool h3 { margin-top: 12px; font-size: 14px; letter-spacing: -.025em; }
+.integration-tool p { font-size: 12px; line-height: 1.45; }
+.integration-tool > .nm-icon { position: absolute; top: 28px; right: 16px; width: 13px; }
+.integration-footnote { font-size: 10px; }
+.work-guide { margin: 0 24px 40px; border-top: var(--rule-page); }
+.work-guide > li { border-bottom: var(--rule-page); }
+.work-guide a { position: relative; display: grid; grid-template-columns: 34px minmax(0, 1fr) 14px; gap: 16px; padding: 24px 0; min-height: 120px; transition: background var(--dur-quick); }
+.guide-number { font-size: 26px; line-height: 1.2; letter-spacing: -.065em; color: var(--color-grey-500); }
+.work-guide h3 { font-size: 16px; font-weight: 500; letter-spacing: -.025em; line-height: 1.3; }
+.work-guide p { font-size: 15px; line-height: 1.6; color: var(--color-grey-500); margin-top: 8px; }
+.work-guide a > .nm-icon { width: 14px; height: 14px; margin-top: 3px; color: var(--color-grey-500); transition: transform var(--dur-quick); }
+.market-clock-intro > p:not(:first-child):not(:last-child) { font-size: 16px; line-height: 1.55; margin-top: 8px; }
+.market-clock { padding: 24px 20px; }
+.faq-list details p { font-size: 16px; }
+.footer-top { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 14px; }
+.footer-top > div:first-child { grid-column: 1 / -1; }
+.site-footer ul li a { min-height: 44px; font-size: 12px; line-height: 1.5; }
+.site-footer h3 { font-size: 10px; }
+.spend-cost-summary { border-top: var(--rule-page); margin-top: 12px; padding-top: 10px; font-size: 11px; }
+.spend-cost-summary > div { display: flex; justify-content: space-between; gap: 16px; padding: 5px 0; }
+.spend-cost-summary dt { color: var(--color-grey-500); }
+.spend-cost-summary dd { font-variant-numeric: tabular-nums; }
+
+@media (hover: hover) {
+  .work-guide a:hover .nm-icon { transform: translate(2px, -2px); color: var(--color-ink); }
+  .work-guide a:hover .guide-number { color: var(--color-ink); }
+  .story-card:hover .text-link .nm-icon { transform: translateX(3px); }
+}
+
+@media (min-width: 640px) {
+  .hero-baseline { flex-direction: row; align-items: center; gap: 24px; }
+  .japac-roster li { height: 80px; }
+  .story-grid { grid-template-columns: 1fr; }
+  .story-content { padding: 32px; }
+  .story-content p { max-width: 420px; }
+  .work-guide { margin: 0 40px 48px; }
+}
+
+@media (min-width: 768px) {
+  .site-nav .nav-brand svg { width: 80px; }
+  .story-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .story-art { padding-left: 16px; padding-right: 16px; }
+  .story-content { padding: 28px; }
+  .story-content h3 { font-size: 30px; }
+  .sheet-letterhead > span { font-size: 8px; }
+  .account-stack { width: min(100% - 12px, 306px); }
+  .account-stack > div { padding: 14px; gap: 12px; }
+  .account-name { font-size: 13px; }
+  .account-stack small { font-size: 10px; }
+  .integration-tool { padding: 24px; }
+  .integration-tool > .nm-icon { right: 24px; }
+  .footer-top { grid-template-columns: 1.5fr repeat(3, minmax(0, 1fr)); gap: 32px; }
+  .footer-top > div:first-child { grid-column: auto; }
+}
+
+@media (min-width: 1024px) {
+  .hero-baseline a { font-size: 12px; }
+  .japac-roster li { height: 84px; }
+  .story-grid { gap: 32px; }
+  .story-art { height: 400px; padding: 24px 32px; }
+  .story-sheet { width: 360px; max-width: 100%; padding: 24px; }
+  .sheet-letterhead strong { font-size: 13px; }
+  .sheet-letterhead > span { font-size: 9px; }
+  .sheet-heading { font-size: 24px; }
+  .sheet-row { font-size: 12px; padding: 10px 0; }
+  .account-name { font-size: 14px; }
+  .account-stack small { font-size: 11px; }
+  .account-stack > div { padding: 16px; }
+  .story-content { padding: 36px; }
+  .story-content h3 { font-size: 36px; }
+  .story-note { padding-bottom: 48px; }
+  .integration-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .integration-tool { padding: 26px 24px; }
+  .integration-tool:nth-child(even) { border-right: var(--rule-page); }
+  .integration-tool:nth-child(4n) { border-right: 0; }
+  .integration-tool:nth-last-child(-n + 4) { border-bottom: 0; }
+  .work-guide { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 0 64px 64px; border-bottom: var(--rule-page); }
+  .work-guide > li { border-bottom: 0; }
+  .work-guide > li + li { border-left: var(--rule-page); }
+  .work-guide a { display: flex; flex-direction: column; height: 100%; gap: 24px; padding: 24px 20px 28px; }
+  .work-guide > li:first-child a { padding-left: 0; }
+  .work-guide > li:last-child a { padding-right: 0; }
+  .guide-number { font-size: 32px; }
+  .work-guide h3 { font-size: 15px; }
+  .work-guide p { font-size: 14px; }
+  .work-guide a > .nm-icon { position: absolute; right: 20px; top: 28px; }
+  .work-guide > li:last-child a > .nm-icon { right: 0; }
+  .market-clock-intro > p:not(:first-child):not(:last-child) { font-size: 14px; line-height: 1.5; }
+  .market-clock { padding: 32px; }
+  .site-footer ul li a { font-size: 13px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-guide a, .work-guide .nm-icon { transition: none; }
+}
