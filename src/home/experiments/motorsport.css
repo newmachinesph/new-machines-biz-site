@@ -1,0 +1,17 @@
+/* The entire treatment is scoped to one retractable component. */
+.closing-content.motorsport-context { position: relative; background-image: none; }
+.motorsport-accent { display: flex; align-items: center; justify-content: center; gap: 20px; max-width: 460px; margin: 36px auto 0; pointer-events: none; }
+.motorsport-car { display: block; width: 168px; max-width: 50%; height: auto; flex-shrink: 0; opacity: .44; transition: opacity var(--dur-quick) var(--ease-out); }
+.motorsport-rule { display: block; height: 1px; background: var(--color-grey-200); flex: 1; }
+@media (min-width: 768px) {
+  .motorsport-car { width: 208px; }
+  .motorsport-accent[data-placement="corner"] { position: absolute; right: 40px; bottom: 24px; width: 168px; margin: 0; }
+  .motorsport-accent[data-placement="corner"] .motorsport-car { width: 168px; max-width: 100%; }
+  .motorsport-accent[data-placement="corner"] .motorsport-rule { display: none; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .closing-content:hover .motorsport-car { opacity: .7; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motorsport-car { transition: none; }
+}

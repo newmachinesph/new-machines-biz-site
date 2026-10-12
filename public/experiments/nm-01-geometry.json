@@ -1,0 +1,29 @@
+{
+  "viewBox": [
+    0,
+    0,
+    1600,
+    610
+  ],
+  "units_per_mm": 0.3,
+  "wheelbase_mm": 3400,
+  "maximum_width_mm": 1900,
+  "front_axle_x": 336,
+  "rear_axle_x": 1356,
+  "centreline_y": 305,
+  "outer_tyre_y": [
+    20,
+    590
+  ],
+  "front_tyre_plan_mm": [
+    715,
+    280
+  ],
+  "rear_tyre_plan_mm": [
+    715,
+    375
+  ],
+  "tyre_note": "Illustrative footprints, not a supplier specification.",
+  "reference": "https://www.formula1.com/en/latest/article/gallery-check-out-every-angle-of-the-2026-f1-car.3W738wJViWXa3NVDNHSEaQ.3W738wJViWXa3NVDNHSEaQ",
+  "dimensional_source": "https://www.fia.com/system/files/documents/fia_2026_f1_regulations_-_section_c_technical_-_iss_16_-_2026-02-27.pdf"
+}

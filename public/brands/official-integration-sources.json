@@ -1,0 +1,21 @@
+{
+  "downloaded": "2026-10-11",
+  "sourcePages": [
+    "https://workspace.google.com/",
+    "https://line-works.com/",
+    "https://www.kintone.com/en-us/",
+    "https://www.freee.co.jp/",
+    "https://smarthr.jp/"
+  ],
+  "assets": {
+    "google-drive-official": "https://www.gstatic.com/images/branding/productlogos/drive_2026/v2/web/192px.svg",
+    "google-sheets-official": "https://www.gstatic.com/images/branding/productlogos/sheets_2026q3/v1/web/192px.svg",
+    "gmail-official": "https://www.gstatic.com/images/branding/productlogos/gmail_2026/v2/web/192px.svg",
+    "google-calendar-official": "https://www.gstatic.com/images/branding/productlogos/calendar_2026/v2/web/192px.svg",
+    "lineworks-official": "https://line-works.pstatic.net/wp-content/uploads/2025/12/LW_Logo_black-1.svg",
+    "kintone-official": "https://www.kintone.com/wp-content/themes/kintone-global/assets/svg/logo_kinton_black.svg",
+    "freee-official": "https://www.freee.co.jp/static/1f4f72049d0c1690b533cb60cbe6468f/logo.svg",
+    "smarthr-official": "https://smarthr.jp/_astro/SmartHR_Logo.BP8K-tat.svg"
+  },
+  "treatment": "Original vendor SVG bytes, original colours. No icon-library redraws."
+}
