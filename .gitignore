@@ -47,16 +47,3 @@ playwright-report/
 
 .vercel
 .env*
-
-# Local editor and assistant config (never committed)
-.claude/
-CLAUDE.md
-AGENTS.md
-.agents/
-skills-lock.json
-.superpowers/
-docs/superpowers/
-.design/
-.hallmark/
-.mcp.json
-.cursor/
