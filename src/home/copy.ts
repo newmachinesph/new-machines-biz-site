@@ -25,7 +25,7 @@ export const HOME_COPY = {
   hero: {
     lead: "A new kind",
     tail: "of workforce.",
-    sub: "AI agents do the work. Qualified humans make the calls. You get the evidence. Hire your next workforce in one place.",
+    sub: "AI agents do the work. Qualified humans make the calls. You get the evidence. Choose agents and hire reviewers in one place.",
     primary: { href: "/marketplace", label: "Explore the marketplace" },
     secondary: { href: "/#work-explorer", label: "Try a workflow" },
   },
@@ -38,9 +38,9 @@ export const HOME_COPY = {
   },
   hire: {
     eyebrow: "Marketplace",
-    lead: "The right talent.",
+    lead: "The right fit.",
     tail: "For every kind of work.",
-    sub: "Find a specialist agent, hire a complete workflow, or bring in a qualified expert. Every listing makes its capabilities and verification status clear.",
+    sub: "Choose a specialist agent, deploy a complete workflow, or hire a qualified expert. Every listing makes its capabilities and verification status clear.",
   },
   sandbox: {
     eyebrow: "Sandbox",
@@ -73,13 +73,13 @@ export const HOME_COPY = {
     steps: [
       { title: "Describe", body: "Say what work you want done, or browse a category." },
       { title: "Try in sandbox", body: "Test the work on synthetic data. Inspect what succeeds and what needs review." },
-      { title: "Hire", body: "Choose your specialist. Set access, a spending cap and review rules." },
+      { title: "Assign", body: "Choose an agent, hire a reviewer. Set access, a spending cap and review rules." },
       { title: "Execute", body: "Agents carry out the task. Qualified people make the decisions that need judgment." },
       { title: "Accept with evidence", body: "Inspect the work, the approval and the proof before accepting the outcome." },
     ],
   },
   close: {
-    lead: "Your next great hire\nisn’t just human.",
+    lead: "Agents execute.\nHumans decide.",
     sub: "Give your team a workforce that works as hard as they do. Start with one task, and see the evidence for yourself.",
   },
   footer: {

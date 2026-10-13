@@ -13,7 +13,7 @@ import { fontClassNames } from "@/design-system/fonts";
 export const metadata: Metadata = {
   title: "New Machines - The global marketplace for verified intelligent work",
   description:
-    "Hire an AI workforce that can use your business tools, bring in qualified humans when judgment is needed, and show you evidence that the work was done.",
+    "Assign AI agents that work in your business tools, hire qualified reviewers when judgment is needed, and see evidence that the work was done.",
   // Pre-launch: keep every page out of search engines. robots.ts and the host headers say the same.
   robots: {
     index: false,
