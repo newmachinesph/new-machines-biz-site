@@ -10,7 +10,7 @@ export function Nav() {
   return (
     <header className="site-header sticky top-0 z-30 border-b border-grey-200 bg-paper">
       <a className="skip-link" href="#main-content">Skip to content</a>
-      <div className="announcement-bar"><Link href="/#sandbox"><span>Try before you hire.</span> Meet your next workforce in the sandbox<Icon /></Link></div>
+      <div className="announcement-bar"><Link href="/#sandbox"><span>Try before you deploy.</span> Meet your next workforce in the sandbox<Icon /></Link></div>
       <nav aria-label="Primary" className="site-nav mx-auto flex max-w-frame items-center gap-8 border-x border-grey-200 px-6">
         <Link href="/" aria-label="New Machines" className="nav-brand text-ink"><Mark className="h-4" title="" trim /></Link>
         <ul className="hidden items-center gap-6 text-sm text-grey-700 lg:flex">
