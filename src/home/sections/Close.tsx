@@ -9,7 +9,14 @@ import { MotorsportAccent } from "../experiments/MotorsportAccent";
 import { MOTORSPORT_EXPERIMENT } from "../experiments/motorsport-config";
 import { cn } from "@/lib/cn";
 
-export function Close() {
+export type CloseProps = {
+  /** The secondary action; the homepage sends visitors to the marketplace. */
+  secondary?: { href: string; label: string };
+  /** Passed to the section links; false off the homepage. */
+  home?: boolean;
+};
+
+export function Close({ secondary = HOME_COPY.hero.primary, home = true }: CloseProps) {
   const { lead, sub } = HOME_COPY.close;
   return (
     <SectionCell labelledBy="close-title" className="closing-section">
@@ -24,7 +31,7 @@ export function Close() {
         <MotionItem delay={0.12}>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Button asChild size="lg"><Link href={HOME_COPY.nav.appUrl}>{HOME_COPY.nav.getStarted}<Icon /></Link></Button>
-            <Button asChild size="lg" variant="secondary"><Link href={HOME_COPY.hero.primary.href}>{HOME_COPY.hero.primary.label}</Link></Button>
+            <Button asChild size="lg" variant="secondary"><Link href={secondary.href} home={home}>{secondary.label}</Link></Button>
           </div>
         </MotionItem>
         <MotorsportAccent />
