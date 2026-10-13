@@ -47,7 +47,7 @@
 .integration-footnote { font-size: 10px; }
 .work-guide { margin: 0 24px 40px; border-top: var(--rule-page); }
 .work-guide > li { border-bottom: var(--rule-page); }
-.work-guide a { position: relative; display: grid; grid-template-columns: 34px minmax(0, 1fr) 14px; gap: 16px; padding: 24px 0; min-height: 120px; transition: background var(--dur-quick); }
+.work-guide .guide-step { position: relative; display: grid; grid-template-columns: 34px minmax(0, 1fr) 14px; gap: 16px; padding: 24px 0; min-height: 120px; transition: background var(--dur-quick); }
 .guide-number { font-size: 26px; line-height: 1.2; letter-spacing: -.065em; color: var(--color-grey-500); }
 .work-guide h3 { font-size: 16px; font-weight: 500; letter-spacing: -.025em; line-height: 1.3; }
 .work-guide p { font-size: 15px; line-height: 1.6; color: var(--color-grey-500); margin-top: 8px; }
@@ -120,9 +120,9 @@
   .work-guide { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 0 64px 64px; border-bottom: var(--rule-page); }
   .work-guide > li { border-bottom: 0; }
   .work-guide > li + li { border-left: var(--rule-page); }
-  .work-guide a { display: flex; flex-direction: column; height: 100%; gap: 24px; padding: 24px 20px 28px; }
-  .work-guide > li:first-child a { padding-left: 0; }
-  .work-guide > li:last-child a { padding-right: 0; }
+  .work-guide .guide-step { display: flex; flex-direction: column; height: 100%; gap: 24px; padding: 24px 20px 28px; }
+  .work-guide > li:first-child .guide-step { padding-left: 0; }
+  .work-guide > li:last-child .guide-step { padding-right: 0; }
   .guide-number { font-size: 32px; }
   .work-guide h3 { font-size: 15px; }
   .work-guide p { font-size: 14px; }

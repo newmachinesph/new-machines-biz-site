@@ -2,7 +2,7 @@
 .marketing-home { --scene-ease: cubic-bezier(.22, 1, .36, 1); }
 .section-opener { padding-top: 36px; padding-bottom: 26px; gap: 18px; }
 .split-copy { padding: 36px 24px; }
-.work-guide a { min-height: 100px; padding-top: 18px; padding-bottom: 18px; }
+.work-guide .guide-step { min-height: 100px; padding-top: 18px; padding-bottom: 18px; }
 .hero-intro { padding-top: 40px; padding-bottom: 30px; }
 .hero-title { font-size: 44px; font-weight: 500; line-height: 1.05; letter-spacing: -.055em; }
 .hero-lede > p { font-size: 16px; line-height: 1.55; }
@@ -211,13 +211,14 @@
 @media (hover: hover) and (pointer: fine) {
   .site-nav ul a { position: relative; }
   .site-nav ul a::after { content: ""; position: absolute; bottom: -8px; height: 1px; left: 0; right: 0; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 180ms var(--ease-out); }
-  .site-nav ul a:hover::after { transform: scaleX(1); }
+  .site-nav ul a:hover::after, .site-nav ul a[aria-current="page"]::after { transform: scaleX(1); }
   .scene-controls button:hover { color: var(--color-ink); }
   .story-card { transition: border-color 200ms ease, transform 300ms var(--scene-ease); }
   .story-card:hover { transform: translateY(-3px); }
   .cap-preview-button:hover { border-color: var(--color-grey-500); }
 }
 .scene-controls button:active, .cap-preview-button:active { transform: scale(.98); }
+.site-nav ul a[aria-current="page"] { color: var(--color-ink); }
 
 @media (min-width: 360px) {
   .scene-controls > div { grid-template-columns: repeat(4, minmax(0, 1fr)); }

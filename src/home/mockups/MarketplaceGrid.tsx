@@ -5,23 +5,15 @@ import { HomepageLink as Link } from "../HomepageLink";
 import Image from "next/image";
 import { cn } from "@/lib/cn";
 import { Icon } from "../Icon";
-import { DEMO_LISTINGS, KIND_LABEL, type DemoListing } from "./data";
+import { DEMO_LISTINGS, KIND_FILTER_GROUP_LABEL, KIND_FILTERS, KIND_LABEL, type KindFilter } from "./data";
 import { AgentPortrait } from "./AgentPortrait";
 import { Check } from "./parts";
 
-const PORTRAITS = ["invoice", "pack", "human", "leads", "receipt", "support"] as const;
-const FILTERS = [
-  { label: "All talent", kind: "all" },
-  { label: "AI agents", kind: "agent" },
-  { label: "Workflow packs", kind: "pack" },
-  { label: "Human work", kind: "human" },
-] as const;
-
 export function MarketplaceGrid({ className }: { className?: string }) {
-  const [filter, setFilter] = useState<"all" | DemoListing["kind"]>("all");
+  const [filter, setFilter] = useState<KindFilter>("all");
   const [selected, setSelected] = useState(1);
   const listing = DEMO_LISTINGS[selected];
-  function changeFilter(kind: typeof filter) {
+  function changeFilter(kind: KindFilter) {
     setFilter(kind);
     if (kind !== "all" && listing.kind !== kind) {
       setSelected(DEMO_LISTINGS.findIndex((item) => item.kind === kind));
@@ -33,15 +25,15 @@ export function MarketplaceGrid({ className }: { className?: string }) {
         <div><span className="scene-kicker">The marketplace</span><h3>A specialist for every task.</h3></div>
         <Icon name="grid" />
       </div>
-      <div className="directory-filters" role="group" aria-label="Filter marketplace talent">
-        {FILTERS.map((item) => <button key={item.kind} type="button" aria-pressed={filter === item.kind} onClick={() => changeFilter(item.kind)}>{item.label}</button>)}
+      <div className="directory-filters" role="group" aria-label={KIND_FILTER_GROUP_LABEL}>
+        {KIND_FILTERS.map((item) => <button key={item.kind} type="button" aria-pressed={filter === item.kind} onClick={() => changeFilter(item.kind)}>{item.label}</button>)}
       </div>
       <div className="directory-body">
         <ul className="talent-list" aria-label="Example marketplace listings">
           {DEMO_LISTINGS.map((item, index) => filter === "all" || filter === item.kind ? (
             <li key={item.title}>
               <button type="button" aria-pressed={selected === index} onClick={() => setSelected(index)} className="talent-row">
-                <AgentPortrait kind={PORTRAITS[index]} />
+                <AgentPortrait kind={item.portrait} />
                 <span className="talent-row-copy"><strong>{item.title}</strong><span>{KIND_LABEL[item.kind]}<i aria-hidden="true">·</i>{item.certified ? <span className="listing-passport"><Check />Trust Passport</span> : <span>Not yet certified</span>}</span></span>
                 <Icon />
               </button>
@@ -49,7 +41,7 @@ export function MarketplaceGrid({ className }: { className?: string }) {
           ) : null)}
         </ul>
         <div className="talent-detail">
-          <AgentPortrait kind={PORTRAITS[selected]} className="portrait-large" />
+          <AgentPortrait kind={listing.portrait} className="portrait-large" />
           <span className="scene-kicker">{KIND_LABEL[listing.kind]}</span>
           <h4>{listing.title}</h4>
           <p>{listing.body}</p>

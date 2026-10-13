@@ -1,22 +1,32 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
-export type Column = { key: string; header: string; align?: "left" | "right"; mono?: boolean };
+export type Column<Row> = { key: keyof Row & string; header: string; align?: "left" | "right"; mono?: boolean };
 
-export type TableProps = {
-  columns: Column[];
-  rows: Record<string, ReactNode>[];
+export type TableProps<Row extends Record<string, ReactNode>> = {
+  columns: readonly Column<Row>[];
+  rows: readonly Row[];
   /** Names the table for assistive tech (visually hidden). */
   caption?: string;
   /** Caps the height so the header can stick while the body scrolls; override with a max-h-* in className. */
   stickyHeader?: boolean;
-  rowKey?: (row: Record<string, ReactNode>, index: number) => string;
+  rowKey?: (row: Row, index: number) => string;
   className?: string;
 };
 
-export function Table({ columns, rows, caption, stickyHeader, rowKey, className }: TableProps) {
+export function Table<Row extends Record<string, ReactNode>>({ columns, rows, caption, stickyHeader, rowKey, className }: TableProps<Row>) {
   return (
-    <div className={cn("overflow-x-auto rounded-lg border border-grey-200", stickyHeader && "max-h-[32rem] overflow-y-auto", className)}>
+    // The wrapper scrolls on narrow screens, so it must be reachable from the keyboard and named for assistive tech.
+    <div
+      tabIndex={0}
+      role={caption ? "region" : undefined}
+      aria-label={caption}
+      className={cn(
+        "overflow-x-auto rounded-lg border border-grey-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink",
+        stickyHeader && "max-h-[32rem] overflow-y-auto",
+        className,
+      )}
+    >
       <table className="w-full border-collapse text-sm">
         {caption ? <caption className="sr-only">{caption}</caption> : null}
         <thead className={cn("bg-grey-50 text-xs uppercase tracking-wide text-grey-500", stickyHeader && "sticky top-0")}>

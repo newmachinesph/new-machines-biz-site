@@ -8,6 +8,7 @@ import "@/home/globe/globe.css";
 import "@/home/mockups/hero-product.css";
 import "@/home/motion/home-motion.css";
 import "@/home/scroll-polish.css";
+import "@/marketplace/marketplace.css";
 import { fontClassNames } from "@/design-system/fonts";
 
 export const metadata: Metadata = {

@@ -22,7 +22,7 @@ describe("Hero", () => {
     render(<Hero />);
     const h1 = screen.getByRole("heading", { level: 1 });
     expect(h1).toHaveTextContent(`${HOME_COPY.hero.lead} ${HOME_COPY.hero.tail}`);
-    expect(screen.getByRole("link", { name: HOME_COPY.hero.primary.label })).toHaveAttribute("href", "#hire");
+    expect(screen.getByRole("link", { name: HOME_COPY.hero.primary.label })).toHaveAttribute("href", "/marketplace");
     expect(screen.getByRole("link", { name: HOME_COPY.hero.secondary.label })).toBeInTheDocument();
     expect(screen.getByRole("figure")).toBeInTheDocument();
     expect(screen.queryByText("Demo data")).toBeNull();

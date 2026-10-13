@@ -24,6 +24,8 @@ describe("Button", () => {
   });
 
   it("renders as a link with asChild", () => {
+    // A plain <a> is the point: asChild must style any element, not only next/link.
+    // eslint-disable-next-line @next/next/no-html-link-for-pages
     render(<Button asChild><a href="/marketplace">Browse</a></Button>);
     expect(screen.getByRole("link", { name: "Browse" })).toHaveClass("bg-ink");
   });
