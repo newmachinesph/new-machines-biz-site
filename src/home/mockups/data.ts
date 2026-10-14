@@ -9,7 +9,7 @@ export const DEMO_RUNS: readonly DemoRun[] = [
   { id: "run_01HX4QK2", agent: "Invoice matcher", status: "running", cost: "¥180" },
   { id: "run_01HX4QJ7", agent: "Lead qualifier", status: "running", cost: "¥260" },
   { id: "run_01HX4QHM", agent: "Contract clause check", status: "waiting-for-human", cost: "¥95" },
-  { id: "run_01HX4QG3", agent: "Customer reply drafter", status: "waiting-for-human", cost: "¥140" },
+  { id: "run_01HX4QG3", agent: "Support reply drafter", status: "waiting-for-human", cost: "¥140" },
   { id: "run_01HX4QFA", agent: "Receipt reconciler", status: "verified", cost: "¥410" },
   { id: "run_01HX4QEN", agent: "Market brief", status: "verified", cost: "¥330" },
 ];
