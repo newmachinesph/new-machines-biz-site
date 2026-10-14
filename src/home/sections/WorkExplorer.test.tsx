@@ -47,6 +47,8 @@ describe("WorkExplorer", () => {
     await user.click(within(support).getByRole("button", { name: "Run demo" }));
     expect(within(support).getByRole("button", { name: "Running…" })).toBeDisabled();
     expect(within(support).getByText("Agent working on synthetic data…")).toBeInTheDocument();
+    expect(within(support).getByText("Approve a refund reply for a double charge")).toBeInTheDocument();
+    expect(within(support).getByText("Run six checks")).toBeInTheDocument();
     // Tab order only reaches the visible chapter: from the sidebar link, the next stop is inside the Support chapter.
     screen.getByRole("link", { name: "Find your next agent" }).focus();
     await user.tab();
