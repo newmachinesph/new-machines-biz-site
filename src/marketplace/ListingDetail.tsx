@@ -12,9 +12,11 @@ import { DEMO_EVIDENCE, DEMO_LOG, DEMO_STEPS } from "@/home/mockups/data";
 import { Check } from "@/home/mockups/parts";
 import { Close } from "@/home/sections/Close";
 import { MARKETPLACE_COPY } from "./copy";
+import { SAMPLE_RUN } from "./invoiceMatcher";
 import { KIND_LABEL } from "./kinds";
 import { ListingCard } from "./ListingCard";
 import { LEAD_QUALIFIER_SAMPLE } from "./leadQualifierSample";
+import { MatchReport } from "./MatchReport";
 import { relatedListings, type ListingReviewer, type MarketplaceListing } from "./listings";
 import { QualifierReport } from "./QualifierReport";
 
@@ -88,6 +90,17 @@ export function ListingDetail({ listing }: { listing: MarketplaceListing }) {
           </div>
           <QualifierReport run={LEAD_QUALIFIER_SAMPLE} />
           <p className="story-note">{L.evidence.note}</p>
+        </SectionCell>
+      ) : null}
+
+      {listing.slug === "invoice-matcher" ? (
+        <SectionCell labelledBy="sample-run-title" className="listing-run-section">
+          <div className="section-opener">
+            <SectionHeader id="sample-run-title" eyebrow={L.run.eyebrow} lead={L.run.lead} tail={L.run.tail} />
+            <p>{L.run.sub}</p>
+          </div>
+          <MatchReport run={SAMPLE_RUN} />
+          <p className="story-note">{L.run.note}</p>
         </SectionCell>
       ) : null}
 
