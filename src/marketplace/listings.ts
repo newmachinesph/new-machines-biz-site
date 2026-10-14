@@ -65,9 +65,9 @@ export const MARKETPLACE_LISTINGS: readonly MarketplaceListing[] = [
   },
   {
     slug: "lead-qualifier", title: "Lead qualifier", kind: "agent", body: "Scores inbound leads against your ideal profile.", price: "¥60 / run", certified: true, portrait: "leads",
-    summary: "Researches each inbound account, scores it against the profile you set and prepares a shortlist. Your team reviews the fit and owns the first conversation.",
-    scope: ["Read inbound accounts from your CRM", "Research company context from public sources", "Score every account against your criteria", "Prepare an outreach brief for the shortlist"],
-    tools: [HUBSPOT, SALESFORCE, GMAIL],
+    summary: "Researches each inbound account, scores its fit against your rubric and prepares a shortlist with dated evidence. It never contacts anyone or changes the CRM; your team reviews the fit and owns the first conversation.",
+    scope: ["Check the CRM, suppression lists and disqualifiers first", "Research company evidence from approved sources", "Score fit against your rubric, with intent kept separate", "Prepare a shortlist with evidence, and list exclusions with a reason"],
+    tools: [HUBSPOT, SALESFORCE, SHEETS],
   },
   {
     slug: "receipt-reconciler", title: "Receipt reconciler", kind: "agent", body: "Reads receipts and flags mismatches.", price: "¥40 / run", certified: false, portrait: "receipt",

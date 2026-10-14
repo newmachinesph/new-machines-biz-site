@@ -89,3 +89,4 @@
 .logo-reel .fictional-brand-logo { width: 118px; height: 32px; filter: none; opacity: .88; }
 .customers-section .roster-note { text-align: left; font: 11px/1.6 var(--font-sans); padding-top: 0; }
 
+.workflow-record-state[data-excluded="true"] { background: var(--color-blocked-soft); color: var(--color-blocked); }

@@ -2,6 +2,7 @@ import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { accentViolations } from "@/home/mockups/accentViolations";
 import { ListingDetail } from "./ListingDetail";
+import { LEAD_QUALIFIER_SAMPLE, QUALIFIER_CHECKS, QUALIFIER_RUBRIC } from "./leadQualifierSample";
 import { findListing } from "./listings";
 
 const toolNames = (container: HTMLElement) => within(container.querySelector<HTMLElement>(".detail-apps")!).getAllByRole("img").map((img) => img.getAttribute("alt"));
@@ -63,5 +64,42 @@ describe("ListingDetail", () => {
     expect(screen.getByRole("link", { name: "Try this agent" })).toBeInTheDocument();
     expect(screen.getByText("Trust Passport")).toBeInTheDocument();
     expect(toolNames(container)).toEqual(["Google Drive", "Google Sheets", "freee"]);
+  });
+
+  it("shows the lead qualifier's sample run: evidence per criterion, intent apart from fit, every check, and the exclusions", () => {
+    const { container } = render(<ListingDetail listing={findListing("lead-qualifier")!} />);
+    const report = within(container.querySelector<HTMLElement>("[data-component=qualifierReport]")!);
+    expect(report.getByText("Recommends only. Never contacts an account, sends email or changes the CRM.")).toBeInTheDocument();
+    expect(toolNames(container)).not.toContain("Gmail");
+    const accounts = container.querySelectorAll<HTMLDetailsElement>(".qualifier-account");
+    expect(accounts).toHaveLength(3);
+    expect([...accounts].map((a) => a.open)).toEqual([true, false, false]);
+    const meridian = within(accounts[0]);
+    expect(meridian.getByText("Review")).toHaveAttribute("data-status", "waiting-for-human");
+    expect(meridian.getByText(/Enterprise tier/)).toBeInTheDocument();
+    expect(meridian.getAllByRole("row")).toHaveLength(6);
+    expect(meridian.getByText("Timing only. Not counted in the fit score.")).toBeInTheDocument();
+    expect(within(accounts[1]).getByText("Ready")).not.toHaveAttribute("data-status");
+    expect(within(accounts[2]).getAllByText("Could not check")).toHaveLength(1);
+    expect(within(accounts[2]).getByText("Warn")).toHaveAttribute("data-accent", "human");
+    expect(within(accounts[2]).getByText("No intent signals found.")).toBeInTheDocument();
+    const excluded = within(report.getByRole("list", { name: "Excluded" })).getAllByRole("listitem");
+    expect(excluded.map((li) => li.querySelector("strong")?.textContent)).toEqual(["Kanso Studio", "Toki Electric", "Sora Freight"]);
+    expect(report.getByText("crm.search_accounts, crm.check_suppression, web.fetch")).toBeInTheDocument();
+    expect(accentViolations(container)).toEqual([]);
+  });
+
+  it("keeps the sample run consistent with its own rules", () => {
+    expect(QUALIFIER_RUBRIC.reduce((sum, c) => sum + c.weight, 0)).toBe(100);
+    for (const account of LEAD_QUALIFIER_SAMPLE.shortlist) {
+      expect(account.criteria.map((c) => [c.criterion, c.max])).toEqual(QUALIFIER_RUBRIC.map((c) => [c.criterion, c.weight]));
+      expect(account.criteria.reduce((sum, c) => sum + c.score, 0)).toBe(account.fit_score);
+      for (const c of account.criteria) if (c.could_not_check) expect(c.score).toBe(0);
+      expect(account.checks.map((c) => c.check)).toEqual([...QUALIFIER_CHECKS]);
+      expect(account.checks.some((c) => c.status === "fail")).toBe(false);
+      if (account.status === "review") expect(account.review_reason).not.toBe("");
+      else expect(account.checks.every((c) => c.status === "pass")).toBe(true);
+      expect(account.domain).toMatch(/\.example$/);
+    }
   });
 });
