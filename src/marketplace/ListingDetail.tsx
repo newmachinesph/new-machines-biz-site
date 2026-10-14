@@ -14,7 +14,9 @@ import { Close } from "@/home/sections/Close";
 import { MARKETPLACE_COPY } from "./copy";
 import { KIND_LABEL } from "./kinds";
 import { ListingCard } from "./ListingCard";
+import { LEAD_QUALIFIER_SAMPLE } from "./leadQualifierSample";
 import { relatedListings, type ListingReviewer, type MarketplaceListing } from "./listings";
+import { QualifierReport } from "./QualifierReport";
 
 const L = MARKETPLACE_COPY.listing;
 
@@ -77,6 +79,17 @@ export function ListingDetail({ listing }: { listing: MarketplaceListing }) {
           }
         />
       </SectionCell>
+
+      {listing.slug === "lead-qualifier" ? (
+        <SectionCell labelledBy="qualifier-title" className="listing-qualifier-section">
+          <div className="section-opener">
+            <SectionHeader id="qualifier-title" eyebrow={L.qualifier.eyebrow} lead={L.qualifier.lead} tail={L.qualifier.tail} />
+            <p>{L.qualifier.sub}</p>
+          </div>
+          <QualifierReport run={LEAD_QUALIFIER_SAMPLE} />
+          <p className="story-note">{L.evidence.note}</p>
+        </SectionCell>
+      ) : null}
 
       <SectionCell labelledBy="listing-steps-title" className="listing-steps-section">
         <div className="section-opener">
