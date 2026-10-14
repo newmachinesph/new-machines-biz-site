@@ -26,7 +26,8 @@ test("smaller trust phrases and the explorer sidebar remain readable while scrol
     await page.evaluate(() => window.scrollBy({ top: 220, behavior: "instant" }));
     const after = (await sidebar.boundingBox())!;
     expect(Math.abs(after.y - before.y)).toBeLessThan(1);
-    expect(after.y).toBeGreaterThanOrEqual(110);
+    // The bound is the 76px sticky nav: the announcement bar scrolls away, so the sidebar must never slide under the nav.
+    expect(after.y).toBeGreaterThanOrEqual(76);
     await page.screenshot({ path: `${dir}/sticky-sales-${width}.png` });
     await page.getByRole("button", { name: "03 Operations", exact: true }).click();
     await expect(page.locator("#workflow-operations")).toHaveAttribute("data-active", "true");
@@ -34,7 +35,8 @@ test("smaller trust phrases and the explorer sidebar remain readable while scrol
     await active.getByRole("button", { name: "Run demo", exact: true }).click();
     await active.getByRole("button", { name: "Approve demo outcome", exact: true }).click();
     await expect(active.locator(".workflow-result")).toContainText("Human approved");
-    await page.locator("#workflow-support").evaluate((element) => element.scrollIntoView({ block: "start", behavior: "instant" }));
+    // Chapters are shown one at a time (the inactive ones are hidden), so the team button is the way to reach Support.
+    await page.getByRole("button", { name: "04 Support", exact: true }).click();
     await expect(page.getByRole("button", { name: "04 Support", exact: true })).toHaveAttribute("aria-pressed", "true");
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
     measurements.push({ width, phrases, before, after });

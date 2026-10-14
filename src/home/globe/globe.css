@@ -54,4 +54,9 @@
   .human-editorial { grid-template-columns: 1fr .85fr; gap: 96px; padding: 72px 64px 48px; }
   .human-portrait { height: 360px; }
 }
+/* Short laptop viewports: the photo and the globe were sized for a 900px screen; both stay whole, just smaller. */
+@media (min-width: 1024px) and (max-height: 800px) {
+  .human-portrait { height: 240px; }
+  .globe-stage { max-width: 480px; }
+}
 @media (prefers-reduced-motion: reduce) { .globe-canvas, .globe-controls button { transition: none; } }

@@ -13,14 +13,15 @@
 .catalogue-count { display: flex; align-items: center; min-height: 40px; white-space: nowrap; flex-shrink: 0; }
 .catalogue-clear { padding: 0 8px; font-size: 12px; flex-shrink: 0; cursor: pointer; }
 
-/* Grid of cards */
+/* Grid of cards. Compact on a phone too: twelve single-column cards are the whole catalogue scroll, so the art band
+   is a short strip and the body sits tight. The whole card is the link, so the foot link needs no tap height. */
 .catalogue-grid { display: grid; gap: 24px; margin: 0; padding: 0 24px 48px; list-style: none; }
-.listing-card-art { display: flex; align-items: center; justify-content: center; height: 160px; background: var(--color-stage); border-bottom: var(--rule-page); }
-.listing-card-body { padding: 24px; }
-.listing-card-body h2, .listing-card-body h3 { margin-top: 12px; font-size: 22px; font-weight: 500; line-height: 1.2; letter-spacing: -.03em; }
-.listing-card-body p { margin-top: 10px; font-size: 14px; line-height: 1.6; color: var(--color-grey-700); }
-.listing-card-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 14px; }
-.listing-card-foot .text-link { font-size: 13px; }
+.listing-card-art { display: flex; align-items: center; justify-content: center; height: 96px; background: var(--color-stage); border-bottom: var(--rule-page); }
+.listing-card-body { padding: 18px 20px; }
+.listing-card-body h2, .listing-card-body h3 { margin-top: 10px; font-size: 22px; font-weight: 500; line-height: 1.2; letter-spacing: -.03em; }
+.listing-card-body p { margin-top: 8px; font-size: 14px; line-height: 1.6; color: var(--color-grey-700); }
+.listing-card-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 12px; }
+.listing-card-foot .text-link { font-size: 13px; min-height: 0; }
 .listing-price { font-size: 14px; font-weight: 500; letter-spacing: -.025em; }
 .catalogue-empty { display: grid; justify-items: center; gap: 16px; padding: 64px 24px; text-align: center; font-size: 15px; color: var(--color-grey-500); }
 
@@ -80,13 +81,11 @@
   .catalogue-controls { flex-wrap: nowrap; justify-content: flex-end; min-width: 0; padding-bottom: 8px; }
   .catalogue-section .catalogue-grid { padding-top: 24px; }
   /* Compact card: with the toolbar scrolled to the top of a short desktop viewport, a complete first row (price and
-     "View listing" included) stays above the fold. The whole card is the link, so the foot link needs no tap height. */
+     "View listing" included) stays above the fold. */
   .listing-card-art { height: 104px; }
   .listing-card-body { padding: 20px; }
   .listing-card-body h2, .listing-card-body h3 { margin-top: 8px; }
-  .listing-card-body p { margin-top: 8px; }
   .listing-card-foot { margin-top: 10px; }
-  .listing-card-foot .text-link { min-height: 0; }
   .listing-hero { grid-template-columns: minmax(0, 1fr) 420px; gap: 64px; padding: 56px 64px 56px; }
   .listing-hero > div:first-child > p { font-size: 17px; }
   .listing-scope { padding: 32px; }

@@ -292,6 +292,32 @@
   .control-board .spend-rules { padding-top: 24px; }
   .control-board .spend-rules li > span { font-size: 10px; }
 }
+/* Short laptop viewports (1024px and wider, up to 800px tall, e.g. 1536×760): each section makes its point on one
+   screen. Nothing here changes a 900px-tall display. */
+@media (min-width: 1024px) and (max-height: 800px) {
+  /* Hero: the headline and the top of the product share the first screen. */
+  .hero-intro { padding-top: 36px; padding-bottom: 28px; gap: 32px; }
+  .hero-intro .hero-title { font-size: clamp(56px, 5vw, 76px); line-height: 1.02; }
+  .hero-title { margin-top: 16px; }
+  .hero-announcement { min-height: 32px; }
+  .hero-live-scene { min-height: 0; padding: 20px 24px; gap: 28px; }
+  /* Openers and editorial headers: less air before the figure that explains the heading. */
+  .section-opener { padding-top: 40px; padding-bottom: 24px; }
+  .section-opener h2 { margin-top: 14px; }
+  .human-editorial, .regional-layout { padding-top: 40px; padding-bottom: 32px; }
+  .human-editorial { gap: 48px; }
+  .faq-layout { padding-top: 48px; padding-bottom: 48px; }
+  .closing-content { padding-top: 56px; padding-bottom: 56px; }
+  .split-copy { padding-top: 28px; padding-bottom: 28px; }
+  /* Fixed-height mockups that were sized for a 900px screen. The story art holds a 360px invoice sheet and a 340px
+     research window (plus its hanging brief), so the band drops to 340 and both mockups lose spacing to stay whole. */
+  .story-art, .story-art.sales-art { height: 340px; }
+  .story-art.sales-art { padding: 20px 24px 44px; }
+  .account-research { padding-bottom: 20px; }
+  .research-toolbar, .research-query, .research-bottom { padding-top: 8px; padding-bottom: 8px; }
+  .research-account-row { padding-top: 8px; padding-bottom: 8px; }
+  .connected-scene { min-height: 0; padding: 28px; }
+}
 @media (prefers-reduced-motion: reduce) {
   .site-nav ul a::after { transition: none; }
   .roster-track { transform: none; animation: none; }

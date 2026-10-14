@@ -1,9 +1,10 @@
-html { scroll-behavior: smooth; scroll-padding-top: 120px; overflow-x: clip; }
+/* Sticky chrome is the nav (--nav-height) plus its 1px rule; anchors land 7px under it. */
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-height) + 8px); overflow-x: clip; }
 body { overflow-x: clip; }
 .marketing-home { overflow: clip; }
-.marketing-home *, .site-header *, .site-footer * { box-sizing: border-box; }
+.marketing-home *, .announcement-bar *, .site-header *, .site-footer * { box-sizing: border-box; }
 .marketing-home a:focus-visible, .marketing-home button:focus-visible, .marketing-home summary:focus-visible,
-.site-header a:focus-visible, .site-footer a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 5px; }
+.announcement-bar a:focus-visible, .site-header a:focus-visible, .site-footer a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 5px; }
 .nm-icon { width: 18px; height: 18px; flex-shrink: 0; }
 .text-link { display: inline-flex; gap: 12px; align-items: center; min-height: 44px; font-size: 14px; font-weight: 500; color: var(--color-ink); }
 .text-link .nm-icon { transition: transform var(--dur-quick) var(--ease-out); }
@@ -25,11 +26,11 @@ body { overflow-x: clip; }
 .section-dark .split-copy { border-color: var(--color-grey-700); }
 .page-section { scroll-margin-top: 12px; }
 .site-header { font-family: var(--font-sans); }
-.announcement-bar { background: var(--color-ink); color: var(--color-paper); font-size: 11px; }
+.announcement-bar { background: var(--color-ink); color: var(--color-paper); font-family: var(--font-sans); font-size: 11px; }
 .announcement-bar a { display: flex; align-items: center; justify-content: center; gap: 7px; min-height: 36px; padding: 7px 16px; }
 .announcement-bar span { display: none; font-weight: 600; }
 .announcement-bar .nm-icon { width: 14px; height: 14px; }
-.site-nav { height: 76px; gap: 12px; padding-left: 16px; padding-right: 16px; }
+.site-nav { height: var(--nav-height); gap: 12px; padding-left: 16px; padding-right: 16px; }
 .nav-brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; min-height: 44px; }
 .nav-brand span { display: none; font-size: 14px; font-weight: 600; letter-spacing: -.04em; }
 .nav-brand svg { width: 40px; height: auto; }
