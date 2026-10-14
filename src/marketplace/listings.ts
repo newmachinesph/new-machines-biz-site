@@ -82,9 +82,9 @@ export const MARKETPLACE_LISTINGS: readonly MarketplaceListing[] = [
     tools: [GMAIL, LINEWORKS, SLACK],
   },
   {
-    slug: "vendor-intake-agent", title: "Vendor intake agent", kind: "agent", body: "Checks vendor applications and routes eligibility exceptions.", price: "¥90 / run", certified: true, portrait: "vendor",
-    summary: "Collects each vendor’s documents, checks the required fields and prepares the register. Eligibility questions, such as an overseas supplier, go to someone who knows the answer.",
-    scope: ["Collect vendor documents from the intake form", "Check required fields and registration numbers", "Route eligibility exceptions to a reviewer", "Prepare a reviewed vendor register"],
+    slug: "vendor-intake-agent", title: "Vendor intake agent", kind: "agent", body: "Checks supplier documents, screens for risk and prepares the vendor master for review.", price: "¥90 / run", certified: true, portrait: "vendor",
+    summary: "Checks that each supplier’s documents are present, valid and consistent with each other, then screens for duplicates and sanctions. Every check comes back with a reason. A person confirms bank details on a callback, and nothing is activated without your reviewer’s decision.",
+    scope: ["Check each required document is present, current and legible", "Match names, registration and tax IDs, and the bank account holder", "Screen for duplicate vendors, sanctions and country risk", "Draft requests for missing documents for your reviewer to send", "Prepare the vendor register, with bank callbacks left to a person"],
     tools: [KINTONE, SHEETS, SLACK],
   },
   {

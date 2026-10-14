@@ -82,4 +82,17 @@ describe("WorkExplorer", () => {
     expect(sales.getByText("Enterprise tier: confirm fit before outreach")).toBeInTheDocument();
     expect(sales.queryByText(/outreach brief/i)).toBeNull();
   });
+
+  it("shows the vendor register as ready, review and blocked, and records the reviewer's call on each", async () => {
+    searchParams.current = new URLSearchParams("workflow=operations");
+    const user = userEvent.setup();
+    render(<WorkExplorer />);
+    const operations = chapterOf("operations");
+    const states = () => within(operations).getAllByRole("row").slice(1).map((row) => [...row.querySelectorAll("td")].map((cell) => cell.textContent));
+    expect(states()).toEqual([["Aster Supply", "4 / 4", "Ready"], ["Meridian", "3 / 4", "Review"], ["Kanso Studio", "4 / 4", "Blocked"]]);
+    expect(within(operations).getByText("Hold a supplier whose bank account name differs from its legal entity")).toBeInTheDocument();
+    await user.click(within(operations).getByRole("button", { name: "Run demo" }));
+    await user.click(await within(operations).findByRole("button", { name: "Approve demo outcome" }, { timeout: 2000 }));
+    expect(states()).toEqual([["Aster Supply", "4 / 4", "Ready"], ["Meridian", "3 / 4", "Request sent"], ["Kanso Studio", "4 / 4", "On hold"]]);
+  });
 });
