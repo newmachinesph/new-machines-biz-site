@@ -57,6 +57,40 @@
 .listing-evidence-file strong { display: block; font-weight: 500; }
 .listing-evidence-file span { display: block; margin-top: 2px; font: 10px/1.5 var(--font-mono); color: var(--color-grey-500); }
 
+/* Invoice matcher sample run: verdict, checks, three-way match, diagnosis, audit. Status colour comes only from Badge. */
+.match-report { display: grid; gap: 16px; padding: 0 24px; }
+.match-report > * { min-width: 0; }
+.match-verdict, .match-checks, .match-exception, .match-audit { padding: 22px 24px; }
+.match-verdict-head, .match-exception-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.match-recommendation { display: flex; align-items: baseline; gap: 12px; margin-top: 16px; }
+.match-recommendation span { font-size: 12px; color: var(--color-grey-500); }
+.match-recommendation strong { font-size: 32px; font-weight: 500; line-height: 1; letter-spacing: -.04em; }
+.match-summary { margin-top: 14px; font-size: 15px; line-height: 1.6; }
+.match-verdict-meta { display: grid; gap: 10px; margin-top: 18px; padding-top: 16px; border-top: var(--rule-page); font-size: 13px; }
+.match-verdict-meta div { display: flex; justify-content: space-between; gap: 16px; }
+.match-verdict-meta dt, .match-audit dt { color: var(--color-grey-500); }
+.match-verdict-meta dd { text-align: right; }
+.match-human-note { display: flex; align-items: flex-start; gap: 10px; margin-top: 18px; font-size: 12px; line-height: 1.5; color: var(--color-muted-ink); }
+.match-human-note .nm-icon { width: 14px; height: 14px; margin-top: 1px; flex-shrink: 0; }
+.match-checks ul { display: grid; margin-top: 8px; }
+.match-checks li { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px 12px; padding: 12px 0; border-bottom: var(--rule-page); font-size: 13px; }
+.match-checks li:last-child { border-bottom: 0; padding-bottom: 0; }
+.match-checks li > [data-status], .match-checks li > span:first-child { justify-self: start; align-self: start; }
+.match-checks strong, .match-causes strong { display: block; font-weight: 500; }
+.match-checks p, .match-causes p { margin-top: 2px; line-height: 1.5; color: var(--color-muted-ink); }
+.match-basis { font: 10px/1.5 var(--font-mono); color: var(--color-grey-500); }
+.match-lines { display: grid; gap: 10px; min-width: 0; }
+.match-exception-head strong { font-size: 22px; font-weight: 500; letter-spacing: -.03em; }
+.match-causes { display: grid; gap: 14px; margin-top: 16px; font-size: 13px; }
+.match-causes li { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 12px; }
+.match-likelihood { align-self: start; padding: 2px 6px; border: var(--rule-page); border-radius: 4px; font: 10px/1.5 var(--font-mono); text-align: center; color: var(--color-grey-500); }
+.match-likelihood[data-likelihood="high"] { color: var(--color-ink); border-color: var(--color-ink); }
+.match-action { display: grid; gap: 6px; margin-top: 18px; padding-top: 16px; border-top: var(--rule-page); font-size: 14px; line-height: 1.5; }
+.match-audit dl { display: grid; gap: 10px; margin-top: 12px; font-size: 12px; }
+.match-audit dl div { display: grid; gap: 2px; }
+.match-audit dd { overflow-wrap: anywhere; }
+.match-audit dd.font-mono { font-size: 11px; }
+
 .related-section .catalogue-grid { padding-top: 0; }
 
 @media (hover: hover) {
@@ -69,6 +103,9 @@
   .listing-hero { padding: 40px 40px 48px; }
   .listing-hero h1 { font-size: clamp(48px, 5.4vw, 64px); }
   .listing-evidence { padding: 0 40px; }
+  .match-report { padding: 0 40px; }
+  .match-checks li { grid-template-columns: 112px minmax(0, 1fr); gap: 4px 12px; }
+  .match-basis { grid-column: 2; }
   .listing-evidence-files { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
@@ -90,6 +127,13 @@
   .listing-hero > div:first-child > p { font-size: 17px; }
   .listing-scope { padding: 32px; }
   .listing-evidence { padding: 0 64px; }
+  .match-report { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); grid-template-areas: "verdict checks" "audit checks" "lines lines"; grid-template-rows: auto 1fr auto; align-items: start; gap: 24px; padding: 0 64px; }
+  .match-verdict { grid-area: verdict; }
+  .match-checks { grid-area: checks; }
+  .match-audit { grid-area: audit; }
+  .match-lines { grid-area: lines; }
+  .match-exception { grid-column: 1 / -1; }
+  .match-causes li { grid-template-columns: 72px minmax(0, 1fr); }
 }
 
 @media (min-width: 1280px) {

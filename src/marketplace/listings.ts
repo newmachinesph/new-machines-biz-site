@@ -45,8 +45,8 @@ const SALESFORCE: ListingTool = { name: "Salesforce", src: "/brands/salesforce.s
 export const MARKETPLACE_LISTINGS: readonly MarketplaceListing[] = [
   {
     slug: "invoice-matcher", title: "Invoice matcher", kind: "agent", body: "Matches supplier invoices to purchase orders.", price: "¥120 / run", certified: true, portrait: "invoice",
-    summary: "Reads each supplier invoice, finds the purchase order it belongs to and separates the exceptions for a reviewer. Tax lines that differ from the order are never settled on the agent’s own authority.",
-    scope: ["Read supplier invoices from a shared folder", "Match line items and totals to purchase orders", "Flag tax or amount differences for review", "Prepare a reconciliation report with evidence"],
+    summary: "Checks that each supplier invoice is genuine and that its numbers agree with the purchase order and receiving report, then prepares a recommendation for a reviewer. It never approves or pays; a qualified person decides.",
+    scope: ["Verify the supplier, bank details and PO against your records", "Check for duplicates, template changes and tampering signals", "Match invoice, PO and receiving report line by line", "Diagnose each exception with the arithmetic behind it", "Recommend approve, review or hold, with a full audit log"],
     tools: [DRIVE, SHEETS, FREEE],
   },
   {
