@@ -64,4 +64,33 @@ describe("ListingDetail", () => {
     expect(screen.getByText("Trust Passport")).toBeInTheDocument();
     expect(toolNames(container)).toEqual(["Google Drive", "Google Sheets", "freee"]);
   });
+
+  it("shows the invoice matcher's sample run: verdict, seven checks, three-way match and a diagnosed exception", () => {
+    const { container } = render(<ListingDetail listing={findListing("invoice-matcher")!} />);
+    const report = within(container.querySelector<HTMLElement>("[data-component='matchReport']")!);
+    expect(report.getByText("Run NM-2291")).toBeInTheDocument();
+    expect(report.getByText("Medium risk")).toHaveAttribute("data-status", "waiting-for-human");
+    expect(report.getByText("Review")).toBeInTheDocument();
+    expect(report.getByText(/A person clicks Approve/)).toBeInTheDocument();
+    expect(container.querySelectorAll(".match-checks li")).toHaveLength(7);
+    expect(report.getAllByText("Pass")).toHaveLength(7);
+    expect(report.getAllByText("Read from document")).toHaveLength(2);
+    expect(report.getAllByText("Verified in database")).toHaveLength(5);
+    const lines = within(report.getByRole("region", { name: /Three-way match|Invoice, purchase order and receiving report/ }));
+    expect(lines.getByText("¥116,727")).toBeInTheDocument();
+    expect(lines.getByText("¥115,527")).toBeInTheDocument();
+    expect(lines.getByText("Exception")).toHaveAttribute("data-status", "waiting-for-human");
+    expect(report.getByText("¥1,200")).toBeInTheDocument();
+    const causes = within(report.getByRole("list", { name: "Likely causes, most likely first" })).getAllByRole("listitem");
+    expect(causes[0]).toHaveTextContent("PO tax not recalculated after a line revision");
+    expect(causes[0]).toHaveTextContent("High");
+    expect(report.getByText(/Correct the PO tax to ¥116,727/)).toBeInTheDocument();
+    expect(report.getByText("2026-10-11T09:14:02+09:00")).toBeInTheDocument();
+    expect(accentViolations(container)).toEqual([]);
+  });
+
+  it("shows the sample run only on the invoice matcher", () => {
+    const { container } = render(<ListingDetail listing={findListing("lead-qualifier")!} />);
+    expect(container.querySelector("[data-component='matchReport']")).toBeNull();
+  });
 });
