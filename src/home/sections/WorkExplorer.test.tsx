@@ -69,4 +69,15 @@ describe("WorkExplorer", () => {
     expect(visibleChapters().map((chapter) => chapter.id)).toEqual(["workflow-operations"]);
     expect(screen.getByRole("button", { name: "03 Operations" })).toHaveAttribute("aria-pressed", "true");
   });
+
+  it("shows the lead qualifier's shortlist with an exclusion and the review it needs", async () => {
+    const user = userEvent.setup();
+    render(<WorkExplorer />);
+    await user.click(screen.getByRole("button", { name: "02 Sales" }));
+    const sales = within(chapterOf("sales"));
+    expect(sales.getByText("Excluded")).toHaveAttribute("data-excluded", "true");
+    expect(sales.getByText("Review")).toHaveAttribute("data-review", "true");
+    expect(sales.getByText("Enterprise tier: confirm fit before outreach")).toBeInTheDocument();
+    expect(sales.queryByText(/outreach brief/i)).toBeNull();
+  });
 });
