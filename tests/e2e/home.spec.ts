@@ -53,6 +53,33 @@ test("workflow demo requires review, verifies the outcome, and resets when teams
   await expect(page.locator(".faq-list details[open]")).toContainText("Execution and verification are separate steps.");
 });
 
+test("on a short laptop screen the hero mockup fits under the nav and the explorer shows one chapter", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop", "explicit laptop viewports");
+  await page.clock.setFixedTime(new Date("2026-10-11T00:00:00Z"));
+  // 1536×760: scrolled to its top, the whole product mockup (workspace bar to demo controls) is on screen.
+  await page.setViewportSize({ width: 1536, height: 760 });
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+  const mockup = page.locator(".hero-product");
+  await mockup.evaluate((element) => element.scrollIntoView({ block: "start", behavior: "instant" }));
+  const box = (await mockup.boundingBox())!;
+  // 77 = the 76px sticky nav plus its 1px rule: the mockup's top must not be under the nav.
+  expect(box.y).toBeGreaterThanOrEqual(77);
+  expect(box.y + box.height).toBeLessThanOrEqual(760);
+  await expect(page.locator(".hero-demo-controls")).toBeInViewport({ ratio: 1 });
+  // Only the sticky nav is fixed: the announcement bar has scrolled away.
+  await expect(page.locator(".announcement-bar")).not.toBeInViewport();
+  expect((await page.locator(".site-header").boundingBox())!.y).toBe(0);
+  // The explorer is one chapter, not a four-high stack, at the desktop reference too.
+  for (const viewport of [{ width: 1536, height: 760 }, { width: 1440, height: 900 }]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/#work-explorer");
+    await expect(page.locator(".workflow-chapter:visible")).toHaveCount(1);
+    // Four stacked chapters measured about 4000px at 1440×900; one chapter with the opener is 1000 to 1200px.
+    expect((await page.locator("#work-explorer").boundingBox())!.height).toBeLessThan(1400);
+  }
+});
+
 test("product scenes keep measured alignment and the fictional company logos load", async ({ page }, testInfo) => {
   await page.goto("/");
   await page.locator(".talent-directory").scrollIntoViewIfNeeded();

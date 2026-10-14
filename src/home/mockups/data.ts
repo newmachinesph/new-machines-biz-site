@@ -1,4 +1,7 @@
 import type { Status } from "@/design-system/components/Badge";
+import { MARKETPLACE_LISTINGS, type MarketplaceListing } from "@/marketplace/listings";
+
+export { KIND_FILTER_GROUP_LABEL, KIND_FILTERS, KIND_LABEL, type Kind, type KindFilter } from "@/marketplace/kinds";
 
 export type DemoRun = { id: string; agent: string; status: Status; cost: string };
 
@@ -17,25 +20,12 @@ export const DEMO_EVIDENCE = [
   { title: "Brief generated", meta: "run_01HX4QEN · 3 files" },
 ] as const;
 
-export type DemoListing = {
-  title: string;
-  kind: "agent" | "pack" | "human";
-  body: string;
-  price: string;
-  certified: boolean;
-  hovered?: boolean;
-};
+export type DemoListing = Pick<MarketplaceListing, "title" | "kind" | "body" | "price" | "certified" | "portrait"> & { hovered?: boolean };
 
-export const KIND_LABEL: Record<DemoListing["kind"], string> = { agent: "AI agent", pack: "Workflow pack", human: "Human work" };
-
-export const DEMO_LISTINGS: readonly DemoListing[] = [
-  { title: "Invoice matcher", kind: "agent", body: "Matches supplier invoices to purchase orders.", price: "¥120 / run", certified: true },
-  { title: "Month-end close pack", kind: "pack", body: "Reconcile, review exceptions, file evidence.", price: "¥48,000 / month", certified: true, hovered: true },
-  { title: "Bilingual contract review", kind: "human", body: "Qualified reviewer, 日本語 ⇄ English, same day.", price: "¥9,800 / hour", certified: true },
-  { title: "Lead qualifier", kind: "agent", body: "Scores inbound leads against your ideal profile.", price: "¥60 / run", certified: true },
-  { title: "Receipt reconciler", kind: "agent", body: "Reads receipts and flags mismatches.", price: "¥40 / run", certified: false },
-  { title: "Support reply drafter", kind: "agent", body: "Drafts replies in 日本語 and English.", price: "¥25 / run", certified: false },
-];
+/** The homepage mockup shows the first six marketplace listings. */
+export const DEMO_LISTINGS: readonly DemoListing[] = MARKETPLACE_LISTINGS.slice(0, 6).map(({ title, kind, body, price, certified, portrait }, index) => ({
+  title, kind, body, price, certified, portrait, ...(index === 1 ? { hovered: true } : {}),
+}));
 
 export const DEMO_STEPS = ["Read inputs", "Draft output", "Check policy", "Human review", "Verify evidence"] as const;
 

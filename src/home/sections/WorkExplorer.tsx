@@ -42,30 +42,18 @@ const WORKFLOW_RECORDS = [
   { heading: "Conversation", value: "Language", rows: [["Delivery update", "日本語", "Ready"], ["Account access", "English", "Ready"], ["Billing exception", "日本語", "Review"]] },
 ] as const;
 
+/** One workflow chapter at a time: the team selector switches which chapter is shown (the others carry `hidden`),
+ *  and switching resets that chapter's demo. `?workflow=<team>` selects on load. */
 export function WorkExplorer() {
   const [selected, setSelected] = useState(0);
   const [keyboard, setKeyboard] = useState(false);
   const [resets, setResets] = useState([0, 0, 0, 0]);
-  const chapters = useRef<(HTMLElement | null)[]>([]);
+  const chapters = useRef<HTMLDivElement | null>(null);
   const selectTeam = useCallback((index: number) => {
     setSelected(index);
     setResets((values) => values.map((value, i) => i === index ? value + 1 : value));
-    chapters.current[index]?.scrollIntoView({ block: "start", behavior: "instant" });
-  }, []);
-  useEffect(() => {
-    let observer: IntersectionObserver;
-    const activate = (entries: IntersectionObserverEntry[]) => {
-      const entry = entries.filter((item) => item.isIntersecting).sort((a, b) => Math.abs(a.boundingClientRect.top - 160) - Math.abs(b.boundingClientRect.top - 160))[0];
-      if (entry) setSelected(Number((entry.target as HTMLElement).dataset.workflowIndex));
-    };
-    const observe = () => {
-      observer?.disconnect();
-      observer = new IntersectionObserver(activate, { rootMargin: `-160px 0px -${Math.max(0, window.innerHeight - 360)}px 0px`, threshold: 0 });
-      chapters.current.forEach((chapter) => { if (chapter) observer.observe(chapter); });
-    };
-    observe();
-    window.addEventListener("resize", observe);
-    return () => { observer.disconnect(); window.removeEventListener("resize", observe); };
+    // The chapters column is always rendered (unlike the chapter React is about to show), so it is the scroll target.
+    chapters.current?.scrollIntoView({ block: "start", behavior: "instant" });
   }, []);
   return (
     <SectionCell id="work-explorer" labelledBy="explorer-title" className="explorer-section">
@@ -76,13 +64,13 @@ export function WorkExplorer() {
           <span className="micro-label">Explore by team</span>
           <div className="workflow-selector" role="group" aria-label="Choose a team workflow" data-keyboard={keyboard} style={{ "--tab-index": selected } as CSSProperties} onKeyDown={() => setKeyboard(true)} onPointerDown={() => setKeyboard(false)}>
             <span className="workflow-selection" aria-hidden="true" />
-            {WORKFLOWS.map((workflow, i) => <button type="button" key={workflow.team} aria-label={`0${i + 1} ${workflow.team}`} aria-pressed={selected === i} aria-controls={"workflow-" + workflow.team.toLowerCase()} onClick={() => selectTeam(i)}><span className="workflow-tab-index">0{i + 1}</span>{workflow.team}<Icon /></button>)}
+            {WORKFLOWS.map((workflow, i) => <button type="button" key={workflow.team} aria-label={`0${i + 1} ${workflow.team}`} aria-pressed={selected === i} aria-controls={"workflow-" + workflow.team.toLowerCase()} data-component={"workflowTeam" + workflow.team} onClick={() => selectTeam(i)}><span className="workflow-tab-index">0{i + 1}</span>{workflow.team}<Icon /></button>)}
           </div>
           <a className="text-link" href="#hire">Find your next agent<Icon /></a>
           <div className="workflow-legend"><span data-accent="machine"><i className="bg-machine" />AI does the work</span><span data-accent="human"><i className="bg-human" />You make the call</span></div>
         </aside>
-        <div className="workflow-chapters">
-          {WORKFLOWS.map((flow, i) => <section key={flow.team} id={"workflow-" + flow.team.toLowerCase()} ref={(element) => { chapters.current[i] = element; }} className="workflow-chapter" data-workflow-index={i} data-active={selected === i} aria-labelledby={"workflow-title-" + i}>
+        <div className="workflow-chapters" ref={chapters}>
+          {WORKFLOWS.map((flow, i) => <section key={flow.team} id={"workflow-" + flow.team.toLowerCase()} className="workflow-chapter" data-active={selected === i} hidden={selected !== i} aria-labelledby={"workflow-title-" + i}>
             <div className="workflow-description"><span className="micro-label">{flow.team} / Example workflow</span><h3 id={"workflow-title-" + i}>{flow.title}</h3><p>{flow.body}</p></div>
             <WorkflowPreview key={i + "-" + resets[i]} index={i} />
           </section>)}

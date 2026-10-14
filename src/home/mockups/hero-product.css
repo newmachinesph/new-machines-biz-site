@@ -123,6 +123,16 @@
   .hero-live-scene figcaption { bottom: 10px; right: 32px; }
 }
 @media (min-width: 1280px) { .hero-intro .hero-title { font-size: 64px; } }
+/* Short laptop viewports: a shorter invoice and inspector so the whole mockup fits under the nav (about 620px). */
+@media (min-width: 1024px) and (max-height: 800px) {
+  .ledger-paper { padding: 18px 20px; }
+  .ledger-heading { margin: 14px 0 12px; }
+  .ledger-headline { font-size: 26px; }
+  .ledger-lines tbody th, .ledger-lines tbody td { height: 38px; }
+  .ledger-record { padding-top: 12px; margin-top: 12px; }
+  .inspector-body { min-height: 190px; padding: 18px 20px; }
+  .inspector-body .inspector-headline { font-size: 22px; margin-bottom: 14px; }
+}
 @media (prefers-reduced-motion: reduce) {
   .hero-live-product *, .hero-live-product *::before, .hero-live-product *::after { animation: none !important; }
   .inspector-cursor { display: none; }

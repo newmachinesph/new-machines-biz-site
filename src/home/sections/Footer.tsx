@@ -3,7 +3,7 @@ import { Lockup } from "@/design-system/logo/Lockup";
 import { HOME_COPY } from "../copy";
 import { Icon } from "../Icon";
 
-export function Footer() {
+export function Footer({ home = true }: { home?: boolean }) {
   const { columns } = HOME_COPY.footer;
   return (
     <footer className="site-footer bg-paper">
@@ -18,14 +18,14 @@ export function Footer() {
               <h3 className="font-mono text-xs uppercase tracking-[0.12em] text-grey-500">{c.title}</h3>
               <ul className="mt-3 flex flex-col gap-2 text-sm">
                 {c.links.map((l) => (
-                  <li key={l.label}><Link href={l.href} className="text-grey-700 transition-colors duration-150 hover:text-ink">{l.label}</Link></li>
+                  <li key={l.label}><Link href={l.href} home={home} className="text-grey-700 transition-colors duration-150 hover:text-ink">{l.label}</Link></li>
                 ))}
               </ul>
             </div>
           ))}
         </nav>
       </div>
-      <div className="footer-bottom"><span>© 2026 New Machines</span><span><Icon name="globe" />日本語 / English · Japan & Asia-Pacific</span><a href="#hero">Back to top ↑</a></div>
+      <div className="footer-bottom"><span>© 2026 New Machines</span><span><Icon name="globe" />日本語 / English · Japan & Asia-Pacific</span><a href="#main-content">Back to top ↑</a></div>
     </footer>
   );
 }

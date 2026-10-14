@@ -16,7 +16,7 @@ export function HowItWorks() {
       <ol className="work-guide">
         {steps.map((s, i) => (
           <li key={s.title}>
-            <a href={`#${STEP_TARGETS[i]}`}>
+            <a className="guide-step" href={`#${STEP_TARGETS[i]}`}>
               <span className="guide-number font-mono font-light">{String(i + 1).padStart(2, "0")}</span>
               <div><h3>{s.title}</h3><p>{s.body}</p></div>
               <Icon name="arrow-up" />

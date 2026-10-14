@@ -63,4 +63,5 @@
   --dur-quick: 160ms;
   --radius-panel: 12px;
   --rule-page: 1px solid var(--color-grey-200);
+  --nav-height: 76px; /* the only sticky chrome; scroll offsets derive from it */
 }
