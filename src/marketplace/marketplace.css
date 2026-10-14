@@ -1,0 +1,102 @@
+/* Marketplace catalogue and listing pages: the home's boxed frame, type and cards, nothing new in colour.
+   The catalogue h1 and the step cells take the home rules (home.css / scroll-polish.css / quality-pass.css). */
+
+/* Toolbar */
+.catalogue-toolbar { display: grid; gap: 20px; padding: 0 24px 28px; }
+.catalogue-toolbar .directory-filters { padding: 0; }
+.catalogue-controls { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 24px; }
+.catalogue-certified { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border: var(--rule-page); border-radius: 999px; font-size: 12px; font-weight: 500; white-space: nowrap; flex-shrink: 0; color: var(--color-grey-500); background: var(--color-paper); cursor: pointer; transition: color var(--dur-quick), border-color var(--dur-quick); }
+.catalogue-certified svg { width: 10px; height: 10px; }
+.catalogue-certified[aria-pressed="true"] { color: var(--color-ink); border-color: var(--color-ink); }
+.catalogue-search { flex: 0 1 320px; min-width: 180px; width: 100%; max-width: 320px; }
+.catalogue-search label { font-size: 12px; }
+.catalogue-count { display: flex; align-items: center; min-height: 40px; white-space: nowrap; flex-shrink: 0; }
+.catalogue-clear { padding: 0 8px; font-size: 12px; flex-shrink: 0; cursor: pointer; }
+
+/* Grid of cards. Compact on a phone too: twelve single-column cards are the whole catalogue scroll, so the art band
+   is a short strip and the body sits tight. The whole card is the link, so the foot link needs no tap height. */
+.catalogue-grid { display: grid; gap: 24px; margin: 0; padding: 0 24px 48px; list-style: none; }
+.listing-card-art { display: flex; align-items: center; justify-content: center; height: 96px; background: var(--color-stage); border-bottom: var(--rule-page); }
+.listing-card-body { padding: 18px 20px; }
+.listing-card-body h2, .listing-card-body h3 { margin-top: 10px; font-size: 22px; font-weight: 500; line-height: 1.2; letter-spacing: -.03em; }
+.listing-card-body p { margin-top: 8px; font-size: 14px; line-height: 1.6; color: var(--color-grey-700); }
+.listing-card-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 12px; }
+.listing-card-foot .text-link { font-size: 13px; min-height: 0; }
+.listing-price { font-size: 14px; font-weight: 500; letter-spacing: -.025em; }
+.catalogue-empty { display: grid; justify-items: center; gap: 16px; padding: 64px 24px; text-align: center; font-size: 15px; color: var(--color-grey-500); }
+
+/* Listing hero */
+.listing-hero { display: grid; gap: 32px; padding: 32px 24px 40px; }
+.listing-back { min-height: 44px; font-size: 12px; color: var(--color-grey-500); }
+.listing-back .nm-icon { width: 14px; height: 14px; transform: scaleX(-1); }
+.listing-hero-portrait { display: flex; margin-top: 16px; }
+.listing-hero .scene-kicker { margin-top: 20px; }
+.listing-hero h1 { margin-top: 10px; font-size: 40px; font-weight: 500; line-height: 1.05; letter-spacing: -.05em; overflow-wrap: anywhere; min-width: 0; }
+.listing-hero > div:first-child > p { margin-top: 20px; max-width: 540px; font-size: 16px; line-height: 1.6; color: var(--color-muted-ink); }
+.listing-hero-aside { display: grid; gap: 20px; align-content: end; }
+.listing-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+.listing-meta .listing-price { font-size: 18px; }
+.listing-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; }
+
+/* Scope card */
+.listing-scope { padding: 24px; }
+.listing-scope-list { display: grid; gap: 12px; margin-top: 14px; }
+.listing-scope-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; line-height: 1.5; }
+.listing-scope-list svg { width: 12px; height: 12px; margin-top: 5px; flex-shrink: 0; }
+.listing-scope .detail-apps { margin: 24px 0 0; padding-top: 20px; border-top: var(--rule-page); }
+.listing-reviewer { display: flex; align-items: center; gap: 14px; margin-top: 20px; padding-top: 20px; border-top: var(--rule-page); font-size: 14px; }
+.listing-reviewer strong { display: block; margin-top: 4px; font-weight: 500; }
+.listing-reviewer > div > span:last-child { display: block; font-size: 12px; color: var(--color-grey-500); }
+
+/* Evidence */
+.listing-evidence { display: grid; gap: 24px; padding: 0 24px; }
+.listing-evidence-files { display: grid; gap: 12px; }
+.listing-evidence-file { display: flex; align-items: center; gap: 14px; padding: 16px 18px; font-size: 14px; }
+.listing-evidence-file > .nm-icon { width: 16px; height: 16px; color: var(--color-grey-500); }
+.listing-evidence-file > div { flex: 1; min-width: 0; }
+.listing-evidence-file strong { display: block; font-weight: 500; }
+.listing-evidence-file span { display: block; margin-top: 2px; font: 10px/1.5 var(--font-mono); color: var(--color-grey-500); }
+
+.related-section .catalogue-grid { padding-top: 0; }
+
+@media (hover: hover) {
+  .catalogue-certified:hover, .catalogue-clear:hover { color: var(--color-ink); }
+  .listing-back:hover .nm-icon { transform: scaleX(-1) translateX(3px); }
+}
+
+@media (min-width: 640px) {
+  .catalogue-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .listing-hero { padding: 40px 40px 48px; }
+  .listing-hero h1 { font-size: clamp(48px, 5.4vw, 64px); }
+  .listing-evidence { padding: 0 40px; }
+  .listing-evidence-files { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1024px) {
+  .catalogue-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  /* One hairline under the whole toolbar, like the home directory; the pressed filter's underline sits on it. */
+  .catalogue-toolbar { grid-template-columns: max-content minmax(0, 1fr); align-items: end; padding-bottom: 0; border-bottom: var(--rule-page); margin: 0 24px; padding-left: 0; padding-right: 0; }
+  .catalogue-toolbar .directory-filters { border-bottom: 0; }
+  /* The search box gives way first (flex 0 1 320px, min 180px), so the count and Clear never clip. */
+  .catalogue-controls { flex-wrap: nowrap; justify-content: flex-end; min-width: 0; padding-bottom: 8px; }
+  .catalogue-section .catalogue-grid { padding-top: 24px; }
+  /* Compact card: with the toolbar scrolled to the top of a short desktop viewport, a complete first row (price and
+     "View listing" included) stays above the fold. */
+  .listing-card-art { height: 104px; }
+  .listing-card-body { padding: 20px; }
+  .listing-card-body h2, .listing-card-body h3 { margin-top: 8px; }
+  .listing-card-foot { margin-top: 10px; }
+  .listing-hero { grid-template-columns: minmax(0, 1fr) 420px; gap: 64px; padding: 56px 64px 56px; }
+  .listing-hero > div:first-child > p { font-size: 17px; }
+  .listing-scope { padding: 32px; }
+  .listing-evidence { padding: 0 64px; }
+}
+
+@media (min-width: 1280px) {
+  .catalogue-toolbar { margin: 0 64px; }
+  .catalogue-grid { padding: 0 64px 64px; gap: 32px; }
+  .related-section .catalogue-grid { padding-top: 0; }
+  .listing-hero { gap: 96px; }
+  .listing-evidence { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; gap: 32px; }
+  .listing-evidence-files { grid-template-columns: 1fr; }
+}
