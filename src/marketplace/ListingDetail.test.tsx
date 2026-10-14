@@ -64,6 +64,28 @@ describe("ListingDetail", () => {
     expect(screen.getByRole("link", { name: "Try this agent" })).toBeInTheDocument();
     expect(screen.getByText("Trust Passport")).toBeInTheDocument();
     expect(toolNames(container)).toEqual(["Google Drive", "Google Sheets", "freee"]);
+    expect(container.querySelector('[data-component="listingDraftReview"]')).toBeNull();
+  });
+
+  it("shows the support reply drafter's reviewer view: routing, the draft, its facts and six checks", () => {
+    const { container } = render(<ListingDetail listing={findListing("support-reply-drafter")!} />);
+    const routing = within(container.querySelector<HTMLElement>('[data-component="draftRouting"]')!);
+    expect(routing.getByText("Ready")).toHaveAttribute("data-status", "verified");
+    expect(routing.getByText("Review")).toHaveAttribute("data-status", "waiting-for-human");
+    expect(routing.getByText("Blocked")).toHaveAttribute("data-status", "blocked");
+    const card = container.querySelector<HTMLElement>('[data-component="listingDraftReview"]')!;
+    const draft = within(card);
+    expect(card.querySelector(".draft-card-head [data-status]")).toHaveTextContent("Review");
+    expect(card.querySelector('.draft-reply[lang="ja"]')).toHaveTextContent("返金");
+    expect(card.querySelector('.draft-reply[lang="en"]')).toHaveTextContent("refund of the duplicate ¥12,800");
+    expect(draft.getByRole("table", { name: "Facts used in the draft and their source records" })).toBeInTheDocument();
+    expect(draft.getByText("payments/pay_7Q21, pay_7Q22")).toBeInTheDocument();
+    const checks = within(draft.getByRole("list", { name: "Checks" })).getAllByRole("listitem");
+    expect(checks.map((item) => item.querySelector("strong")?.textContent)).toEqual(["Identity", "Policy", "Factual accuracy", "Tone", "Privacy", "Escalation"]);
+    expect(checks[1].querySelector("[data-status]")).toHaveTextContent("Warn");
+    expect(draft.getByText("Approve the ¥12,800 refund in the billing system")).toBeInTheDocument();
+    expect(draft.getByText("Needs approval")).toBeInTheDocument();
+    expect(accentViolations(container)).toEqual([]);
   });
 
   it("shows the lead qualifier's sample run: evidence per criterion, intent apart from fit, every check, and the exclusions", () => {
