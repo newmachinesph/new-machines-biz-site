@@ -19,7 +19,7 @@ async function auditPage(page: Page) {
 test("marketplace catalogue renders twelve listings, has no horizontal scroll, and passes axe", async ({ page }) => {
   const audit = await auditPage(page);
   await page.goto("/marketplace");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("The right talent.");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("The right fit.");
   await expect(page.locator(".listing-card")).toHaveCount(12);
   await expect(page.getByText("United States")).toHaveCount(0);
   await expect(page.locator('nav[aria-label="Primary"] a[aria-current="page"]')).toHaveAttribute("href", "/marketplace");

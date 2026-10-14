@@ -133,6 +133,13 @@
   .site-footer ul li a { font-size: 13px; }
 }
 
+/* Short laptop viewports: the invoice sheet keeps an 8px inset inside the 340px story art (home-motion.css). */
+@media (min-width: 1024px) and (max-height: 800px) {
+  .story-sheet { padding: 16px 24px; }
+  .sheet-letterhead { padding-bottom: 10px; }
+  .sheet-heading { margin: 10px 0; }
+  .sheet-row { padding: 7px 0; }
+}
 @media (prefers-reduced-motion: reduce) {
   .work-guide a, .work-guide .nm-icon { transition: none; }
 }
