@@ -77,8 +77,8 @@ export const MARKETPLACE_LISTINGS: readonly MarketplaceListing[] = [
   },
   {
     slug: "support-reply-drafter", title: "Support reply drafter", kind: "agent", body: "Drafts replies in 日本語 and English.", price: "¥25 / run", certified: false, portrait: "support",
-    summary: "Drafts a helpful reply in the customer’s language with the account context attached. Sensitive cases are queued for a human who can make the call.",
-    scope: ["Read the conversation and account context", "Draft a reply in 日本語 or English", "Check tone against your support policy", "Queue sensitive replies for review"],
+    summary: "Drafts a reply in the customer’s language, with every fact traced to a record and six checks attached. Each draft is marked ready, review or blocked; the agent never sends a reply, issues a refund or changes an account.",
+    scope: ["Classify the request and match the customer’s language", "Look up orders, invoices and account state; cite each fact", "Check identity, policy, accuracy, tone, privacy and escalation", "Route each draft as ready, review or blocked for your reviewer"],
     tools: [GMAIL, LINEWORKS, SLACK],
   },
   {

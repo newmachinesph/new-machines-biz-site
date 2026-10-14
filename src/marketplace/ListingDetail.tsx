@@ -12,6 +12,7 @@ import { DEMO_EVIDENCE, DEMO_LOG, DEMO_STEPS } from "@/home/mockups/data";
 import { Check } from "@/home/mockups/parts";
 import { Close } from "@/home/sections/Close";
 import { MARKETPLACE_COPY } from "./copy";
+import { DraftReview } from "./DraftReview";
 import { SAMPLE_RUN } from "./invoiceMatcher";
 import { KIND_LABEL } from "./kinds";
 import { ListingCard } from "./ListingCard";
@@ -19,6 +20,7 @@ import { LEAD_QUALIFIER_SAMPLE } from "./leadQualifierSample";
 import { MatchReport } from "./MatchReport";
 import { relatedListings, type ListingReviewer, type MarketplaceListing } from "./listings";
 import { QualifierReport } from "./QualifierReport";
+import { sampleRunFor } from "./supportDraft";
 
 const L = MARKETPLACE_COPY.listing;
 
@@ -44,6 +46,7 @@ function ReviewerAvatar({ reviewer }: { reviewer: ListingReviewer }) {
 export function ListingDetail({ listing }: { listing: MarketplaceListing }) {
   const { title, kind, summary, price, certified, portrait, scope, reviewer, tools } = listing;
   const related = relatedListings(listing, 3);
+  const draftRun = sampleRunFor(listing.slug);
   return (
     <>
       <SectionCell labelledBy="listing-title" className="listing-hero-section">
@@ -103,6 +106,7 @@ export function ListingDetail({ listing }: { listing: MarketplaceListing }) {
           <p className="story-note">{L.run.note}</p>
         </SectionCell>
       ) : null}
+      {draftRun ? <DraftReview run={draftRun} /> : null}
 
       <SectionCell labelledBy="listing-steps-title" className="listing-steps-section">
         <div className="section-opener">

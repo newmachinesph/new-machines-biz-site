@@ -48,6 +48,32 @@
 .listing-reviewer strong { display: block; margin-top: 4px; font-weight: 500; }
 .listing-reviewer > div > span:last-child { display: block; font-size: 12px; color: var(--color-grey-500); }
 
+/* Draft review (Support reply drafter) */
+.draft-routing { margin-top: 32px; padding-top: 20px; border-top: var(--rule-page); }
+.draft-routing ul { display: grid; gap: 14px; margin-top: 14px; }
+.draft-routing li { display: grid; grid-template-columns: 88px minmax(0, 1fr); align-items: start; gap: 12px; font-size: 14px; line-height: 1.5; color: var(--color-muted-ink); }
+.draft-routing li > span:first-child { justify-self: start; margin-top: 1px; }
+.draft-card { display: grid; gap: 20px; padding: 24px; min-width: 0; }
+.draft-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.draft-card-head > div { min-width: 0; }
+.draft-card-head strong { display: block; margin-top: 6px; font-size: 18px; font-weight: 500; letter-spacing: -.02em; overflow-wrap: anywhere; }
+.draft-card-meta { display: block; margin-top: 2px; font: 11px/1.5 var(--font-mono); text-transform: uppercase; color: var(--color-grey-500); }
+.draft-status-reason { margin-top: -8px; font-size: 14px; line-height: 1.5; color: var(--color-muted-ink); }
+.draft-field { display: grid; gap: 8px; min-width: 0; padding-top: 18px; border-top: var(--rule-page); font-size: 14px; line-height: 1.6; }
+.draft-reply-pair { display: grid; gap: 20px; }
+.draft-reply { white-space: pre-line; padding: 14px 16px; border-radius: var(--radius-md); background: var(--color-stage); overflow-wrap: anywhere; }
+.draft-subhead { margin-top: 6px; }
+.draft-list { display: grid; gap: 8px; padding-left: 18px; list-style: disc; }
+.draft-actions { list-style: decimal; }
+.draft-list li { overflow-wrap: anywhere; }
+.draft-tags { display: inline-flex; flex-wrap: wrap; gap: 6px; margin-left: 10px; vertical-align: middle; }
+.draft-checks { display: grid; gap: 10px; }
+.draft-checks li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; align-items: center; }
+.draft-checks li strong { font-weight: 500; }
+.draft-checks li > span:last-child { grid-column: 1 / -1; font-size: 13px; color: var(--color-grey-500); }
+.draft-audit p { font: 11px/1.6 var(--font-mono); color: var(--color-grey-500); overflow-wrap: anywhere; }
+.draft-note { margin: 0; padding: 0; }
+
 /* Evidence */
 .listing-evidence { display: grid; gap: 24px; padding: 0 24px; }
 .listing-evidence-files { display: grid; gap: 12px; }
@@ -181,6 +207,7 @@
   .qualifier-criteria tbody th, .qualifier-criteria td { display: table-cell; padding: 12px 12px 12px 0; border-bottom: 1px solid var(--color-grey-100); vertical-align: top; }
   .qualifier-criteria tbody th { white-space: nowrap; }
   .qualifier-footer { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; }
+  .draft-reply-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (min-width: 1024px) {
@@ -200,6 +227,8 @@
   .listing-hero { grid-template-columns: minmax(0, 1fr) 420px; gap: 64px; padding: 56px 64px 56px; }
   .listing-hero > div:first-child > p { font-size: 17px; }
   .listing-scope { padding: 32px; }
+  .draft-card { padding: 32px; }
+  .draft-checks { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 24px; }
   .listing-evidence { padding: 0 64px; }
   .qualifier-report { padding: 0 64px; }
   .qualifier-summary { padding: 24px 28px; }
