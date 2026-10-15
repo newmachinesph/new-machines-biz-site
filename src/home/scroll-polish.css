@@ -45,6 +45,15 @@
 .workflow-record-table td { padding: 11px 0; border-bottom: 1px solid var(--color-grey-100); }
 .workflow-record-table th:not(:first-child), .workflow-record-table td:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }
 .workflow-record-table td:first-child { white-space: nowrap; }
+.workflow-record-reason { display: block; max-width: 30ch; margin-top: 3px; color: var(--color-grey-500); font-size: 10px; line-height: 1.4; white-space: normal; }
+.workflow-record-table td { vertical-align: top; }
+.workflow-record-state { white-space: nowrap; }
+/* Wide enough for the longest final state ("Sent to owner"), so the badge changing never re-wraps the reasons. */
+.workflow-record-table :is(th, td):last-child { width: 96px; }
+.workflow-result .workflow-result-status { display: grid; }
+.workflow-result .workflow-result-status > span { grid-area: 1 / 1; margin-top: 0; }
+.workflow-result .workflow-result-status > [aria-hidden] { visibility: hidden; }
+.workflow-record-table :is(th, td):not(:first-child) { padding-left: 12px; }
 .workflow-record-state { display: inline-block; padding: 3px 5px; font-size: 10px; border-radius: 3px; background: var(--color-grey-50); color: var(--color-grey-700); }
 .workflow-record-state[data-review="true"] { background: var(--color-human-soft); color: var(--color-human); }
 .workflow-chapter .task-reviewer { border-left: 0; margin-top: 0; padding: 20px; }

@@ -40,9 +40,8 @@ test("workflow demo requires review, verifies the outcome, and resets when teams
   await page.getByRole("button", { name: "02 Sales", exact: true }).click();
   await expect(page.getByRole("heading", { name: "More conversations. Less preparation." })).toBeVisible();
   await page.locator(".workflow-chapter[data-active=true]").getByRole("button", { name: "Run demo", exact: true }).click();
-  await expect(page.locator(".workflow-chapter[data-active=true]").getByRole("button", { name: "Approve demo outcome", exact: true })).toBeVisible();
-  await expect(page.locator(".workflow-chapter[data-active=true]").getByRole("button", { name: "Awaiting review", exact: true })).toBeDisabled();
-  await page.locator(".workflow-chapter[data-active=true]").getByRole("button", { name: "Approve demo outcome", exact: true }).click();
+  await expect(page.locator(".workflow-chapter[data-active=true]").getByRole("button", { name: "Awaiting S. Lim", exact: true })).toBeDisabled();
+  await expect(page.locator(".workflow-chapter[data-active=true] .task-review-state")).toContainText("Submitted by S. Lim", { timeout: 10_000 });
   await expect(page.locator(".workflow-chapter[data-active=true] .workflow-result")).toContainText("Qualified account shortlist");
   await expect(page.locator(".workflow-chapter[data-active=true] .workflow-result")).toContainText("Human approved");
   await page.locator(".workflow-chapter[data-active=true]").getByRole("button", { name: "Reset demo", exact: true }).click();
