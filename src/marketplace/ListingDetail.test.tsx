@@ -136,16 +136,20 @@ describe("ListingDetail", () => {
     expect(report.getAllByText("Pass")).toHaveLength(7);
     expect(report.getAllByText("Read from document")).toHaveLength(2);
     expect(report.getAllByText("Verified in database")).toHaveLength(5);
-    const lines = within(report.getByRole("region", { name: /Three-way match|Invoice, purchase order and receiving report/ }));
-    expect(lines.getByText("¥116,727")).toBeInTheDocument();
-    expect(lines.getByText("¥115,527")).toBeInTheDocument();
-    expect(lines.getByText("Exception")).toHaveAttribute("data-status", "waiting-for-human");
-    expect(report.getByText("¥1,200")).toBeInTheDocument();
+    const lines = within(report.getByRole("region", { name: /Three-way match|Purchase order, receiving report and invoice/ }));
+    expect(lines.getByText("¥76,177")).toBeInTheDocument();
+    expect(lines.getByText("¥76,264")).toBeInTheDocument();
+    const exceptionRows = lines.getAllByText("Exception").map((badge) => badge.closest("tr")!.textContent);
+    expect(exceptionRows).toEqual(["Interfolded Paper Towel Virgin Pulp646363Exception", "Jumbo Roll Tissue Virgin Pulp111212Exception"]);
+    for (const badge of lines.getAllByText("Exception")) expect(badge).toHaveAttribute("data-status", "waiting-for-human");
+    expect(lines.getAllByText("Match")).toHaveLength(2);
+    expect(report.getByText("¥87")).toBeInTheDocument();
     const causes = within(report.getByRole("list", { name: "Likely causes, most likely first" })).getAllByRole("listitem");
-    expect(causes[0]).toHaveTextContent("PO tax not recalculated after a line revision");
+    expect(causes[0]).toHaveTextContent("PO not revised after a quantity change at dispatch");
     expect(causes[0]).toHaveTextContent("High");
-    expect(report.getByText(/Correct the PO tax to ¥116,727/)).toBeInTheDocument();
-    expect(report.getByText("2026-10-11T09:14:02+09:00")).toBeInTheDocument();
+    expect(report.getByText(/Revise the PO to 63 paper towels and 12 jumbo rolls, then approve ¥76,177/)).toBeInTheDocument();
+    expect(report.getByText("2026-10-09T09:14:02+08:00")).toBeInTheDocument();
+    expect(screen.getByText("Real invoices, names and dates changed · No real actions")).toBeInTheDocument();
     expect(accentViolations(container)).toEqual([]);
   });
 

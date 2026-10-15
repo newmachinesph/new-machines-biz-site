@@ -4,6 +4,7 @@ import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
 import { forwardRef, type ButtonHTMLAttributes, type ReactElement } from "react";
 import { cn } from "@/lib/cn";
+import { useResolvedElement } from "@/lib/useResolvedElement";
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: "primary" | "secondary" | "ghost";
@@ -35,6 +36,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   ref,
 ) {
   const isDisabled = disabled || loading;
+  const child = useResolvedElement(children);
   const spinner = loading ? (
     <span aria-hidden="true" className="size-3 animate-spin rounded-full border-2 border-current border-t-transparent" />
   ) : null;
@@ -44,7 +46,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   // only appears on real <button>s.
   return useRender({
     defaultTagName: "button",
-    render: asChild ? (children as ReactElement<Record<string, unknown>>) : undefined,
+    render: asChild ? (child as ReactElement<Record<string, unknown>>) : undefined,
     ref,
     props: mergeProps<"button">(
       {

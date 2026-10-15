@@ -2,6 +2,9 @@ import { HOME_COPY } from "@/home/copy";
 import type { DEMO_STEPS } from "@/home/mockups/data";
 import type { Kind } from "./kinds";
 
+/** What the Invoice matcher demo runs on, wherever it appears (sandbox, work explorer, sample run). */
+const INVOICE_DATA_NOTE = "Real invoices, names and dates changed";
+
 /** Every string on /marketplace and /marketplace/[slug]. Same register as HOME_COPY: Japan and Asia-Pacific only. */
 export const MARKETPLACE_COPY = {
   meta: {
@@ -56,14 +59,15 @@ export const MARKETPLACE_COPY = {
       checksHeading: "Document checks",
       checkStatus: { pass: "Pass", warn: "Warn", fail: "Fail", could_not_check: "Could not check" },
       basis: { database: "Verified in database", document: "Read from document" },
-      lines: { heading: "Three-way match", caption: "Invoice, purchase order and receiving report by line · synthetic data", line: "Line", invoice: "Invoice", po: "PO", received: "Received", status: "Status" },
+      lines: { heading: "Three-way match", caption: "Purchase order, receiving report and invoice quantities by item", item: "Item", invoice: "Invoice", po: "PO", received: "Received", status: "Status", amount: "Amount" },
       lineStatus: { match: "Match", exception: "Exception" },
       exception: "Exception",
       causesLabel: "Likely causes, most likely first",
       likelihood: { high: "High", medium: "Medium", low: "Low" },
       suggestedAction: "Suggested action",
       audit: { heading: "Audit", sources: "Data sources checked", tools: "Tools called", checkedAt: "Checked at" },
-      note: "Synthetic data · No real actions or charges",
+      dataNote: INVOICE_DATA_NOTE,
+      note: `${INVOICE_DATA_NOTE} · No real actions`,
     },
     draftReview: {
       eyebrow: "What your reviewer sees",

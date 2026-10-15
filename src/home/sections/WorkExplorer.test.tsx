@@ -95,4 +95,21 @@ describe("WorkExplorer", () => {
     await user.click(await within(operations).findByRole("button", { name: "Approve demo outcome" }, { timeout: 2000 }));
     expect(states()).toEqual([["Aster Supply", "4 / 4", "Ready"], ["Meridian", "3 / 4", "Request sent"], ["Kanso Studio", "4 / 4", "On hold"]]);
   });
+
+  it("shows the invoice matcher's approve and review recommendations on the real batch, and records the reviewer's call", async () => {
+    const user = userEvent.setup();
+    render(<WorkExplorer />);
+    const finance = chapterOf("finance");
+    const states = () => within(finance).getAllByRole("row").slice(1).map((row) => [...row.querySelectorAll("td")].map((cell) => cell.textContent));
+    const highlighted = () => [...finance.querySelectorAll(".workflow-record-state")].map((state) => state.getAttribute("data-review"));
+    expect(states()).toEqual([["014592", "¥28,000", "Approve"], ["028222", "¥29,505", "Approve"], ["030679", "¥76,177", "Review"]]);
+    expect(highlighted()).toEqual(["false", "false", "true"]);
+    expect(within(finance).getByText("Revise two PO quantities before approving receipt 030679")).toBeInTheDocument();
+    expect(within(finance).getByText("Match PO, receipt and invoice")).toBeInTheDocument();
+    expect(within(finance).getByText("Interactive demo · Real invoices, names and dates changed · No real actions or charges")).toBeInTheDocument();
+    expect(within(finance).getByRole("button", { name: "Aster Supply 030679, show the source document" })).toHaveAttribute("data-component", "financeInvoicePhoto");
+    await user.click(within(finance).getByRole("button", { name: "Run demo" }));
+    await user.click(await within(finance).findByRole("button", { name: "Approve demo outcome" }, { timeout: 2000 }));
+    expect(states()).toEqual([["014592", "¥28,000", "Approved"], ["028222", "¥29,505", "Approved"], ["030679", "¥76,177", "Approved"]]);
+  });
 });

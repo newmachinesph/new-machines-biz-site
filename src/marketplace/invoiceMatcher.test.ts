@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { RECOMMENDATION_FOR, riskFor, SAMPLE_RUN, type CheckStatus } from "./invoiceMatcher";
+import { checksPassed, lineDiffs, lineTotal, RECOMMENDATION_FOR, riskFor, SAMPLE_BATCH, SAMPLE_RUN, type CheckStatus } from "./invoiceMatcher";
 
 const withCheck = (check: string, status: CheckStatus) => ({
   ...SAMPLE_RUN,
-  line_matches: SAMPLE_RUN.line_matches.map((l) => ({ ...l, status: "match" as const })),
+  record: SAMPLE_BATCH[1],
   document_checks: SAMPLE_RUN.document_checks.map((c) => (c.check === check ? { ...c, status } : c)),
 });
 
@@ -12,10 +12,26 @@ describe("invoice matcher routing", () => {
     expect(SAMPLE_RUN.document_checks).toHaveLength(7);
     expect(riskFor(SAMPLE_RUN)).toBe(SAMPLE_RUN.risk_level);
     expect(RECOMMENDATION_FOR[SAMPLE_RUN.risk_level]).toBe(SAMPLE_RUN.recommendation);
-    const [ops, software, tax] = SAMPLE_RUN.line_matches;
-    expect(Math.round((ops.invoice + software.invoice) * 0.1)).toBe(tax.invoice);
-    expect(Math.round((ops.po + software.po - 12_000) * 0.1)).toBe(tax.po);
-    expect(tax.invoice - tax.po).toBe(SAMPLE_RUN.exceptions[0].difference);
+    expect(SAMPLE_RUN.record).toBe(SAMPLE_BATCH[0]);
+    expect(SAMPLE_RUN.record.purchase_order.amount - SAMPLE_RUN.record.invoice.amount).toBe(SAMPLE_RUN.exceptions[0].difference);
+    expect(SAMPLE_RUN.exceptions[0].difference).toBe(87);
+    expect(checksPassed(SAMPLE_RUN)).toBe(7);
+    expect(checksPassed({ document_checks: SAMPLE_RUN.document_checks.map((c, i) => (i === 0 ? { ...c, status: "warn" as const } : c)) })).toBe(6);
+  });
+
+  it("derives every batch amount from its items, and only the Aster PO disagrees", () => {
+    expect(SAMPLE_BATCH.map((record) => [record.invoice.number, record.invoice.amount, record.purchase_order.amount])).toEqual([["030679", 76_177, 76_264], ["014592", 28_000, 28_000], ["028222", 29_505, 29_505]]);
+    for (const record of SAMPLE_BATCH) {
+      expect(record.invoice.amount).toBe(lineTotal(record.invoice.items));
+      expect(record.purchase_order.amount).toBe(lineTotal(record.purchase_order.items));
+    }
+    expect(lineDiffs(SAMPLE_BATCH[0])).toEqual([
+      { item: "Interfolded Paper Towel Virgin Pulp", invoice: 63, po: 64, received: 63, status: "exception" },
+      { item: "Jumbo Roll Tissue Virgin Pulp", invoice: 12, po: 11, received: 12, status: "exception" },
+    ]);
+    expect(SAMPLE_BATCH.slice(1).map(lineDiffs)).toEqual([[], []]);
+    expect(SAMPLE_BATCH.map((record) => riskFor({ ...SAMPLE_RUN, record }))).toEqual(["medium", "low", "low"]);
+    expect(SAMPLE_BATCH.map((record) => RECOMMENDATION_FOR[riskFor({ ...SAMPLE_RUN, record })])).toEqual(SAMPLE_BATCH.map((record) => record.recommendation));
   });
 
   it("is low only when everything passes", () => {

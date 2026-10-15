@@ -14,18 +14,25 @@
 .ledger-lines { width: 100%; border-collapse: collapse; font-size: 11px; font-variant-numeric: tabular-nums; }
 .ledger-lines th { text-align: left; font-weight: 400; }
 .ledger-lines thead th { color: var(--color-grey-500); font-size: 9px; padding: 10px 0; border-bottom: var(--rule-page); }
-.ledger-lines tbody th, .ledger-lines tbody td { height: 42px; border-bottom: var(--rule-page); }
-.ledger-lines th:nth-child(2), .ledger-lines td:nth-child(2), .ledger-lines th:nth-child(3), .ledger-lines td:nth-child(3) { text-align: right; padding-left: 10px; }
-.ledger-lines th:nth-child(3), .ledger-lines td:nth-child(3) { display: none; }
+.ledger-lines tbody th, .ledger-lines tbody td { height: 42px; padding-top: 9px; padding-bottom: 9px; vertical-align: top; border-bottom: var(--rule-page); }
+.ledger-lines tbody th { font-weight: 500; }
+.ledger-lines td strong { display: block; font-weight: 400; }
+.ledger-number, .ledger-items-note { display: block; margin-top: 3px; color: var(--color-grey-500); font: 8px/1.3 var(--font-mono); }
+.ledger-number { font-weight: 400; }
+.ledger-items { margin-top: 3px; color: var(--color-grey-500); font-size: 9px; line-height: 1.45; white-space: nowrap; }
+.hero-ledger[data-ledger-phase="1"] .ledger-exception :is(.ledger-items, .ledger-number) { color: inherit; }
+.hero-ledger[data-ledger-phase="1"] .ledger-items [data-diff] { font-weight: 600; }
+.ledger-lines th:nth-child(n+2):not(:last-child), .ledger-lines td:nth-child(n+2):not(:last-child) { text-align: right; padding-left: 10px; }
+/* Phones: supplier and the billed amount only; the PO and receiving columns join from 640px. */
+.ledger-lines th:nth-child(2), .ledger-lines td:nth-child(2), .ledger-lines th:nth-child(3), .ledger-lines td:nth-child(3) { display: none; }
 .ledger-lines th:last-child, .ledger-lines td:last-child { width: 26px; text-align: right; }
-.ledger-lines tfoot th, .ledger-lines tfoot td { padding-top: 12px; font-weight: 500; }
 .ledger-line-status { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; color: var(--color-grey-500); }
 .ledger-line-status .nm-icon { width: 12px; height: 12px; }
 .ledger-exception { transition: background 220ms ease, color 220ms ease; }
 .hero-ledger[data-ledger-phase="1"] .ledger-exception { background: var(--color-human-soft); color: var(--color-human); }
 .hero-ledger[data-ledger-phase="1"] .ledger-exception .nm-icon { color: var(--color-human); }
 .hero-ledger[data-ledger-phase="0"] .ledger-match .ledger-line-status { animation: ledger-match-in 350ms var(--ease-out) 450ms both; }
-.hero-ledger[data-ledger-phase="0"] .ledger-match:nth-child(2) .ledger-line-status { animation-delay: 1100ms; }
+.hero-ledger[data-ledger-phase="0"] .ledger-match:nth-child(3) .ledger-line-status { animation-delay: 1100ms; }
 .ledger-record { display: flex; align-items: center; gap: 10px; padding-top: 16px; margin-top: 16px; border-top: var(--rule-page); }
 .ledger-record strong { display: block; font-size: 11px; font-weight: 500; }
 .ledger-record div > span { display: block; margin-top: 4px; font-size: 9px; line-height: 1.5; color: var(--color-grey-500); }
@@ -43,7 +50,7 @@
 .inspector-title strong { display: block; font-size: 12px; font-weight: 500; }
 .inspector-title div > span { display: block; color: var(--color-grey-500); font: 8px var(--font-mono); margin-top: 4px; }
 .inspector-title > span:last-child { margin-left: auto; font-size: 9px; }
-.inspector-body { min-height: 202px; padding: 20px; animation: inspector-enter 260ms var(--ease-out) both; }
+.inspector-body { min-height: 268px; padding: 20px; animation: inspector-enter 260ms var(--ease-out) both; }
 .inspector-body .inspector-headline { margin: 8px 0 20px; font-size: 22px; line-height: 1.1; letter-spacing: -.035em; font-weight: 500; }
 .inspector-body .scene-kicker { font-size: 9px; }
 .inspector-file { display: flex; align-items: center; gap: 8px; padding: 12px; border: var(--rule-page); border-radius: 5px; background: var(--color-grey-50); font: 10px var(--font-mono); }
@@ -56,6 +63,7 @@
 .inspector-scanning { width: 6px; height: 6px; border-radius: 50%; background: var(--color-machine); animation: matching-pulse 1s ease-in-out infinite; }
 .inspector-difference { display: flex; justify-content: space-between; padding: 16px 0; border-top: var(--rule-page); border-bottom: var(--rule-page); font-size: 12px; color: var(--color-grey-500); }
 .inspector-difference strong { font-size: 18px; color: var(--color-ink); font-weight: 500; letter-spacing: -.025em; }
+.inspector-difference small { display: block; margin-top: 4px; font-size: 9px; line-height: 1.4; }
 .inspector-reviewer { display: flex; align-items: center; gap: 10px; margin-top: 18px; }
 .inspector-reviewer > span:nth-child(2) { font-size: 11px; }
 .inspector-reviewer small { display: block; font-size: 9px; color: var(--color-grey-500); margin-top: 3px; }
@@ -90,7 +98,7 @@
   .hero-live-scene { padding: 28px; min-height: 0; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 24px; }
   .hero-live-scene .hero-dashboard > div:nth-child(2) > div.mt-5 { display: block; }
   .hero-run-inspector { position: relative; width: auto; right: auto; bottom: auto; margin-top: 0; }
-  .ledger-lines th:nth-child(3), .ledger-lines td:nth-child(3) { display: table-cell; }
+  .ledger-lines th:nth-child(2), .ledger-lines td:nth-child(2), .ledger-lines th:nth-child(3), .ledger-lines td:nth-child(3) { display: table-cell; }
   .hero-demo-controls { padding: 8px 24px; }
   .hero-demo-controls > div { gap: 24px; }
   .hero-demo-controls button span { display: inline; }
@@ -116,7 +124,7 @@
   .ledger-record strong { font-size: 12px; }
   .ledger-record div > span { font-size: 10px; }
   .inspector-title { padding: 18px 20px; }
-  .inspector-body { min-height: 226px; padding: 24px; }
+  .inspector-body { min-height: 280px; padding: 24px; }
   .inspector-body .inspector-headline { font-size: 26px; }
   .inspector-title strong { font-size: 14px; }
   .inspector-title div > span { font-size: 9px; }
@@ -128,12 +136,22 @@
   .ledger-paper { padding: 18px 20px; }
   .ledger-heading { margin: 14px 0 12px; }
   .ledger-headline { font-size: 26px; }
-  .ledger-lines tbody th, .ledger-lines tbody td { height: 38px; }
+  .ledger-lines tbody th, .ledger-lines tbody td { height: 38px; padding-top: 6px; padding-bottom: 6px; }
+  .ledger-items { line-height: 1.35; }
+  .ledger-hint { display: none; }
   .ledger-record { padding-top: 12px; margin-top: 12px; }
-  .inspector-body { min-height: 190px; padding: 18px 20px; }
+  .inspector-body { min-height: 258px; padding: 18px 20px; }
   .inspector-body .inspector-headline { font-size: 22px; margin-bottom: 14px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-live-product *, .hero-live-product *::before, .hero-live-product *::after { animation: none !important; }
   .inspector-cursor { display: none; }
 }
+.ledger-invoice-trigger { display: block; font-weight: 500; }
+.ledger-invoice-trigger .ledger-number { display: flex; width: fit-content; align-items: center; gap: 4px; color: var(--color-grey-700); text-decoration: underline dotted var(--color-grey-700); text-underline-offset: 2px; }
+.ledger-invoice-trigger .ledger-number .nm-icon { width: 10px; height: 10px; }
+.ledger-invoice-trigger:hover .ledger-number, .ledger-invoice-trigger:focus-visible .ledger-number { color: var(--color-ink); text-decoration-color: var(--color-ink); }
+.ledger-hint { margin-top: 8px; color: var(--color-grey-500); font: 8px/1.5 var(--font-mono); }
+.inspector-checks-trigger.inspector-field { width: 100%; cursor: help; }
+.inspector-checks-trigger > span:first-child { text-decoration: underline dotted var(--color-grey-300); text-underline-offset: 3px; }
+.inspector-checks-trigger:hover > span:first-child, .inspector-checks-trigger:focus-visible > span:first-child { text-decoration-color: var(--color-ink); }
