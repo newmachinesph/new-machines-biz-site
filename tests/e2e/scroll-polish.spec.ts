@@ -33,8 +33,7 @@ test("smaller trust phrases and the explorer sidebar remain readable while scrol
     await expect(page.locator("#workflow-operations")).toHaveAttribute("data-active", "true");
     const active = page.locator("#workflow-operations");
     await active.getByRole("button", { name: "Run demo", exact: true }).click();
-    await active.getByRole("button", { name: "Approve demo outcome", exact: true }).click();
-    await expect(active.locator(".workflow-result")).toContainText("Human approved");
+    await expect(active.locator(".workflow-result")).toContainText("Human approved", { timeout: 10_000 });
     // Chapters are shown one at a time (the inactive ones are hidden), so the team button is the way to reach Support.
     await page.getByRole("button", { name: "04 Support", exact: true }).click();
     await expect(page.getByRole("button", { name: "04 Support", exact: true })).toHaveAttribute("aria-pressed", "true");

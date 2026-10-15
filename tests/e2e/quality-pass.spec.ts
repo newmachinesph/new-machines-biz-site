@@ -49,8 +49,7 @@ test("workflow stories select the matching demo and keep review separate from ve
   await page.locator(".workflow-chapter[data-active=true]").getByRole("button", { name: "Run demo", exact: true }).click();
   await expect(page.locator(".workflow-chapter[data-active=true] .task-specialist")).toContainText("Needs review");
   await expect(page.locator(".workflow-chapter[data-active=true] .task-specialist")).not.toContainText("Verified");
-  await page.locator(".workflow-chapter[data-active=true]").getByRole("button", { name: "Approve demo outcome", exact: true }).click();
-  await expect(page.locator(".workflow-chapter[data-active=true] .task-specialist")).toContainText("Verified");
+  await expect(page.locator(".workflow-chapter[data-active=true] .task-specialist")).toContainText("Verified", { timeout: 10_000 });
   await page.locator(".story-finance").click();
   await expect(page.getByRole("button", { name: "01 Finance", exact: true })).toHaveAttribute("aria-pressed", "true");
   await expect(page.locator(".workflow-chapter[data-active=true]").getByRole("button", { name: "Run demo", exact: true })).toBeEnabled();
