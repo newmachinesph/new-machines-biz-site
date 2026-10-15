@@ -54,8 +54,8 @@ test("connectors meet card edges and stay outside every card through responsive 
     await page.locator("#integrations").screenshot({ path: `${dir}/integrations-${width}.png`, style: ".site-header { visibility: hidden; }" });
     await page.locator("#hero").scrollIntoViewIfNeeded();
     await page.getByRole("button", { name: "02 Human review", exact: true }).click();
-    await expect(page.locator(".ledger-record")).toContainText("¥1,200 needs a decision");
-    await expect(page.locator(".ledger-exception")).toHaveText(/¥116,727.*¥115,527/);
+    await expect(page.locator(".ledger-record")).toContainText("¥87 needs a decision");
+    await expect(page.locator(".ledger-exception")).toHaveText(/Aster Supply.*030679.*¥76,264.*Paper towel · 64.*129 units.*Paper towel · 63.*¥76,177.*Paper towel · 63/);
     await page.locator("#hero").screenshot({ path: `${dir}/hero-${width}.png`, style: ".site-header { visibility: hidden; }" });
     await page.getByRole("button", { name: "03 Evidence", exact: true }).click();
     await expect(page.locator(".ledger-record")).toContainText("Source values preserved");
