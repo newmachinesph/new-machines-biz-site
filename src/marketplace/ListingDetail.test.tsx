@@ -2,6 +2,7 @@ import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { accentViolations } from "@/home/mockups/accentViolations";
 import { ListingDetail } from "./ListingDetail";
+import { LEAD_QUALIFIER_SAMPLE, QUALIFIER_CHECKS, QUALIFIER_RUBRIC } from "./leadQualifierSample";
 import { findListing } from "./listings";
 
 const toolNames = (container: HTMLElement) => within(container.querySelector<HTMLElement>(".detail-apps")!).getAllByRole("img").map((img) => img.getAttribute("alt"));
@@ -63,5 +64,97 @@ describe("ListingDetail", () => {
     expect(screen.getByRole("link", { name: "Try this agent" })).toBeInTheDocument();
     expect(screen.getByText("Trust Passport")).toBeInTheDocument();
     expect(toolNames(container)).toEqual(["Google Drive", "Google Sheets", "freee"]);
+    expect(container.querySelector('[data-component="listingDraftReview"]')).toBeNull();
+  });
+
+  it("shows the support reply drafter's reviewer view: routing, the draft, its facts and six checks", () => {
+    const { container } = render(<ListingDetail listing={findListing("support-reply-drafter")!} />);
+    const routing = within(container.querySelector<HTMLElement>('[data-component="draftRouting"]')!);
+    expect(routing.getByText("Ready")).toHaveAttribute("data-status", "verified");
+    expect(routing.getByText("Review")).toHaveAttribute("data-status", "waiting-for-human");
+    expect(routing.getByText("Blocked")).toHaveAttribute("data-status", "blocked");
+    const card = container.querySelector<HTMLElement>('[data-component="listingDraftReview"]')!;
+    const draft = within(card);
+    expect(card.querySelector(".draft-card-head [data-status]")).toHaveTextContent("Review");
+    expect(card.querySelector('.draft-reply[lang="ja"]')).toHaveTextContent("返金");
+    expect(card.querySelector('.draft-reply[lang="en"]')).toHaveTextContent("refund of the duplicate ¥12,800");
+    expect(draft.getByRole("table", { name: "Facts used in the draft and their source records" })).toBeInTheDocument();
+    expect(draft.getByText("payments/pay_7Q21, pay_7Q22")).toBeInTheDocument();
+    const checks = within(draft.getByRole("list", { name: "Checks" })).getAllByRole("listitem");
+    expect(checks.map((item) => item.querySelector("strong")?.textContent)).toEqual(["Identity", "Policy", "Factual accuracy", "Tone", "Privacy", "Escalation"]);
+    expect(checks[1].querySelector("[data-status]")).toHaveTextContent("Warn");
+    expect(draft.getByText("Approve the ¥12,800 refund in the billing system")).toBeInTheDocument();
+    expect(draft.getByText("Needs approval")).toBeInTheDocument();
+    expect(accentViolations(container)).toEqual([]);
+  });
+
+  it("shows the lead qualifier's sample run: evidence per criterion, intent apart from fit, every check, and the exclusions", () => {
+    const { container } = render(<ListingDetail listing={findListing("lead-qualifier")!} />);
+    const report = within(container.querySelector<HTMLElement>("[data-component=qualifierReport]")!);
+    expect(report.getByText("Recommends only. Never contacts an account, sends email or changes the CRM.")).toBeInTheDocument();
+    expect(toolNames(container)).not.toContain("Gmail");
+    const accounts = container.querySelectorAll<HTMLDetailsElement>(".qualifier-account");
+    expect(accounts).toHaveLength(3);
+    expect([...accounts].map((a) => a.open)).toEqual([true, false, false]);
+    const meridian = within(accounts[0]);
+    expect(meridian.getByText("Review")).toHaveAttribute("data-status", "waiting-for-human");
+    expect(meridian.getByText(/Enterprise tier/)).toBeInTheDocument();
+    expect(meridian.getAllByRole("row")).toHaveLength(6);
+    expect(meridian.getByText("Timing only. Not counted in the fit score.")).toBeInTheDocument();
+    expect(within(accounts[1]).getByText("Ready")).not.toHaveAttribute("data-status");
+    expect(within(accounts[2]).getAllByText("Could not check")).toHaveLength(1);
+    expect(within(accounts[2]).getByText("Warn")).toHaveAttribute("data-accent", "human");
+    expect(within(accounts[2]).getByText("No intent signals found.")).toBeInTheDocument();
+    const excluded = within(report.getByRole("list", { name: "Excluded" })).getAllByRole("listitem");
+    expect(excluded.map((li) => li.querySelector("strong")?.textContent)).toEqual(["Kanso Studio", "Toki Electric", "Sora Freight"]);
+    expect(report.getByText("crm.search_accounts, crm.check_suppression, web.fetch")).toBeInTheDocument();
+    expect(accentViolations(container)).toEqual([]);
+  });
+
+  it("keeps the sample run consistent with its own rules", () => {
+    expect(QUALIFIER_RUBRIC.reduce((sum, c) => sum + c.weight, 0)).toBe(100);
+    for (const account of LEAD_QUALIFIER_SAMPLE.shortlist) {
+      expect(account.criteria.map((c) => [c.criterion, c.max])).toEqual(QUALIFIER_RUBRIC.map((c) => [c.criterion, c.weight]));
+      expect(account.criteria.reduce((sum, c) => sum + c.score, 0)).toBe(account.fit_score);
+      for (const c of account.criteria) if (c.could_not_check) expect(c.score).toBe(0);
+      expect(account.checks.map((c) => c.check)).toEqual([...QUALIFIER_CHECKS]);
+      expect(account.checks.some((c) => c.status === "fail")).toBe(false);
+      if (account.status === "review") expect(account.review_reason).not.toBe("");
+      else expect(account.checks.every((c) => c.status === "pass")).toBe(true);
+      expect(account.domain).toMatch(/\.example$/);
+    }
+  });
+
+  it("shows the invoice matcher's sample run: verdict, seven checks, three-way match and a diagnosed exception", () => {
+    const { container } = render(<ListingDetail listing={findListing("invoice-matcher")!} />);
+    const report = within(container.querySelector<HTMLElement>("[data-component='matchReport']")!);
+    expect(report.getByText("Run NM-2291")).toBeInTheDocument();
+    expect(report.getByText("Medium risk")).toHaveAttribute("data-status", "waiting-for-human");
+    expect(report.getByText("Review")).toBeInTheDocument();
+    expect(report.getByText(/A person clicks Approve/)).toBeInTheDocument();
+    expect(container.querySelectorAll(".match-checks li")).toHaveLength(7);
+    expect(report.getAllByText("Pass")).toHaveLength(7);
+    expect(report.getAllByText("Read from document")).toHaveLength(2);
+    expect(report.getAllByText("Verified in database")).toHaveLength(5);
+    const lines = within(report.getByRole("region", { name: /Three-way match|Purchase order, receiving report and invoice/ }));
+    expect(lines.getByText("¥76,177")).toBeInTheDocument();
+    expect(lines.getByText("¥76,264")).toBeInTheDocument();
+    const exceptionRows = lines.getAllByText("Exception").map((badge) => badge.closest("tr")!.textContent);
+    expect(exceptionRows).toEqual(["Interfolded Paper Towel Virgin Pulp646363Exception", "Jumbo Roll Tissue Virgin Pulp111212Exception"]);
+    for (const badge of lines.getAllByText("Exception")) expect(badge).toHaveAttribute("data-status", "waiting-for-human");
+    expect(lines.getAllByText("Match")).toHaveLength(2);
+    expect(report.getByText("¥87")).toBeInTheDocument();
+    const causes = within(report.getByRole("list", { name: "Likely causes, most likely first" })).getAllByRole("listitem");
+    expect(causes[0]).toHaveTextContent("PO not revised after a quantity change at dispatch");
+    expect(causes[0]).toHaveTextContent("High");
+    expect(report.getByText(/Revise the PO to 63 paper towels and 12 jumbo rolls, then approve ¥76,177/)).toBeInTheDocument();
+    expect(report.getByText("2026-10-09T09:14:02+08:00")).toBeInTheDocument();
+    expect(screen.getByText("Real invoices, names and dates changed · No real actions")).toBeInTheDocument();
+    expect(accentViolations(container)).toEqual([]);
+  });
+
+  it("shows the sample run only on the invoice matcher", () => {
+    const { container } = render(<ListingDetail listing={findListing("lead-qualifier")!} />);
+    expect(container.querySelector("[data-component='matchReport']")).toBeNull();
   });
 });

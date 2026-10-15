@@ -20,7 +20,7 @@ export function CustomerStories() {
             <div className="story-sheet">
               <div className="sheet-letterhead"><ExampleBrand name="aster-supply" /><strong>Aster Supply</strong><span>OCT / 2026</span></div>
               <div className="sheet-heading">All accounted for.<Icon name="check" /></div>
-              {["Supplier invoices", "Purchase orders", "Tax exceptions", "Approval record"].map((label) => <div className="sheet-row" key={label}><Icon name="file" /><span>{label}</span><Icon name="check" /></div>)}
+              {["Supplier invoices", "Purchase orders", "Quantity exceptions", "Approval record"].map((label) => <div className="sheet-row" key={label}><Icon name="file" /><span>{label}</span><Icon name="check" /></div>)}
               <div className="sheet-proof"><AgentPortrait kind="human" /><span>M. Tanaka<small>Reviewed with evidence</small></span><Icon name="shield" /></div>
             </div>
           </div>

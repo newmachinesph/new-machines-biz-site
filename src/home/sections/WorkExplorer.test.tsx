@@ -47,6 +47,8 @@ describe("WorkExplorer", () => {
     await user.click(within(support).getByRole("button", { name: "Run demo" }));
     expect(within(support).getByRole("button", { name: "Running…" })).toBeDisabled();
     expect(within(support).getByText("Agent working on synthetic data…")).toBeInTheDocument();
+    expect(within(support).getByText("Approve a refund reply for a double charge")).toBeInTheDocument();
+    expect(within(support).getByText("Run six checks")).toBeInTheDocument();
     // Tab order only reaches the visible chapter: from the sidebar link, the next stop is inside the Support chapter.
     screen.getByRole("link", { name: "Find your next agent" }).focus();
     await user.tab();
@@ -68,5 +70,46 @@ describe("WorkExplorer", () => {
     render(<WorkExplorer />);
     expect(visibleChapters().map((chapter) => chapter.id)).toEqual(["workflow-operations"]);
     expect(screen.getByRole("button", { name: "03 Operations" })).toHaveAttribute("aria-pressed", "true");
+  });
+
+  it("shows the lead qualifier's shortlist with an exclusion and the review it needs", async () => {
+    const user = userEvent.setup();
+    render(<WorkExplorer />);
+    await user.click(screen.getByRole("button", { name: "02 Sales" }));
+    const sales = within(chapterOf("sales"));
+    expect(sales.getByText("Excluded")).toHaveAttribute("data-excluded", "true");
+    expect(sales.getByText("Review")).toHaveAttribute("data-review", "true");
+    expect(sales.getByText("Enterprise tier: confirm fit before outreach")).toBeInTheDocument();
+    expect(sales.queryByText(/outreach brief/i)).toBeNull();
+  });
+
+  it("shows the vendor register as ready, review and blocked, and records the reviewer's call on each", async () => {
+    searchParams.current = new URLSearchParams("workflow=operations");
+    const user = userEvent.setup();
+    render(<WorkExplorer />);
+    const operations = chapterOf("operations");
+    const states = () => within(operations).getAllByRole("row").slice(1).map((row) => [...row.querySelectorAll("td")].map((cell) => cell.textContent));
+    expect(states()).toEqual([["Aster Supply", "4 / 4", "Ready"], ["Meridian", "3 / 4", "Review"], ["Kanso Studio", "4 / 4", "Blocked"]]);
+    expect(within(operations).getByText("Hold a supplier whose bank account name differs from its legal entity")).toBeInTheDocument();
+    await user.click(within(operations).getByRole("button", { name: "Run demo" }));
+    await user.click(await within(operations).findByRole("button", { name: "Approve demo outcome" }, { timeout: 2000 }));
+    expect(states()).toEqual([["Aster Supply", "4 / 4", "Ready"], ["Meridian", "3 / 4", "Request sent"], ["Kanso Studio", "4 / 4", "On hold"]]);
+  });
+
+  it("shows the invoice matcher's approve and review recommendations on the real batch, and records the reviewer's call", async () => {
+    const user = userEvent.setup();
+    render(<WorkExplorer />);
+    const finance = chapterOf("finance");
+    const states = () => within(finance).getAllByRole("row").slice(1).map((row) => [...row.querySelectorAll("td")].map((cell) => cell.textContent));
+    const highlighted = () => [...finance.querySelectorAll(".workflow-record-state")].map((state) => state.getAttribute("data-review"));
+    expect(states()).toEqual([["014592", "¥28,000", "Approve"], ["028222", "¥29,505", "Approve"], ["030679", "¥76,177", "Review"]]);
+    expect(highlighted()).toEqual(["false", "false", "true"]);
+    expect(within(finance).getByText("Revise two PO quantities before approving receipt 030679")).toBeInTheDocument();
+    expect(within(finance).getByText("Match PO, receipt and invoice")).toBeInTheDocument();
+    expect(within(finance).getByText("Interactive demo · Real invoices, names and dates changed · No real actions or charges")).toBeInTheDocument();
+    expect(within(finance).getByRole("button", { name: "Aster Supply 030679, show the source document" })).toHaveAttribute("data-component", "financeInvoicePhoto");
+    await user.click(within(finance).getByRole("button", { name: "Run demo" }));
+    await user.click(await within(finance).findByRole("button", { name: "Approve demo outcome" }, { timeout: 2000 }));
+    expect(states()).toEqual([["014592", "¥28,000", "Approved"], ["028222", "¥29,505", "Approved"], ["030679", "¥76,177", "Approved"]]);
   });
 });

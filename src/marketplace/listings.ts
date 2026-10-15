@@ -45,8 +45,8 @@ const SALESFORCE: ListingTool = { name: "Salesforce", src: "/brands/salesforce.s
 export const MARKETPLACE_LISTINGS: readonly MarketplaceListing[] = [
   {
     slug: "invoice-matcher", title: "Invoice matcher", kind: "agent", body: "Matches supplier invoices to purchase orders.", price: "¥120 / run", certified: true, portrait: "invoice",
-    summary: "Reads each supplier invoice, finds the purchase order it belongs to and separates the exceptions for a reviewer. Tax lines that differ from the order are never settled on the agent’s own authority.",
-    scope: ["Read supplier invoices from a shared folder", "Match line items and totals to purchase orders", "Flag tax or amount differences for review", "Prepare a reconciliation report with evidence"],
+    summary: "Checks that each supplier invoice is genuine and that its numbers agree with the purchase order and receiving report, then prepares a recommendation for a reviewer. It never approves or pays; a qualified person decides.",
+    scope: ["Verify the supplier, bank details and PO against your records", "Check for duplicates, template changes and tampering signals", "Match PO, receiving report and invoice line by line", "Diagnose each exception with the arithmetic behind it", "Recommend approve, review or hold, with a full audit log"],
     tools: [DRIVE, SHEETS, FREEE],
   },
   {
@@ -65,9 +65,9 @@ export const MARKETPLACE_LISTINGS: readonly MarketplaceListing[] = [
   },
   {
     slug: "lead-qualifier", title: "Lead qualifier", kind: "agent", body: "Scores inbound leads against your ideal profile.", price: "¥60 / run", certified: true, portrait: "leads",
-    summary: "Researches each inbound account, scores it against the profile you set and prepares a shortlist. Your team reviews the fit and owns the first conversation.",
-    scope: ["Read inbound accounts from your CRM", "Research company context from public sources", "Score every account against your criteria", "Prepare an outreach brief for the shortlist"],
-    tools: [HUBSPOT, SALESFORCE, GMAIL],
+    summary: "Researches each inbound account, scores its fit against your rubric and prepares a shortlist with dated evidence. It never contacts anyone or changes the CRM; your team reviews the fit and owns the first conversation.",
+    scope: ["Check the CRM, suppression lists and disqualifiers first", "Research company evidence from approved sources", "Score fit against your rubric, with intent kept separate", "Prepare a shortlist with evidence, and list exclusions with a reason"],
+    tools: [HUBSPOT, SALESFORCE, SHEETS],
   },
   {
     slug: "receipt-reconciler", title: "Receipt reconciler", kind: "agent", body: "Reads receipts and flags mismatches.", price: "¥40 / run", certified: false, portrait: "receipt",
@@ -77,14 +77,14 @@ export const MARKETPLACE_LISTINGS: readonly MarketplaceListing[] = [
   },
   {
     slug: "support-reply-drafter", title: "Support reply drafter", kind: "agent", body: "Drafts replies in 日本語 and English.", price: "¥25 / run", certified: false, portrait: "support",
-    summary: "Drafts a helpful reply in the customer’s language with the account context attached. Sensitive cases are queued for a human who can make the call.",
-    scope: ["Read the conversation and account context", "Draft a reply in 日本語 or English", "Check tone against your support policy", "Queue sensitive replies for review"],
+    summary: "Drafts a reply in the customer’s language, with every fact traced to a record and six checks attached. Each draft is marked ready, review or blocked; the agent never sends a reply, issues a refund or changes an account.",
+    scope: ["Classify the request and match the customer’s language", "Look up orders, invoices and account state; cite each fact", "Check identity, policy, accuracy, tone, privacy and escalation", "Route each draft as ready, review or blocked for your reviewer"],
     tools: [GMAIL, LINEWORKS, SLACK],
   },
   {
-    slug: "vendor-intake-agent", title: "Vendor intake agent", kind: "agent", body: "Checks vendor applications and routes eligibility exceptions.", price: "¥90 / run", certified: true, portrait: "vendor",
-    summary: "Collects each vendor’s documents, checks the required fields and prepares the register. Eligibility questions, such as an overseas supplier, go to someone who knows the answer.",
-    scope: ["Collect vendor documents from the intake form", "Check required fields and registration numbers", "Route eligibility exceptions to a reviewer", "Prepare a reviewed vendor register"],
+    slug: "vendor-intake-agent", title: "Vendor intake agent", kind: "agent", body: "Checks supplier documents, screens for risk and prepares the vendor master for review.", price: "¥90 / run", certified: true, portrait: "vendor",
+    summary: "Checks that each supplier’s documents are present, valid and consistent with each other, then screens for duplicates and sanctions. Every check comes back with a reason. A person confirms bank details on a callback, and nothing is activated without your reviewer’s decision.",
+    scope: ["Check each required document is present, current and legible", "Match names, registration and tax IDs, and the bank account holder", "Screen for duplicate vendors, sanctions and country risk", "Draft requests for missing documents for your reviewer to send", "Prepare the vendor register, with bank callbacks left to a person"],
     tools: [KINTONE, SHEETS, SLACK],
   },
   {

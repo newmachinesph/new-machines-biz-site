@@ -29,9 +29,11 @@ export function useScenePlayback(durations: readonly number[], loop = true) {
   const [mounted, setMounted] = useState(false);
   const [step, setStep] = useState(0);
   const [paused, setPaused] = useState(false);
+  // Open previews hold the clock without touching `paused`, so closing the last one resumes only what was playing.
+  const [holds, setHolds] = useState(0);
   useEffect(() => setMounted(true), []);
   const reduced = mounted && preference === true;
-  const playing = mounted && preference === false && inView && documentVisible && !paused && (loop || step < durations.length - 1);
+  const playing = mounted && preference === false && inView && documentVisible && !paused && holds === 0 && (loop || step < durations.length - 1);
   useEffect(() => {
     if (!playing) return;
     const timer = window.setTimeout(() => setStep((current) => (current + 1) % durations.length), durations[step]);
@@ -42,5 +44,6 @@ export function useScenePlayback(durations: readonly number[], loop = true) {
     ref, phase: reduced && !paused ? durations.length - 1 : step,
     playing, paused, reduced, select,
     toggle: () => setPaused((value) => !value),
+    hold: (on: boolean) => setHolds((count) => Math.max(0, count + (on ? 1 : -1))),
   };
 }
