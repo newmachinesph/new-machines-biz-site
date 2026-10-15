@@ -44,9 +44,9 @@ export const HOME_COPY = {
   },
   sandbox: {
     eyebrow: "Sandbox",
-    lead: "Try it on synthetic data",
+    lead: "Try it on sample data",
     tail: "before you pay.",
-    sub: "Run any listing in isolation on synthetic data and inspect the success case and the exception case side by side.",
+    sub: "Run any listing in isolation, away from your live systems, and inspect the success case and the exception case side by side. Here, on real invoices with names and dates changed.",
   },
   trust: {
     eyebrow: "Trust",
@@ -72,7 +72,7 @@ export const HOME_COPY = {
     sub: "From describing the work to accepting it, each step leaves a record you can inspect.",
     steps: [
       { title: "Describe", body: "Say what work you want done, or browse a category." },
-      { title: "Try in sandbox", body: "Test the work on synthetic data. Inspect what succeeds and what needs review." },
+      { title: "Try in sandbox", body: "Test the work on sample documents, away from your live systems. Inspect what succeeds and what needs review." },
       { title: "Assign", body: "Choose an agent, hire a reviewer. Set access, a spending cap and review rules." },
       { title: "Execute", body: "Agents carry out the task. Qualified people make the decisions that need judgment." },
       { title: "Accept with evidence", body: "Inspect the work, the approval and the proof before accepting the outcome." },

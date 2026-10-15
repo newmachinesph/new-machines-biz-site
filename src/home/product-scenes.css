@@ -110,10 +110,20 @@
 .comparison-state { margin-top: 24px; }
 .comparison-state h3 { font-size: 23px; font-weight: 500; line-height: 1.2; letter-spacing: -.045em; margin: 16px 0 12px; }
 .comparison-state p { font-size: 12px; line-height: 1.65; color: var(--color-grey-700); }
-.field-comparison { margin-top: 24px; border-top: var(--rule-page); }
-.field-comparison > div { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 0; border-bottom: var(--rule-page); }
-.field-comparison strong { font-size: 18px; font-weight: 500; letter-spacing: -.04em; }
-.field-comparison div > span:last-child:not(.scene-kicker) { font-size: 10px; color: var(--color-grey-500); }
+.comparison-state .comparison-recommendation { margin-top: 8px; font-size: 11px; color: var(--color-grey-500); }
+.comparison-recommendation strong { font-weight: 500; color: var(--color-ink); }
+.field-comparison { width: 100%; margin-top: 24px; border-collapse: collapse; border-top: var(--rule-page); font-variant-numeric: tabular-nums; }
+.field-comparison th, .field-comparison td { padding: 10px 0; border-bottom: var(--rule-page); text-align: right; font-weight: 400; }
+.field-comparison :is(th, td):first-child { text-align: left; padding-right: 12px; }
+.field-comparison :is(th, td) + :is(th, td) { width: 18%; padding-left: 8px; }
+.field-comparison thead th { font: 9px/1.6 var(--font-mono); letter-spacing: .065em; text-transform: uppercase; color: var(--color-grey-500); }
+.field-comparison tbody th { font-size: 11px; line-height: 1.4; color: var(--color-grey-700); }
+.field-comparison td { font-size: 18px; font-weight: 500; letter-spacing: -.04em; }
+.field-comparison td[data-accent="human"] { color: var(--color-human); }
+.invoice-photo { margin: 0; padding: 0; }
+.invoice-photo-frame { background: var(--color-grey-50); }
+.invoice-photo-frame img { display: block; width: 100%; height: auto; max-height: 480px; object-fit: contain; }
+.invoice-photo .invoice-file { margin: 0; }
 .difference-note { margin-top: 20px; color: var(--color-human); }
 .difference-note > span { font-size: 12px; font-weight: 500; }
 .difference-note p { margin-top: 6px; font-size: 11px; line-height: 1.65; color: var(--color-grey-700); }
@@ -172,7 +182,7 @@
 .review-field-table th { padding: 12px 6px; text-align: left; font-weight: 400; color: var(--color-grey-500); border-bottom: var(--rule-page); }
 .review-field-table td { padding: 14px 6px; border-bottom: var(--rule-page); font-variant-numeric: tabular-nums; }
 .review-field-table th:not(:first-child), .review-field-table td:not(:first-child) { text-align: right; }
-.review-tax-row td { font-weight: 500; background: var(--color-grey-50); }
+.review-exception-row td { font-weight: 500; background: var(--color-grey-50); }
 .review-decision-area { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding: 0 24px 24px; }
 .review-decision-area > span { font-size: 11px; color: var(--color-grey-500); }
 .review-decision-area > div:not(.review-decision-record) { display: flex; gap: 8px; }
@@ -331,3 +341,42 @@
 @media (prefers-reduced-motion: reduce) {
   .product-scene *, .human-work-layout * { transition: none !important; animation: none !important; }
 }
+/* Hover, focus or tap previews: the redacted source photo of an invoice, and the document checks behind a run. */
+.invoice-photo-trigger, .ledger-invoice-trigger, .inspector-checks-trigger { appearance: none; border: 0; background: none; padding: 0; font: inherit; color: inherit; text-align: inherit; cursor: zoom-in; }
+.invoice-photo-trigger { text-decoration: underline dotted var(--color-grey-300); text-underline-offset: 3px; }
+.invoice-photo-trigger:hover, .invoice-photo-trigger:focus-visible { text-decoration-color: var(--color-ink); }
+:is(.invoice-photo-trigger, .ledger-invoice-trigger, .inspector-checks-trigger):focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; border-radius: 2px; }
+.invoice-photo-card { display: flex; flex-direction: column; gap: 10px; width: 560px; max-height: var(--available-height); overflow-y: auto; }
+.invoice-photo-documents { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 14px; align-items: start; }
+.invoice-photo-source { margin: 0; min-width: 0; }
+.invoice-photo-source img { display: block; width: 100%; height: auto; max-height: min(380px, 55vh); object-fit: contain; background: var(--color-grey-50); }
+.invoice-photo-source figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 12px; margin-top: 8px; font-size: 11px; font-weight: 500; }
+.invoice-photo-source figcaption span { color: var(--color-grey-500); font: 9px/1.6 var(--font-mono); font-weight: 400; }
+.invoice-photo-records { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.source-document { width: 100%; border: 1px solid var(--color-grey-200); border-top: 0; border-radius: 0 0 6px 6px; border-collapse: separate; border-spacing: 0; font-size: 10px; line-height: 1.35; }
+.source-document caption { padding: 7px 8px; border: 1px solid var(--color-grey-200); border-radius: 6px 6px 0 0; background: var(--color-grey-50); font-size: 10px; font-weight: 600; text-align: left; }
+.source-document-title { display: flex; justify-content: space-between; gap: 8px; }
+.source-document-title span:last-child { color: var(--color-grey-500); font: 9px/1.6 var(--font-mono); font-weight: 400; }
+.source-document :is(th, td) { padding: 4px 8px; border-top: 1px solid var(--color-grey-100); text-align: left; vertical-align: top; }
+.source-document thead th { border-top: 0; color: var(--color-grey-500); font: 9px var(--font-mono); font-weight: 400; }
+.source-document tbody th { font-weight: 400; }
+.source-document td { font-family: var(--font-mono); text-align: right; white-space: nowrap; }
+.source-document thead th:not(:first-child) { text-align: right; }
+.source-document tr[data-diff] { background: var(--color-human-soft); }
+.source-document tr[data-diff] :is(th, td) { color: var(--color-human); }
+.source-document tfoot th { font-weight: 600; }
+.source-document tfoot td { font-weight: 600; }
+.invoice-photo-redaction { display: flex; align-items: center; gap: 6px; margin: 0; color: var(--color-grey-700); font-size: 11px; }
+.invoice-photo-redaction svg { flex: none; width: 12px; height: 12px; }
+@media (max-width: 599px) {
+  .invoice-photo-documents { grid-template-columns: minmax(0, 1fr); }
+  .invoice-photo-source img { max-height: 42vh; }
+}
+.document-checks-card { width: 340px; max-height: var(--available-height); overflow-y: auto; }
+.document-checks-card ul { display: grid; margin-top: 6px; }
+.document-checks-card li { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 8px; padding: 7px 0; border-bottom: var(--rule-page); }
+.document-checks-card li:last-child { border-bottom: 0; padding-bottom: 0; }
+.document-checks-card li > .nm-icon { width: 13px; height: 13px; margin-top: 1px; }
+.document-checks-card strong { display: block; font-size: 11px; font-weight: 500; }
+.document-checks-card p { margin-top: 1px; font-size: 10px; line-height: 1.4; color: var(--color-grey-700); }
+.document-check-basis { display: block; margin-top: 2px; color: var(--color-grey-500); font: 8px/1.5 var(--font-mono); }

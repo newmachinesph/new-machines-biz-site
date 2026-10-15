@@ -3,6 +3,7 @@
 import { Dialog as BaseDialog } from "@base-ui-components/react/dialog";
 import { forwardRef, type ReactElement, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
+import { useResolvedElement } from "@/lib/useResolvedElement";
 
 export type DialogProps = {
   /** A single element that can take a ref (e.g. <Button>) - Base UI renders it as the trigger. */
@@ -21,9 +22,10 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
   { trigger, title, description, children, open, onOpenChange, className },
   ref,
 ) {
+  const triggerElement = useResolvedElement(trigger);
   return (
     <BaseDialog.Root open={open} onOpenChange={onOpenChange ? (next) => onOpenChange(next) : undefined}>
-      <BaseDialog.Trigger render={trigger} />
+      <BaseDialog.Trigger render={triggerElement} />
       <BaseDialog.Portal>
         <BaseDialog.Backdrop className={cn("fixed inset-0 z-40 bg-ink/40", enterExit)} />
         <BaseDialog.Popup

@@ -4,34 +4,36 @@ import { Card } from "@/design-system/components/Card";
 import { Table, type Column } from "@/design-system/components/Table";
 import { Icon } from "@/home/Icon";
 import { MARKETPLACE_COPY } from "./copy";
-import { APPEARANCE_CHECKS, type CheckStatus, type InvoiceMatchRun, type LineMatch, type RiskLevel } from "./invoiceMatcher";
+import { APPEARANCE_CHECKS, type CheckStatus, type InvoiceMatchRun, type LineComparison, lineComparisons, yen, type RiskLevel } from "./invoiceMatcher";
 
 const R = MARKETPLACE_COPY.listing.run;
 
 const CHECK_BADGE: Record<CheckStatus, Status | undefined> = { pass: "verified", warn: "waiting-for-human", fail: "blocked", could_not_check: undefined };
 const RISK_BADGE: Record<RiskLevel, Status> = { low: "verified", medium: "waiting-for-human", high: "blocked" };
-const LINE_BADGE: Record<LineMatch["status"], Status> = { match: "verified", exception: "waiting-for-human" };
+const LINE_BADGE: Record<LineComparison["status"], Status> = { match: "verified", exception: "waiting-for-human" };
 
-const yen = (n: number) => `¥${n.toLocaleString("en-US")}`;
-
-type LineRow = { line: string; invoice: string; po: string; received: string; status: ReactNode };
+type LineRow = { item: string; invoice: string; po: string; received: string; status: ReactNode };
 const LINE_COLUMNS: readonly Column<LineRow>[] = [
-  { key: "line", header: R.lines.line },
-  { key: "invoice", header: R.lines.invoice, align: "right" },
+  { key: "item", header: R.lines.item },
   { key: "po", header: R.lines.po, align: "right" },
   { key: "received", header: R.lines.received, align: "right" },
+  { key: "invoice", header: R.lines.invoice, align: "right" },
   { key: "status", header: R.lines.status, align: "right" },
 ];
 
 /** The reviewer's view of one Invoice matcher run: verdict first, then every check, the three-way match and the diagnosis. */
 export function MatchReport({ run }: { run: InvoiceMatchRun }) {
-  const lineRows: LineRow[] = run.line_matches.map((l) => ({
-    line: l.line,
-    invoice: yen(l.invoice),
-    po: yen(l.po),
-    received: l.received === null ? "—" : yen(l.received),
-    status: <Badge status={LINE_BADGE[l.status]}>{R.lineStatus[l.status]}</Badge>,
-  }));
+  const { invoice, purchase_order } = run.record;
+  const lineRows: LineRow[] = [
+    ...lineComparisons(run.record).map((l) => ({
+      item: l.item,
+      invoice: String(l.invoice),
+      po: String(l.po),
+      received: String(l.received),
+      status: <Badge status={LINE_BADGE[l.status]}>{R.lineStatus[l.status]}</Badge>,
+    })),
+    { item: R.lines.amount, invoice: yen(invoice.amount), po: yen(purchase_order.amount), received: "—", status: "" },
+  ];
   return (
     <div className="match-report" data-component="matchReport">
       <Card className="match-verdict">
@@ -63,7 +65,7 @@ export function MatchReport({ run }: { run: InvoiceMatchRun }) {
 
       <div className="match-lines">
         <span className="scene-kicker">{R.lines.heading}</span>
-        <Table caption={R.lines.caption} columns={LINE_COLUMNS} rows={lineRows} rowKey={(row) => row.line} />
+        <Table caption={R.lines.caption} columns={LINE_COLUMNS} rows={lineRows} rowKey={(row) => row.item} />
       </div>
 
       {run.exceptions.map((ex) => (

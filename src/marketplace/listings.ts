@@ -46,7 +46,7 @@ export const MARKETPLACE_LISTINGS: readonly MarketplaceListing[] = [
   {
     slug: "invoice-matcher", title: "Invoice matcher", kind: "agent", body: "Matches supplier invoices to purchase orders.", price: "¥120 / run", certified: true, portrait: "invoice",
     summary: "Checks that each supplier invoice is genuine and that its numbers agree with the purchase order and receiving report, then prepares a recommendation for a reviewer. It never approves or pays; a qualified person decides.",
-    scope: ["Verify the supplier, bank details and PO against your records", "Check for duplicates, template changes and tampering signals", "Match invoice, PO and receiving report line by line", "Diagnose each exception with the arithmetic behind it", "Recommend approve, review or hold, with a full audit log"],
+    scope: ["Verify the supplier, bank details and PO against your records", "Check for duplicates, template changes and tampering signals", "Match PO, receiving report and invoice line by line", "Diagnose each exception with the arithmetic behind it", "Recommend approve, review or hold, with a full audit log"],
     tools: [DRIVE, SHEETS, FREEE],
   },
   {
