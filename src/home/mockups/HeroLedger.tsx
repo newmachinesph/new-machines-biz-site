@@ -10,6 +10,12 @@ const SHORT: Record<string, string> = { "Bathroom Tissue Virgin Pulp": "Bath tis
 const itemCount = (lines: readonly ReceivedItem[]) => `${lines.length} ${lines.length === 1 ? "item" : "items"}`;
 const units = (lines: readonly ReceivedItem[]) => lines.reduce((sum, line) => sum + line.quantity, 0);
 const ROWS = SAMPLE_BATCH.map((record) => ({ record, diffs: new Set(lineDiffs(record).map((line) => line.item)) }));
+/** The record line's message per phase. All three render stacked so the line keeps the height of its tallest message and the page never shifts between phases. */
+const RECORDS = [
+  { symbol: "file", title: CHECKED, detail: "Comparing PO, receipt and invoice…", check: "arrow" },
+  { symbol: "file", title: `${yen(EXCEPTION.difference)} needs a decision`, detail: DIFFERING, check: "arrow" },
+  { symbol: "shield", title: "PO revised. Invoice approved.", detail: "M. Tanaka · Source values preserved", check: "check" },
+] as const;
 
 function Items({ lines, diffs }: { lines: readonly ReceivedItem[]; diffs: ReadonlySet<string> }) {
   return <ul className="ledger-items">{lines.map((line) => <li key={line.item} data-diff={diffs.has(line.item) || undefined}>{SHORT[line.item] ?? line.item} · {line.quantity}</li>)}</ul>;
@@ -30,15 +36,15 @@ export function HeroLedger({ phase, onPreviewOpenChange }: { phase: number; onPr
             const { invoice, purchase_order, received } = record;
             return <tr key={invoice.number} className={exception ? "ledger-exception" : "ledger-match"}>
               <th scope="row"><InvoicePhotoPreview record={record} dataComponent="ledgerInvoicePhoto" className="ledger-invoice-trigger" onOpenChange={onPreviewOpenChange}>{record.supplier}<span className="ledger-number">{invoice.number}<Icon name="file" /></span></InvoicePhotoPreview></th>
-              <td><strong>{yen(purchase_order.amount)}</strong>{exception ? <Items lines={purchase_order.items} diffs={diffs} /> : <span className="ledger-items-note">{itemCount(purchase_order.items)}</span>}</td>
-              <td><strong>{units(received.items)} units</strong>{exception ? <Items lines={received.items} diffs={diffs} /> : <span className="ledger-items-note">{itemCount(received.items)}</span>}</td>
-              <td><strong>{yen(invoice.amount)}</strong>{exception ? <Items lines={invoice.items} diffs={diffs} /> : <span className="ledger-items-note">all match</span>}</td>
+              <td data-label="PO"><strong>{yen(purchase_order.amount)}</strong>{exception ? <Items lines={purchase_order.items} diffs={diffs} /> : <span className="ledger-items-note">{itemCount(purchase_order.items)}</span>}</td>
+              <td data-label="Received"><strong>{units(received.items)} units</strong>{exception ? <Items lines={received.items} diffs={diffs} /> : <span className="ledger-items-note">{itemCount(received.items)}</span>}</td>
+              <td data-label="Invoice"><strong>{yen(invoice.amount)}</strong>{exception ? <Items lines={invoice.items} diffs={diffs} /> : <span className="ledger-items-note">all match</span>}</td>
               <td><span className="ledger-line-status"><Icon name={exception && phase < 2 ? "shield" : "check"} /></span></td>
             </tr>;
           })}</tbody>
         </table>
         <p className="ledger-hint">Hover or tap an invoice for its source document</p>
-        <div className="ledger-record"><span className="ledger-record-symbol"><Icon name={phase === 2 ? "shield" : "file"} /></span><div><strong>{phase === 0 ? CHECKED : phase === 1 ? `${yen(EXCEPTION.difference)} needs a decision` : "PO revised. Invoice approved."}</strong><span>{phase === 0 ? "Comparing PO, receipt and invoice…" : phase === 1 ? DIFFERING : "M. Tanaka · Source values preserved"}</span></div><span className="ledger-record-check"><Icon name={phase === 2 ? "check" : "arrow"} /></span></div>
+        <div className="ledger-record"><span className="ledger-record-symbol"><Icon name={RECORDS[phase].symbol} /></span><div className="ledger-record-text">{RECORDS.map((record, index) => <div key={record.title} aria-hidden={index !== phase || undefined}><strong>{record.title}</strong><span>{record.detail}</span></div>)}</div><span className="ledger-record-check"><Icon name={RECORDS[phase].check} /></span></div>
       </div>
     </div>
   );

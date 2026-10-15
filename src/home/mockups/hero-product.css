@@ -23,8 +23,6 @@
 .hero-ledger[data-ledger-phase="1"] .ledger-exception :is(.ledger-items, .ledger-number) { color: inherit; }
 .hero-ledger[data-ledger-phase="1"] .ledger-items [data-diff] { font-weight: 600; }
 .ledger-lines th:nth-child(n+2):not(:last-child), .ledger-lines td:nth-child(n+2):not(:last-child) { text-align: right; padding-left: 10px; }
-/* Phones: supplier and the billed amount only; the PO and receiving columns join from 640px. */
-.ledger-lines th:nth-child(2), .ledger-lines td:nth-child(2), .ledger-lines th:nth-child(3), .ledger-lines td:nth-child(3) { display: none; }
 .ledger-lines th:last-child, .ledger-lines td:last-child { width: 26px; text-align: right; }
 .ledger-line-status { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; color: var(--color-grey-500); }
 .ledger-line-status .nm-icon { width: 12px; height: 12px; }
@@ -36,6 +34,9 @@
 .ledger-record { display: flex; align-items: center; gap: 10px; padding-top: 16px; margin-top: 16px; border-top: var(--rule-page); }
 .ledger-record strong { display: block; font-size: 11px; font-weight: 500; }
 .ledger-record div > span { display: block; margin-top: 4px; font-size: 9px; line-height: 1.5; color: var(--color-grey-500); }
+.ledger-record-text { display: grid; min-width: 0; }
+.ledger-record-text > div { grid-area: 1 / 1; }
+.ledger-record-text > div[aria-hidden="true"] { visibility: hidden; }
 .ledger-record-symbol { display: flex; align-items: center; justify-content: center; width: 28px; height: 32px; border: var(--rule-page); background: var(--color-grey-50); border-radius: 4px; flex-shrink: 0; }
 .ledger-record-symbol .nm-icon { width: 14px; height: 14px; }
 .ledger-record-check { margin-left: auto; }
@@ -94,11 +95,20 @@
 .account-progress { width: 13px; height: 13px; border: 1px solid var(--color-grey-200); border-top-color: var(--color-grey-700); border-radius: 50%; margin-left: auto; animation: account-research-spin 900ms linear infinite; }
 .account-researching { color: var(--color-grey-700); }
 @keyframes account-research-spin { to { transform: rotate(360deg); } }
+/* Phones: each invoice stacks, supplier on top and PO, received and invoice as three labelled columns beneath; the table returns at 640px. */
+@media (max-width: 639px) {
+  .ledger-lines, .ledger-lines tbody { display: block; }
+  .ledger-lines thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .ledger-lines tbody tr { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) 26px; column-gap: 8px; padding: 10px 0; border-bottom: var(--rule-page); }
+  .hero-ledger .ledger-lines tbody :is(th, td) { height: auto; padding-top: 0; padding-bottom: 0; border-bottom: 0; }
+  .ledger-lines tbody th { grid-column: 1 / 4; grid-row: 1; margin-bottom: 8px; }
+  .ledger-lines tbody td:last-child { grid-column: 4; grid-row: 1; justify-self: end; }
+  .ledger-lines td[data-label]::before { content: attr(data-label); display: block; margin-bottom: 3px; color: var(--color-grey-500); font: 8px var(--font-mono); letter-spacing: .04em; text-transform: uppercase; }
+}
 @media (min-width: 640px) {
   .hero-live-scene { padding: 28px; min-height: 0; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 24px; }
   .hero-live-scene .hero-dashboard > div:nth-child(2) > div.mt-5 { display: block; }
   .hero-run-inspector { position: relative; width: auto; right: auto; bottom: auto; margin-top: 0; }
-  .ledger-lines th:nth-child(2), .ledger-lines td:nth-child(2), .ledger-lines th:nth-child(3), .ledger-lines td:nth-child(3) { display: table-cell; }
   .hero-demo-controls { padding: 8px 24px; }
   .hero-demo-controls > div { gap: 24px; }
   .hero-demo-controls button span { display: inline; }
