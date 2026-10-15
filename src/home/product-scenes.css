@@ -288,6 +288,23 @@
 .task-review-state { display: flex; align-items: center; gap: 6px; margin-top: 20px; color: var(--color-grey-500); font-size: 9px; }
 .task-review-state .nm-icon { width: 13px; height: 13px; }
 .task-review-note { font-size: 10px; line-height: 1.65; margin-top: 24px; color: var(--color-grey-500); }
+/* The reviewer's reply: a still picture of an input that types out, with a cursor pressing Submit. The ghost copy of the full reply reserves the box's height so nothing moves while it types. */
+.review-entry { position: relative; margin-top: 20px; }
+.review-entry-box { display: grid; margin-top: 8px; padding: 10px 12px; border: var(--rule-page); border-radius: 5px; background: var(--color-paper); font-size: 12px; line-height: 1.6; transition: border-color 160ms ease; }
+.review-entry-box > span { grid-area: 1 / 1; }
+.review-entry-ghost { visibility: hidden; }
+.review-entry-placeholder { color: var(--color-grey-500); }
+.review-entry[data-state="review"] .review-entry-box { border-color: var(--color-grey-700); }
+.review-caret { display: inline-block; width: 1px; height: 1.1em; margin-left: 1px; vertical-align: text-bottom; background: var(--color-ink); animation: review-caret 900ms steps(1) infinite; }
+.review-entry-actions { position: relative; display: flex; justify-content: flex-end; margin-top: 10px; }
+.review-submit { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border-radius: 5px; background: var(--color-grey-100); color: var(--color-grey-500); font-size: 11px; transition: background 160ms ease, color 160ms ease, transform 120ms ease; }
+.review-submit .nm-icon { width: 12px; height: 12px; }
+.review-submit[data-enabled] { background: var(--color-ink); color: var(--color-paper); }
+.review-submit[data-pressed] { transform: scale(.96); }
+.review-cursor { position: absolute; top: 22px; right: 2px; width: 18px; height: 22px; fill: var(--color-ink); stroke: var(--color-paper); stroke-width: 1.8; pointer-events: none; animation: review-cursor 600ms var(--ease-out) both; }
+@keyframes review-caret { 50% { opacity: 0; } }
+@keyframes review-cursor { from { opacity: 0; transform: translate(32px, 24px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .review-caret, .review-cursor { animation: none; } .review-submit { transition: none; } }
 @media (hover: hover) and (pointer: fine) {
   .talent-row:hover { background: var(--color-grey-50); }
   .directory-filters button:hover, .scenario-switch button:hover { color: var(--color-ink); }

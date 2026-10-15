@@ -143,8 +143,6 @@ body { overflow-x: clip; }
 .review-avatar { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; font: 10px var(--font-mono); border-radius: 50%; background: var(--color-human-soft); color: var(--color-human); }
 .review-reason { font-size: 11px; color: var(--color-grey-700); margin: 14px 0 10px; }
 .review-active { border-color: var(--color-human); }
-.review-approve { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 44px; margin-top: 12px; background: var(--color-ink); color: var(--color-paper); border-radius: 5px; font-size: 12px; cursor: pointer; }
-.review-approve .nm-icon { width: 14px; }
 .workflow-result { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 16px; background: var(--color-paper); border-top: var(--rule-page); }
 .workflow-result > div { display: flex; align-items: center; gap: 10px; }
 .workflow-result p { font-size: 12px; font-weight: 500; }
@@ -224,12 +222,12 @@ body { overflow-x: clip; }
 @media (hover: hover) {
   .text-link:hover .nm-icon { transform: translateX(3px); }
   .workflow-selector button:hover:not([aria-pressed="true"]) { background: var(--color-grey-50); color: var(--color-ink); }
-  .demo-run-button:hover:not(:disabled), .review-approve:hover { background: var(--color-grey-700); }
+  .demo-run-button:hover:not(:disabled) { background: var(--color-grey-700); }
   .story-card:hover { border-color: var(--color-grey-500); }
   .integration-tool:hover { background: var(--color-grey-50); }
   .faq-list summary:hover { color: var(--color-muted-ink); }
 }
-.demo-run-button:active:not(:disabled), .review-approve:active, .workflow-selector button:active { transform: translateY(1px); }
+.demo-run-button:active:not(:disabled), .workflow-selector button:active { transform: translateY(1px); }
 
 @media (min-width: 360px) {
   .nav-brand span { display: inline; }
