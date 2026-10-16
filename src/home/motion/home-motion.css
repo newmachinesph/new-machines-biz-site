@@ -169,6 +169,13 @@
 .account-outreach > span { display: block; color: var(--color-grey-500); font-size: 10px; line-height: 1.6; }
 .outreach-foot { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; margin-top: 14px; border-top: var(--rule-page); font-size: 9px; }
 .account-research[data-playing="false"] .scene-working-dot { animation-play-state: paused; }
+/* Inbox Lead Tracker variant: the "How soon" chip holds words, and a sorted-out email reads as left out. */
+.inbox-leads .account-fit { padding: 0 6px; white-space: nowrap; font-size: 10px; }
+.inbox-leads .lead-mail { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; flex-shrink: 0; border: var(--rule-page); border-radius: 5px; color: var(--color-grey-500); }
+.inbox-leads .lead-mail .nm-icon { width: 14px; height: 14px; }
+.inbox-leads .lead-left-out strong { color: var(--color-grey-500); }
+.inbox-leads .lead-left-out .fit-ready { background: transparent; color: var(--color-grey-500); }
+.account-outreach .lead-sheet-icon { width: 14px; height: 14px; flex-shrink: 0; }
 .sales-art-label { display: none; }
 .integrations-section .integration-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .integrations-section .integration-tool { padding: 16px 10px; border-right: var(--rule-page); }

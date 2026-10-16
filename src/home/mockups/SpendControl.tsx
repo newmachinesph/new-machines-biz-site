@@ -34,7 +34,7 @@ export function SpendControl({ className }: { className?: string }) {
       </div>
       <div className="spend-chart-block">
         <div className="chart-heading"><span>Daily spend</span><span>Illustrative 14-day period</span></div>
-        <svg className="daily-spend-chart" viewBox="0 0 460 155" role="img" aria-label="Synthetic daily spend over fourteen sample days">
+        <svg className="daily-spend-chart" viewBox="0 10 460 140" role="img" aria-label="Synthetic daily spend over fourteen sample days">
           {[20, 65, 110].map((y, i) => <g key={y}><line x1="38" x2="452" y1={y} y2={y} className="chart-grid-line" /><text x="0" y={y + 4} className="chart-axis-label">{["$20", "$10", "$0"][i]}</text></g>)}
           {DAILY_SPEND.map((value, i) => <rect key={i} x={48 + i * 28} y={110 - value / 2000 * 90} width="14" height={value / 2000 * 90} rx="2" style={{ animationDelay: i * 35 + "ms" }} className={i === DAILY_SPEND.length - 1 ? "chart-bar-current" : "chart-bar"} />)}
           <text x="46" y="142" className="chart-axis-label">Day 01</text><text x="206" y="142" className="chart-axis-label">Day 07</text><text x="382" y="142" className="chart-axis-label">Day 14</text>

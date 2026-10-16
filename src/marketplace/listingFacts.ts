@@ -35,7 +35,7 @@ const RETAIL = "Retail & Commerce";
 const MANUFACTURING = "Manufacturing";
 const MEDIA = "Media, Content & Digital Experiences";
 const PRO_SERVICES = "Professional Services";
-const DECISION_MODEL = "A separate decision model";
+const DECISION_MODEL = "a separate decision model";
 
 export const LISTING_FACTS: Readonly<Record<string, ListingFacts>> = {
   "order-to-cash-exception-desk": {

@@ -22,7 +22,8 @@ describe("illustrated sections", () => {
     render(<Sandbox />);
     const h2 = screen.getByRole("heading", { level: 2 });
     expect(h2.closest(".lg\\:order-2")).not.toBeNull();
-    expect(screen.getByText("Exception case")).toBeInTheDocument();
+    expect(screen.getByText("Needs human")).toBeInTheDocument();
+    expect(screen.queryByRole("group", { name: "Choose a sandbox scenario" })).toBeNull();
   });
 
   it("Trust is the dark band with the display headline and one Blocked example", () => {

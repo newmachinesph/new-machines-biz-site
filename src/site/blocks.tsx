@@ -8,7 +8,7 @@ import { SectionHeader } from "@/home/SectionHeader";
 
 export type Action = { href: string; label: string };
 
-/** The home's Trust heading: "Judgment recommends. Policy authorizes. Verification checks.", one clause per line. */
+/** The home's Trust heading: "Judgment recommends. Policy authorises. Verification checks.", one clause per line. */
 export function clauses(lead: string) {
   return lead.split(". ").map((clause, i) => <span className="trust-clause" key={clause}>{clause.endsWith(".") ? clause : clause + "."}{i < 2 ? " " : null}</span>);
 }

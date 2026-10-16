@@ -6,7 +6,7 @@ import { Icon } from "@/home/Icon";
 import { HOME_COPY } from "@/home/copy";
 import { Close } from "@/home/sections/Close";
 import { KIND_LABEL } from "@/marketplace/kinds";
-import { MARKETPLACE_LISTINGS } from "@/marketplace/listings";
+import { fullPriceOf, MARKETPLACE_LISTINGS } from "@/marketplace/listings";
 import { PageShell } from "@/marketplace/PageShell";
 import { FeatureGrid, Opener, PageIntro } from "@/site/blocks";
 import { PRICING_COPY as C } from "@/site/copy";
@@ -17,15 +17,16 @@ export const metadata = pageMetadata({ ...C.meta, path: "/pricing" });
 
 type PriceRow = { listing: string; kind: string; price: string; certified: string };
 
+/** The estimate sits next to the name so it stays in view on a phone, where site.css hides the Certified column. */
 const PRICE_COLUMNS: readonly Column<PriceRow>[] = [
   { key: "listing", header: C.examples.columns.listing },
+  { key: "price", header: C.examples.columns.price },
   { key: "kind", header: C.examples.columns.kind },
   { key: "certified", header: C.examples.columns.certified },
-  { key: "price", header: C.examples.columns.price, align: "right" },
 ];
 
-const PRICE_ROWS: readonly PriceRow[] = MARKETPLACE_LISTINGS.map(({ title, kind, price, certified }) => ({
-  listing: title, kind: KIND_LABEL[kind], price, certified: certified ? C.examples.yes : C.examples.no,
+const PRICE_ROWS: readonly PriceRow[] = MARKETPLACE_LISTINGS.map((listing) => ({
+  listing: listing.title, kind: KIND_LABEL[listing.kind], price: fullPriceOf(listing), certified: listing.certified ? C.examples.yes : C.examples.no,
 }));
 
 export default function Page() {
@@ -34,11 +35,12 @@ export default function Page() {
       <PageIntro id="pricing-title" {...C.intro} />
 
       <SectionCell labelledBy="plans-title">
-        <h2 id="plans-title" className="sr-only">Plans</h2>
+        <h2 id="plans-title" className="sr-only">The Trial plan and what a run costs</h2>
         <ul className="plan-grid" data-component="pricingPlans">
           {C.plans.map((plan) => (
             <li key={plan.name}>
               <Card className="plan-card h-full">
+                <span className="scene-kicker">{plan.label}</span>
                 <h3>{plan.name}</h3>
                 <div className="plan-price"><strong>{plan.price}</strong>{plan.unit ? <span>{plan.unit}</span> : null}</div>
                 <p>{plan.body}</p>

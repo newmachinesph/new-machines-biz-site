@@ -10,7 +10,7 @@ export const metadata: Metadata = { title: "Styleguide", robots: { index: false,
 
 const FONT_SAMPLES = [
   { name: "font-display (Michroma)", cls: "font-display", text: "Verified intelligent work" },
-  { name: "font-sans (Geist)", cls: "font-sans", text: "Hire an AI workforce that can use your business tools." },
+  { name: "font-sans (Geist)", cls: "font-sans", text: "Choose agents that can use your business tools." },
   { name: "font-mono (Geist Mono)", cls: "font-mono", text: "run_01HX4… · policy_v1 · REVIEW_REQUIRED" },
 ];
 

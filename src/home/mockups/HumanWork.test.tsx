@@ -13,11 +13,12 @@ describe("human work vignettes", () => {
     const rows = screen.getAllByRole("row").slice(1).map((row) => [...row.children].map((cell) => cell.textContent));
     expect(rows).toEqual([["Interfolded Paper Towel Virgin Pulp", "64", "63", "63"], ["Jumbo Roll Tissue Virgin Pulp", "11", "12", "12"], ["Amount", "¥76,264", "—", "¥76,177"]]);
     expect(screen.getByText("Claimed by you")).toBeInTheDocument();
+    expect(screen.getByText("Illustrative · fictional reviewer")).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Approve as is" }));
-    expect(screen.getByText("Approved as is")).toBeInTheDocument();
+    expect(screen.getByText("Verdict: approve as is")).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Reset review" }));
     await userEvent.click(screen.getByRole("button", { name: "Send back" }));
-    expect(screen.getByText("Sent back with corrections")).toBeInTheDocument();
+    expect(screen.getByText("Verdict: send back with corrections")).toBeInTheDocument();
     expect(accentViolations(container)).toEqual([]);
   });
   it("ScopedPermissions lists three scopes under a timed hold, with no amount limit", () => {

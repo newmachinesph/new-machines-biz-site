@@ -111,11 +111,12 @@ export const DEMO_PACK_SPEND = [
   { name: "Weekly Expense Check", runs: 4, verified: true, cents: 240 },
 ] as const;
 
+/** Illustrative log. Reviewers (fictional names) give verdicts; approving a write is the business's own call. */
 export const DEMO_LOG = [
-  { id: "ap_9f31", who: "M. Tanaka", what: "approved run_01HX4QHM", at: "09:36:12 JST" },
-  { id: "ap_9f2e", who: "policy v3", what: "authorized run_01HX4QG3", at: "09:31:40 JST" },
-  { id: "ap_9f2a", who: "S. Lim", what: "rejected run_01HX4QD9", at: "08:28:05 SGT" },
+  { id: "ap_9f31", who: "M. Tanaka", what: "gave a verdict: approve as is, run_01HX4QHM", at: "09:36:12 JST" },
+  { id: "ap_9f2e", who: "policy v3", what: "authorised run_01HX4QG3", at: "09:31:40 JST" },
+  { id: "ap_9f2a", who: "S. Lim", what: "gave a verdict: send back, run_01HX4QD9", at: "08:28:05 SGT" },
   { id: "ap_9f27", who: "verifier", what: "verified run_01HX4QFA", at: "09:22:58 JST" },
-  { id: "ap_9f21", who: "J. Park", what: "approved run_01HX4QCX", at: "09:19:33 KST" },
+  { id: "ap_9f21", who: "You", what: "approved 2 writes, run_01HX4QCX", at: "09:19:33 KST" },
   { id: "ap_9f1d", who: "policy v3", what: "blocked run_01HX4QBB", at: "09:12:07 JST" },
 ] as const;

@@ -4,7 +4,7 @@ Updated: 2026-10-17. Status: pre-launch. Canonical site: https://newmachin.es. C
 
 ## Definition
 
-New Machines is a marketplace for verified intelligent work: businesses choose AI agents and workflow packs for defined work, bring in qualified human reviewers where judgment is needed, and accept each outcome with evidence attached. Built for Japan and Asia-Pacific; pre-launch.
+New Machines is a marketplace for verified intelligent work: businesses choose Workflow Packs and the AI agents inside them for defined work, bring in qualified human reviewers where judgment is needed, and accept each outcome with evidence attached. Built for Japan and Asia-Pacific; pre-launch.
 
 Tagline: "The global marketplace for verified intelligent work." Positioning line: "Agents execute. Humans decide."
 
@@ -13,7 +13,7 @@ Vocabulary used on the site: AI agents are chosen, added or deployed; only peopl
 ## What is listed
 
 1. Workflow Packs: a complete business outcome for one job, combining pinned agent versions, decision steps, human review, an approval before any write, and a check at the end. Each pack page states its outcome, publisher and version, what it can touch (read only, or writes with your approval), its risk class, its data region and its estimate per run.
-2. Agents: one kind of work each, with read-only app tools. Platform agents are free inside packs; an agent listed by another workspace carries a per-call fee, itemized on the work receipt.
+2. Agents: one kind of work each, with read-only app tools. Platform agents are free inside packs; an agent listed by another workspace carries a per-call fee, itemised on the work receipt.
 
 The eight platform packs, published by New Machines Labs and marked Certified: Order-to-Cash Exception Desk; Order & Payment Reconciliation; Overdue Invoice Follow-up; Refund Triage; Support Inbox Triage; Weekly Expense Check; Inbox Lead Tracker; Meeting Follow-ups. The Order-to-Cash Exception Desk reads the store, ledger, warehouse and sales-app sections of a demo business app through a read-only connection and drafts reminders in Gmail. There are no human-work listings: reviewers come from your own team or the New Machines reviewer network, chosen per pack.
 
@@ -27,7 +27,7 @@ The eight platform packs, published by New Machines Labs and marked Certified: O
 
 ## Trust model
 
-Seven responsibilities are kept separate, each with its own owner, record and failure path: judgment recommends; policy authorises; approval grants; execution changes state; verification checks; acceptance; settlement. A model-generated "approved" is not an approval. Every step shows three separate records: what the evaluator recommends, what policy allows and who signs off. No confidence score is shown, and scores never authorize an action. Unconfirmed writes are never labelled successful. Blocked never becomes approved.
+Seven responsibilities are kept separate, each with its own owner, record and failure path: judgment recommends; policy authorises; approval grants; execution changes state; verification checks; acceptance; settlement. A model-generated "approved" is not an approval. Every step shows three separate records: what the evaluator recommends, what policy allows and who signs off. No confidence score is shown, and scores never authorise an action. Unconfirmed writes are never labelled successful. Blocked never becomes approved.
 
 Policy: reads are permitted, writes and money movements wait for approval, and an action the policy does not know is denied. Tools that delete records or move money are never offered. Policies are shown to read and cannot be changed from the workspace; there are no amount-based approval thresholds.
 
@@ -39,7 +39,7 @@ Certification: none yet. An independent security assessment is planned before co
 
 ## Pricing status
 
-Every new workspace starts on the Trial plan with no plan fee and a monthly cap of $25 by default. Pricing is usage-based per run, with each pack's estimate shown in US dollars before it is added: for example, the Order-to-Cash Exception Desk is about $0.80 to $3.00 of AI work per run, and packs with a reviewer add reviewer time up to a stated maximum ($5.00 or $7.50 per run on today's packs). Packs and agents listed by other workspaces carry a publisher fee per run or per call, itemized on the receipt; the publisher keeps 80% and New Machines 20%. Reviews by your own team are unpaid. The work contract says you pay for agent and tool use as it happens, up to the cap you set per run, and a result is not charged if its independent check fails. During pre-launch, billing, reviewer pay, publisher fees and payouts are all simulated: no money moves.
+Every new workspace starts on the Trial plan with no plan fee and a monthly cap of $25 by default. Pricing is usage-based per run, with each pack's estimate shown in US dollars before it is added: for example, the Order-to-Cash Exception Desk is about $0.80 to $3.00 of AI work per run, and packs with a reviewer add reviewer time up to a stated maximum ($5.00 or $7.50 per run on today's packs). Packs and agents listed by other workspaces carry a publisher fee per run or per call, itemised on the receipt; the publisher keeps 80% and New Machines 20%. Reviews by your own team are unpaid. The work contract says you pay for agent and tool use as it happens, up to the cap you set per run, and a result is not charged if its independent check fails. During pre-launch, billing, reviewer pay, publisher fees and payouts are all simulated: no money moves.
 
 ## Stage
 

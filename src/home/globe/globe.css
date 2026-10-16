@@ -41,7 +41,7 @@
 @media (hover: hover) { .globe-controls button:hover { background: var(--color-grey-50); } }
 @media (min-width: 768px) {
   .regional-layout { padding: 64px 40px 48px; }
-  .globe-controls { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .globe-controls { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .human-editorial { grid-template-columns: 1fr 1fr; gap: 40px; padding: 64px 40px 48px; }
   .human-portrait { height: 340px; }
 }

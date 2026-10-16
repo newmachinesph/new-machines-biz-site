@@ -14,8 +14,9 @@ import { MARKETPLACE_COPY } from "./copy";
 import { DraftReview } from "./DraftReview";
 import { KIND_LABEL } from "./kinds";
 import { ListingCard } from "./ListingCard";
+import { appHref, previewHref } from "./listingLinks";
 import { DATA_REGION, factsFor, PUBLISHER, type ListingFacts } from "./listingFacts";
-import { relatedListings, type MarketplaceListing } from "./listings";
+import { relatedListings, reviewPriceOf, type MarketplaceListing } from "./listings";
 import { O2C_SAMPLE } from "./o2cSample";
 import { O2CReport } from "./O2CReport";
 import { sampleRunFor } from "./supportDraft";
@@ -47,7 +48,7 @@ function factRows(facts: ListingFacts, price: string): readonly { label: string;
 }
 
 export function ListingDetail({ listing }: { listing: MarketplaceListing }) {
-  const { slug, title, kind, summary, price, certified, portrait, scope, tools } = listing;
+  const { slug, title, kind, summary, price, certified, contributor, portrait, scope, tools } = listing;
   const facts = factsFor(slug);
   const related = relatedListings(listing, 3);
   const draftRun = sampleRunFor(slug);
@@ -63,11 +64,11 @@ export function ListingDetail({ listing }: { listing: MarketplaceListing }) {
             <p>{summary}</p>
           </div>
           <div className="listing-hero-aside">
-            <div className="listing-meta"><span className="listing-price">{price}</span>{certified ? <Badge status="verified">{L.certified}</Badge> : <Badge>{L.notCertified}</Badge>}</div>
-            {facts ? <p className="listing-publisher">{L.publisherVersion(PUBLISHER, facts.version)}</p> : null}
+            <div className="listing-meta"><span className="listing-price">{price}{reviewPriceOf(listing) ? <small>{reviewPriceOf(listing)}</small> : null}</span>{certified ? <Badge status="verified">{L.certified}</Badge> : <Badge>{L.notCertified}</Badge>}</div>
+            {facts ? <p className="listing-publisher" data-component="listingPublisher">{contributor ? L.contributedBy(contributor, PUBLISHER, facts.version) : L.publisherVersion(PUBLISHER, facts.version)}</p> : null}
             <div className="listing-actions">
-              <Button asChild size="lg" data-component="listingAddInApp"><HomepageLink href={L.appHref} home={false}>{L.cta[kind]}<Icon /></HomepageLink></Button>
-              <HomepageLink href={L.preview.href} home={false} className="text-link" data-component="listingSeePreview">{L.preview.label}<Icon name="arrow-up" /></HomepageLink>
+              <Button asChild size="lg" data-component="listingAddInApp"><HomepageLink href={appHref(listing)} home={false}>{L.cta[kind]}<Icon /></HomepageLink></Button>
+              <HomepageLink href={previewHref(slug)} home={false} className="text-link" data-component="listingSeePreview">{L.preview.label}<Icon name="arrow-up" /></HomepageLink>
             </div>
           </div>
         </div>

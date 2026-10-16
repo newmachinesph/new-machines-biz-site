@@ -8,6 +8,8 @@ import { Badge } from "@/design-system/components/Badge";
 import { cn } from "@/lib/cn";
 import { useMotionAllowed } from "@/design-system/motion/useMotionAllowed";
 import { AgentPortrait } from "../mockups/AgentPortrait";
+import { MARKETPLACE_COPY } from "@/marketplace/copy";
+import { O2C_SAMPLE, peso, type O2CRow } from "@/marketplace/o2cSample";
 
 /** Who makes the call in a chapter: you approve the exact writes ("approval"), or a reviewer from your team or the
  *  New Machines reviewer network gives a verdict ("review"). Nobody is assigned by name. */
@@ -49,33 +51,48 @@ type Workflow = Readonly<{
 
 const SYNTHETIC = "synthetic data";
 
+/** The Finance chapter shows the same demo report as the Order-to-Cash listing page (O2C_SAMPLE): actions first,
+ *  largest amount first within each, and the row it holds back last. */
+const O2C_KIND = MARKETPLACE_COPY.listing.o2c.kinds;
+const OUTCOME_ORDER: Record<O2CRow["outcome"], number> = { drafted: 0, noted: 1, not_sent: 2, listed_only: 3 };
+const O2C_ROWS = [...O2C_SAMPLE.rows].sort((a, b) => OUTCOME_ORDER[a.outcome] - OUTCOME_ORDER[b.outcome] || b.amountMinor - a.amountMinor);
+/** "Shipped, not paid · 17 days past terms" from the report row note, or the kind alone. */
+function o2cReason(row: O2CRow): string {
+  const overdue = row.note.match(/(\d+) days past due/);
+  return overdue ? `${O2C_KIND[row.kind]} · ${overdue[1]} days past terms` : O2C_KIND[row.kind];
+}
+function o2cRecord(row: O2CRow): RecordRow {
+  const name = `${row.orderId} · ${row.customer}`;
+  const value = peso(row.amountMinor);
+  if (row.outcome === "drafted") return { name, value, state: "Reminder", decided: "Drafted", reason: o2cReason(row) };
+  if (row.outcome === "noted") return { name, value, state: row.kind === "paid_not_shipped" ? "Warehouse note" : "Finance note", decided: "Noted", reason: o2cReason(row) };
+  return { name, value, state: "Listed only", reason: `${o2cReason(row)} · smaller balance`, held: true };
+}
+const O2C_ACTIONS = O2C_SAMPLE.actions;
+const O2C_REMINDER_TOTAL = peso(O2C_ROWS.filter((row) => row.outcome === "drafted").reduce((sum, row) => sum + row.amountMinor, 0));
+const O2C_LISTED = O2C_ROWS.filter((row) => row.outcome === "listed_only").map((row) => row.customer).join(", ");
+const O2C_WRITES = O2C_ACTIONS.remindersDrafted + O2C_ACTIONS.financeNotes + O2C_ACTIONS.warehouseNotes;
+
 const WORKFLOWS: readonly Workflow[] = [
   {
     team: "Finance", title: "Every order, followed to cash.", pack: "Order-to-Cash Exception Desk", credit: "Pack contributed by Adrian Anton Ladia",
     body: "Follow each order from store to warehouse to ledger and find every break: payments pending confirmation, orders shipped but not paid, paid but not shipped, and disputed invoices. One approval covers every write, and each write is counted.",
-    agent: "Order-to-Cash Triage Agent", agentNote: "With the Collections Writer and Report Agent",
-    source: "Kalumpang Demo Supply Co.", systems: ["Store", "Ledger", "Warehouse", "Sales app"], sourceInfo: "Read only · 48 orders",
+    agent: "Order-to-Cash Triage Agent", agentNote: "With the Collections Writer and the Order-to-Cash Report Agent",
+    source: O2C_SAMPLE.business, systems: ["Store", "Ledger", "Warehouse", "Sales app"], sourceInfo: "Read only · 48 orders",
     output: "Exception desk report", outputNote: "One row per exception, with the evidence from each system and the policy action. Reminders come from each account manager, for the largest overdue balances; the rest are listed, not sent.",
-    records: { heading: "Order", value: "At stake", rows: [
-      { name: "SO-2041 · Bakawan Bakeshop", value: "₱48,600.00", state: "Reminder", decided: "Drafted", reason: "Shipped, not paid · 21 days past terms" },
-      { name: "SO-2044 · Dalisay Hardware", value: "₱31,250.00", state: "Reminder", decided: "Drafted", reason: "Shipped, not paid · 9 days past terms" },
-      { name: "SO-2047 · Liwayway Catering", value: "₱27,900.00", state: "Warehouse note", decided: "Noted", reason: "Paid, not shipped" },
-      { name: "SO-2052 · Malaya Grocery", value: "₱12,350.00", state: "Finance note", decided: "Noted", reason: "Payment pending confirmation" },
-      { name: "SO-2058 · Tala Eatery", value: "₱9,480.00", state: "Finance note", decided: "Noted", reason: "Disputed invoice" },
-      { name: "SO-2063 · Sampaguita Café", value: "₱3,200.00", state: "Listed only", reason: "Shipped, not paid · not among the largest balances", held: true },
-    ] },
+    records: { heading: "Order", value: "At stake", rows: O2C_ROWS.map(o2cRecord) },
     mode: "approval",
-    decision: "Six breaks across 48 orders. Save 2 collection reminders as Gmail drafts (₱79,850.00 outstanding), post 2 finance notes and 1 warehouse note? Sampaguita Café is listed only.",
+    decision: `Six breaks across 48 orders. Save ${O2C_ACTIONS.remindersDrafted} collection reminders as Gmail drafts (${O2C_REMINDER_TOTAL} outstanding), post ${O2C_ACTIONS.financeNotes} finance notes and ${O2C_ACTIONS.warehouseNotes} warehouse note? ${O2C_LISTED} is listed only.`,
     reply: "",
     approval: { title: "Save reminder drafts and post notes", calls: [
-      { app: "Gmail", action: "Save a reminder draft", count: 2 },
-      { app: "Ledger", action: "Post a finance note", count: 2, sandbox: true, also: true },
-      { app: "Warehouse", action: "Post a warehouse note", count: 1, sandbox: true, also: true },
+      { app: "Gmail", action: "Save a reminder draft", count: O2C_ACTIONS.remindersDrafted },
+      { app: "Ledger", action: "Post a finance note", count: O2C_ACTIONS.financeNotes, sandbox: true, also: true },
+      { app: "Warehouse", action: "Post a warehouse note", count: O2C_ACTIONS.warehouseNotes, sandbox: true, also: true },
     ] },
-    writes: { before: "None until you approve", after: "5, all after your approval" },
+    writes: { before: "None until you approve", after: `${O2C_WRITES}, all after your approval` },
     roles: "The agents follow each order and draft the reminders. You approve once; nothing is sent and no money moves.",
     steps: ["Read the store, ledger, warehouse and sales app", "Follow each order across all four", "Name each break and its policy action", "Draft reminders from each account manager", "Save drafts and post notes after one approval", "Write the report, one row per exception"],
-    data: "illustrative demo data", verifiedNote: "5 writes counted · Work receipt ready",
+    data: "illustrative demo data", verifiedNote: `${O2C_WRITES} writes counted · Work receipt ready`,
   },
   {
     team: "Sales", title: "More conversations. Less preparation.", pack: "Inbox Lead Tracker",
@@ -248,7 +265,7 @@ function WorkflowPreview({ index }: { index: number }) {
   const placeholder = "The reviewer replies here once the agent flags a decision.";
   const data = flow.data[0].toUpperCase() + flow.data.slice(1);
   // Every footer line is laid out (only the current one visibly), so the footer keeps the height of the longest and never jumps.
-  const status: Record<RunState, string> = { ready: `Try a complete run with ${flow.data}.`, running: `Agent working on ${flow.data}…`, review: `Agent complete. ${person.reviewing}`, verified: `Verified · Human approved · ${flow.verifiedNote}` };
+  const status: Record<RunState, string> = { ready: `Try a complete run with ${flow.data}.`, running: `Agent working on ${flow.data}…`, review: `Agent complete. ${person.reviewing}`, verified: `Verified · ${flow.mode === "approval" ? "Approved by you" : "Reviewer verdict recorded"} · ${flow.verifiedNote}` };
   const announced = flow.mode === "approval" ? `${person.decided}: ${flow.approval?.title ?? ""}` : `The reviewer submitted: ${flow.reply}`;
   return (
         <div className="workflow-canvas task-preview">

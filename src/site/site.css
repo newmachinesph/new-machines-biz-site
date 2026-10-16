@@ -10,7 +10,7 @@
 .site-page .page-intro-lede { display: flex; flex-direction: column; justify-content: flex-end; gap: 22px; }
 .site-page .page-intro-lede > p { max-width: 460px; font-size: 17px; line-height: 1.6; color: var(--color-muted-ink); }
 .site-page .page-intro-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; }
-.site-page .page-intro-note { font: 11px/1.6 var(--font-mono); color: var(--color-grey-500); }
+.site-page .page-intro-lede > .page-intro-note { font: 11px/1.6 var(--font-mono); color: var(--color-grey-500); }
 
 /* A text link inside a dark cell (home.css sets .text-link to ink). */
 .site-page .section-dark .split-copy .text-link { color: var(--color-paper); }
@@ -37,6 +37,11 @@
 /* Table and prose blocks share the frame's gutters. */
 .site-page .site-block { padding: 0 24px 40px; }
 .site-page .site-block .story-note, .site-page .site-note { padding: 12px 0 0; }
+/* Pricing examples on a phone: name, estimate and kind fit the width; the Certified column returns from 640px. */
+@media (max-width: 639px) {
+  .site-page [data-component="pricingExamples"] :is(th, td):nth-child(4) { display: none; }
+  .site-page [data-component="pricingExamples"] :is(th, td) { padding-inline: 12px; }
+}
 
 /* Pull quote on About. */
 .site-page .pull-quote { margin: 0 24px 32px; padding: 24px 0 0; border-top: var(--rule-page); }

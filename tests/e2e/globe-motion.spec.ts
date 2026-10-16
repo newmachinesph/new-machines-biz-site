@@ -11,12 +11,12 @@ test("the Three.js globe loads, focuses a market and replaces the clocks", async
   await expect(page.getByRole("button", { name: "Focus Sydney, Australia" })).toHaveAttribute("aria-pressed", "true");
   await expect.poll(relativeSydneyPosition).toBeLessThan(before - 20);
   await expect(page.locator("[data-clock]")).toHaveCount(0);
-  await page.getByRole("button", { name: "Focus New Clark City, Philippines" }).click();
-  await expect(page.getByRole("button", { name: "Focus New Clark City, Philippines" })).toHaveAttribute("aria-pressed", "true");
-  await expect(page.locator(".globe-city-label").filter({ hasText: "New Clark City" })).toHaveCount(1);
-  await expect(page.locator("#japac")).not.toContainText("Manila");
-  await expect(page.getByRole("group", { name: "Explore a JAPAC market" }).getByRole("button")).toHaveCount(8);
-  for (const [city, country] of [["Bengaluru", "India"], ["Melbourne", "Australia"], ["Beijing", "China"]]) {
+  await page.getByRole("button", { name: "Focus Manila, Philippines" }).click();
+  await expect(page.getByRole("button", { name: "Focus Manila, Philippines" })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator(".globe-city-label").filter({ hasText: "Manila" })).toHaveCount(1);
+  await expect(page.locator("#japac")).not.toContainText(/Beijing|New Clark City|Melbourne/);
+  await expect(page.getByRole("group", { name: "Explore a JAPAC market" }).getByRole("button")).toHaveCount(6);
+  for (const [city, country] of [["Bengaluru", "India"], ["Singapore", "Singapore"], ["Seoul", "South Korea"]]) {
     const button = page.getByRole("button", { name: `Focus ${city}, ${country}` });
     await button.click();
     await expect(button).toHaveAttribute("aria-pressed", "true");
@@ -32,7 +32,7 @@ test("the Three.js globe loads, focuses a market and replaces the clocks", async
   await page.locator("#japac").screenshot({ path: `.design/japac-globe/screenshots/globe-${testInfo.project.name}.png`, style: ".site-header { visibility: hidden; }" });
 });
 
-test("eight hub labels and the city selector keep their spacing across screen sizes", async ({ page }, testInfo) => {
+test("six hub labels and the city selector keep their spacing across screen sizes", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop", "explicit responsive viewports");
   const directory = ".design/japac-hubs/screenshots";
   await mkdir(directory, { recursive: true });
@@ -73,7 +73,7 @@ test("eight hub labels and the city selector keep their spacing across screen si
     await page.locator("#japac").screenshot({ path: `${directory}/hubs-${width}.png`, style: ".site-header { visibility: hidden; }" });
     expect(layout.overlaps).toEqual([]);
     expect(layout.labels.every((label) => Math.min(label.left, label.top, label.right, label.bottom) >= 0)).toBe(true);
-    const columns = width >= 768 ? 4 : 2;
+    const columns = width >= 768 ? 3 : 2;
     expect(Math.max(...layout.controls.map((control) => control.height)) - Math.min(...layout.controls.map((control) => control.height))).toBeLessThan(.5);
     for (let i = 0; i < layout.controls.length; i++) {
       expect(layout.controls[i].height).toBeGreaterThanOrEqual(44);

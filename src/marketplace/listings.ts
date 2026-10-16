@@ -14,8 +14,12 @@ export type MarketplaceListing = {
   /** One line for cards and the homepage mockup. For packs, the pack's outcome as the product states it. */
   body: string;
   price: string;
+  /** The most reviewer time a run can add, for packs with a review step (e.g. "$7.50"). Shown next to the price. */
+  reviewUpTo?: string;
   /** Marked Certified: a platform listing published by New Machines Labs. */
   certified: boolean;
+  /** The person who contributed the pack, credited next to the publisher. */
+  contributor?: string;
   /** Which AgentPortrait glyph represents the listing. */
   portrait: PortraitKind;
   /** Two or three sentences for the detail hero. */
@@ -42,7 +46,7 @@ const INCLUDED = "Included in packs";
  *  order (MarketplaceGrid's portraits are index-aligned). Outcomes and prices follow each pack's definition. */
 export const MARKETPLACE_LISTINGS: readonly MarketplaceListing[] = [
   {
-    slug: "order-to-cash-exception-desk", title: "Order-to-Cash Exception Desk", kind: "pack", body: "Every order followed from store to warehouse to ledger, with each break found and acted on after one approval.", price: "About $0.80–$3.00 / run", certified: true, portrait: "pack",
+    slug: "order-to-cash-exception-desk", title: "Order-to-Cash Exception Desk", kind: "pack", body: "Every order followed from store to warehouse to ledger, with each break found and acted on after one approval.", price: "About $0.80–$3.00 / run", certified: true, contributor: "Adrian Anton Ladia", portrait: "pack",
     summary: "Follows each order across the store, ledger, warehouse and sales-app sections of a business app. It finds payments waiting to be confirmed, orders shipped but not paid past their terms, orders paid but not shipped and disputed invoices, then asks you once before anything is written. Nothing is sent and no money moves.",
     scope: [
       "Read orders, payments, invoices and deliveries from the business app, read-only",
@@ -55,7 +59,7 @@ export const MARKETPLACE_LISTINGS: readonly MarketplaceListing[] = [
     tools: [BUSINESS_APP, GMAIL],
   },
   {
-    slug: "order-payment-reconciliation", title: "Order & Payment Reconciliation", kind: "pack", body: "Every order matched to a payment, with exceptions reviewed by a person.", price: "About $0.60–$2.40 / run", certified: true, portrait: "invoice",
+    slug: "order-payment-reconciliation", title: "Order & Payment Reconciliation", kind: "pack", body: "Every order matched to a payment, with exceptions reviewed by a person.", price: "About $0.60–$2.40 / run", reviewUpTo: "$7.50", certified: true, portrait: "invoice",
     summary: "Reads your orders and payment records, matches them line by line, and sends anything that does not add up to a qualified reviewer. You get a reconciliation report with the evidence behind every match.",
     scope: [
       "Read orders from Shopify and payments from Stripe",
@@ -67,7 +71,7 @@ export const MARKETPLACE_LISTINGS: readonly MarketplaceListing[] = [
     tools: [SHOPIFY, STRIPE, SHEETS],
   },
   {
-    slug: "refund-triage", title: "Refund Triage", kind: "pack", body: "Every refund request matched to its order and payment, with a proposed decision and a reply drafted.", price: "About $0.60–$2.40 / run", certified: true, portrait: "contract",
+    slug: "refund-triage", title: "Refund Triage", kind: "pack", body: "Every refund request matched to its order and payment, with a proposed decision and a reply drafted.", price: "About $0.60–$2.40 / run", reviewUpTo: "$5.00", certified: true, portrait: "contract",
     summary: "Reads refund requests from your inbox, finds the order and payment each one is about, and proposes approve, partial or decline from your refund policy. A reviewer confirms every case, then it drafts a reply to each customer once you approve. It never issues a refund: a person does.",
     scope: [
       "Read refund requests from Gmail",
@@ -79,7 +83,7 @@ export const MARKETPLACE_LISTINGS: readonly MarketplaceListing[] = [
     tools: [GMAIL, SHOPIFY, STRIPE],
   },
   {
-    slug: "support-inbox-triage", title: "Support Inbox Triage", kind: "pack", body: "Every customer email sorted, complaints and refund requests checked by a person, replies drafted and each case logged.", price: "About $0.30–$1.50 / run", certified: true, portrait: "support",
+    slug: "support-inbox-triage", title: "Support Inbox Triage", kind: "pack", body: "Every customer email sorted, complaints and refund requests checked by a person, replies drafted and each case logged.", price: "About $0.30–$1.50 / run", reviewUpTo: "$5.00", certified: true, portrait: "support",
     summary: "Reads recent customer emails, sorts each one as a question, a complaint, a refund request or spam, and leaves the spam out. A reviewer checks every complaint and refund request. Once you approve, it saves the replies as Gmail drafts and logs each case in your Google Sheet; it never sends an email or issues a refund.",
     scope: [
       "Read recent customer emails",
@@ -103,7 +107,7 @@ export const MARKETPLACE_LISTINGS: readonly MarketplaceListing[] = [
     tools: [GMAIL, SHEETS],
   },
   {
-    slug: "weekly-expense-check", title: "Weekly Expense Check", kind: "pack", body: "A week of expenses sorted by category, anything unusual checked by a person, and a summary in your inbox.", price: "About $0.20–$1.00 / run", certified: true, portrait: "receipt",
+    slug: "weekly-expense-check", title: "Weekly Expense Check", kind: "pack", body: "A week of expenses sorted by category, anything unusual checked by a person, and a summary in your inbox.", price: "About $0.20–$1.00 / run", reviewUpTo: "$5.00", certified: true, portrait: "receipt",
     summary: "Reads one week of expenses from your Google Sheet, puts each one in a category and flags missing receipts, items over your limit and likely duplicates. A reviewer checks anything flagged. Once you approve, it adds the summary to a tab of the sheet and emails it; it never changes or deletes your expense rows.",
     scope: [
       "Read one week of expenses from your Google Sheet",
@@ -115,7 +119,7 @@ export const MARKETPLACE_LISTINGS: readonly MarketplaceListing[] = [
     tools: [SHEETS, GMAIL],
   },
   {
-    slug: "overdue-invoice-follow-up", title: "Overdue Invoice Follow-up", kind: "pack", body: "Every overdue invoice gets a reminder of the right firmness, drafted and ready for you to send.", price: "About $0.20–$1.00 / run", certified: true, portrait: "invoice",
+    slug: "overdue-invoice-follow-up", title: "Overdue Invoice Follow-up", kind: "pack", body: "Every overdue invoice gets a reminder of the right firmness, drafted and ready for you to send.", price: "About $0.20–$1.00 / run", reviewUpTo: "$5.00", certified: true, portrait: "reminder",
     summary: "Reads your open invoices, works out how late each one is and how firm its reminder should be, and has a reviewer check the plan. Then it writes one short, polite reminder per invoice and saves them as email drafts once you approve. Nothing is sent without you.",
     scope: [
       "Read your open invoices from Stripe",
@@ -127,7 +131,7 @@ export const MARKETPLACE_LISTINGS: readonly MarketplaceListing[] = [
     tools: [STRIPE, GMAIL],
   },
   {
-    slug: "meeting-follow-ups", title: "Meeting Follow-ups", kind: "pack", body: "A short follow-up drafted for everyone outside your team you met with, ready for you to check and send.", price: "About $0.05–$0.30 / run", certified: true, portrait: "brief",
+    slug: "meeting-follow-ups", title: "Meeting Follow-ups", kind: "pack", body: "A short follow-up drafted for everyone outside your team you met with, ready for you to check and send.", price: "About $0.05–$0.30 / run", certified: true, portrait: "calendar",
     summary: "Reads one day of your Google Calendar and plans a short follow-up for each guest from outside your team, using what the event says was agreed. Once you approve, it saves the follow-ups as Gmail drafts. Nothing is sent.",
     scope: [
       "Read one day of your Google Calendar",
@@ -199,6 +203,17 @@ export const MARKETPLACE_LISTINGS: readonly MarketplaceListing[] = [
     tools: [SHOPIFY],
   },
 ];
+
+/** The review part of a pack's price, or undefined when the pack has no reviewer time. */
+export function reviewPriceOf(listing: Pick<MarketplaceListing, "reviewUpTo">): string | undefined {
+  return listing.reviewUpTo ? `+ up to ${listing.reviewUpTo} review` : undefined;
+}
+
+/** The price with any reviewer time, on one line: "About $0.60–$2.40 / run + up to $7.50 review". */
+export function fullPriceOf(listing: Pick<MarketplaceListing, "price" | "reviewUpTo">): string {
+  const review = reviewPriceOf(listing);
+  return review ? `${listing.price} ${review}` : listing.price;
+}
 
 export function findListing(slug: string): MarketplaceListing | undefined {
   return MARKETPLACE_LISTINGS.find((listing) => listing.slug === slug);

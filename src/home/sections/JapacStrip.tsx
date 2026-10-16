@@ -3,7 +3,7 @@ import { SectionCell } from "../Frame";
 import { RegionalGlobe } from "../globe/RegionalGlobe";
 import { Icon } from "../Icon";
 
-/** Replaces the logo wall: four JAPAC hubs with live local clocks. The ticking is the section's motion. */
+/** Replaces the logo wall: the launch market and the hubs that follow (src/site/hubs.ts) on the regional globe. */
 export function JapacStrip() {
   const { languages, eyebrow } = HOME_COPY.japac;
   return (

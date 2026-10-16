@@ -6,7 +6,7 @@ import { Icon } from "@/home/Icon";
 import { PageShell } from "@/marketplace/PageShell";
 import { NOT_FOUND_COPY as C } from "@/site/copy";
 
-export const metadata: Metadata = { title: C.meta.title, robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: C.meta.title, description: C.meta.description, robots: { index: false, follow: false } };
 
 export default function NotFound() {
   const [home, ...rest] = C.links;

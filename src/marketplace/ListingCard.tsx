@@ -3,7 +3,7 @@ import { Icon } from "@/home/Icon";
 import { AgentPortrait } from "@/home/mockups/AgentPortrait";
 import { MARKETPLACE_COPY } from "./copy";
 import { KIND_LABEL } from "./kinds";
-import type { MarketplaceListing } from "./listings";
+import { reviewPriceOf, type MarketplaceListing } from "./listings";
 
 export type ListingCardProps = {
   listing: MarketplaceListing;
@@ -22,7 +22,7 @@ export function ListingCard({ listing, headingLevel: Heading = "h3", dataCompone
         <span className="micro-label">{KIND_LABEL[kind]}{certified ? ` / ${MARKETPLACE_COPY.listing.certified}` : ""}</span>
         <Heading>{title}</Heading>
         <p>{body}</p>
-        <div className="listing-card-foot"><span className="listing-price">{price}</span><span className="text-link">{MARKETPLACE_COPY.catalogue.view}<Icon /></span></div>
+        <div className="listing-card-foot"><span className="listing-price">{price}{reviewPriceOf(listing) ? <small>{reviewPriceOf(listing)}</small> : null}</span><span className="text-link">{MARKETPLACE_COPY.catalogue.view}<Icon /></span></div>
       </div>
     </Link>
   );

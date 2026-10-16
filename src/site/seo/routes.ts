@@ -21,7 +21,7 @@ export type SeoRoute = Readonly<{
   priority: number;
 }>;
 
-export const HOME_ROUTE: SeoRoute = { path: "/", description: "New Machines is a marketplace where businesses choose AI agents for defined work, bring in qualified reviewers for judgment, and accept outcomes with evidence.", updated: "2026-10-17", changeFrequency: "weekly", priority: 1 };
+export const HOME_ROUTE: SeoRoute = { path: "/", description: "New Machines is a marketplace: businesses choose Workflow Packs and the AI agents inside them, add reviewers for judgment and accept outcomes with evidence.", updated: "2026-10-17", changeFrequency: "weekly", priority: 1 };
 
 /** Every public page route. `/styleguide` is deliberately absent (SEO.neverIndex). */
 export const PAGE_ROUTES: readonly SeoRoute[] = [

@@ -115,7 +115,7 @@ describe("WorkExplorer", () => {
     await user.click(within(operations).getByRole("button", { name: "Run demo" }));
     await within(operations).findByText("Verdict recorded with the work", {}, { timeout: 6000 });
     expect(rowsOf(operations)).toEqual([["Taxi · client visit", "₱486.00", "Categorised"], ["Team lunch", "₱6,240.00", "Accepted"], ["Design software", "₱2,950.00", "Duplicate"]]);
-    expect(operations.querySelector(".workflow-result")).toHaveTextContent("Human approved");
+    expect(operations.querySelector(".workflow-result")).toHaveTextContent("Reviewer verdict recorded");
   });
 
   it("follows every order across four systems, counts every write in one approval and lists what it holds back", async () => {
@@ -126,13 +126,14 @@ describe("WorkExplorer", () => {
     expect([...finance.querySelectorAll(".task-systems > span")].map((system) => system.textContent)).toEqual(["Store", "Ledger", "Warehouse", "Sales app"]);
     expect(desk.getByText("Kalumpang Demo Supply Co.")).toBeInTheDocument();
     expect(rowsOf(finance)).toEqual([
-      ["SO-2041 · Bakawan Bakeshop", "₱48,600.00", "Reminder"],
-      ["SO-2044 · Dalisay Hardware", "₱31,250.00", "Reminder"],
-      ["SO-2047 · Liwayway Catering", "₱27,900.00", "Warehouse note"],
-      ["SO-2052 · Malaya Grocery", "₱12,350.00", "Finance note"],
-      ["SO-2058 · Tala Eatery", "₱9,480.00", "Finance note"],
-      ["SO-2063 · Sampaguita Café", "₱3,200.00", "Listed only"],
+      ["SO-DEMO-1041 · Bayan Demo Hardware", "₱148,500.00", "Reminder"],
+      ["SO-DEMO-1052 · Lakan Demo Foods", "₱96,200.00", "Reminder"],
+      ["SO-DEMO-1063 · Alon Demo Builders", "₱62,000.00", "Finance note"],
+      ["SO-DEMO-1067 · Bayan Demo Hardware", "₱34,900.00", "Warehouse note"],
+      ["SO-DEMO-1070 · Lakan Demo Foods", "₱21,600.00", "Finance note"],
+      ["SO-DEMO-1058 · Tala Demo Retail", "₱18,750.00", "Listed only"],
     ]);
+    expect(desk.getByText(/Save 2 collection reminders as Gmail drafts \(₱244,700\.00 outstanding\).*Tala Demo Retail is listed only\./)).toBeInTheDocument();
     expect(desk.getByText("Listed only")).toHaveAttribute("data-excluded", "true");
     expect(calls(finance)).toEqual(["GmailSave a reminder draftCalls × 2", "LedgerPost a finance note · sandbox onlyCalls × 2", "WarehousePost a warehouse note · sandbox onlyCalls × 1"]);
     expect(desk.getByText("Also covered by this approval")).toBeInTheDocument();
@@ -144,6 +145,6 @@ describe("WorkExplorer", () => {
     expect(rowsOf(finance).map((row) => row[2])).toEqual(["Drafted", "Drafted", "Noted", "Noted", "Noted", "Listed only"]);
     expect(desk.getByText("5, all after your approval")).toBeInTheDocument();
     expect(desk.getByText("Work receipt · Verified")).toBeInTheDocument();
-    expect(finance.querySelector(".workflow-result")).toHaveTextContent("Verified · Human approved · 5 writes counted · Work receipt ready");
+    expect(finance.querySelector(".workflow-result")).toHaveTextContent("Verified · Approved by you · 5 writes counted · Work receipt ready");
   });
 });

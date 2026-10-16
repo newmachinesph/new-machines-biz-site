@@ -1,4 +1,5 @@
-/** The Support reply drafter's output, as the reviewer UI receives it. Synthetic data only. */
+/** The Support reply drafter's output, as the reviewer UI receives it. Synthetic data only, in yen (a Japanese
+ *  customer). The pack reads Gmail and Google Sheets only, so every fact cites one of those. */
 
 export type CheckStatus = "pass" | "warn" | "fail" | "could_not_check";
 export type DraftStatus = "ready" | "review" | "blocked";
@@ -50,44 +51,38 @@ export function routeDraft(checks: readonly DraftCheck[], commitments: readonly 
 
 export const SUPPORT_SAMPLE_RUN: SupportDraftRun = {
   runId: "run_01HX4QG3",
-  summary: "One billing draft needs your approval: the customer was charged twice and the duplicate refund needs sign-off.",
+  summary: "One refund request needs a person: the customer reports a double charge, and refund requests always go to a reviewer.",
   drafts: [
     {
-      conversation: "conv_5531 · Billing exception",
+      conversation: "conv_5531 · Refund request",
       issueType: "billing",
       language: "ja",
       status: "review",
-      statusReason: "The refund needs approval in the billing system before this reply is sent.",
+      statusReason: "Refund requests go to a person. The pack reads only Gmail and your support sheet, so the charge itself is checked outside it.",
       customerAsk: "Refund the second ¥12,800 charge for the October invoice.",
       draftReply:
-        "山田様\n\nお問い合わせいただき、誠にありがとうございます。\n10月3日に10月分のご請求（¥12,800）が2回計上されていることを確認いたしました。2回目の計上は、決済処理の再試行によるものでございます。\n重複分の¥12,800につきましては、返金の手続きを進めております。手続きが完了しましたら、改めてご連絡いたします。\nご不便をおかけし、誠に申し訳ございません。",
+        "山田様\n\nお問い合わせいただき、誠にありがとうございます。\n10月3日に10月分のご請求（¥12,800）が2回計上されたとのご連絡を承りました。現在、担当部署にて確認を進めております。重複して計上されていた場合は、返金の手続きをいたします。\n確認が完了しましたら、改めてご連絡いたします。\nご不便をおかけし、誠に申し訳ございません。",
       backTranslationEn:
-        "Dear Yamada-sama,\n\nThank you for contacting us.\nWe have confirmed that the October invoice (¥12,800) was charged twice on 3 October. The second charge was caused by a retry of the payment process.\nWe are processing a refund of the duplicate ¥12,800 and will contact you again once it is complete.\nWe sincerely apologise for the inconvenience.",
-      billingExplanation: {
-        cause: "Charged twice on 3 Oct: the first attempt was reported as failed, and the retry also settled.",
-        options: ["Refund the duplicate ¥12,800 to the card on file (needs approval)", "Credit ¥12,800 to the November invoice (needs approval)"],
-      },
+        "Dear Yamada-sama,\n\nThank you for contacting us.\nWe have received your report that the October invoice (¥12,800) was charged twice on 3 October. Our billing team is now checking it. If the charge was duplicated, we will process a refund.\nWe will contact you again once the check is complete.\nWe sincerely apologise for the inconvenience.",
       factsUsed: [
-        { claim: "October invoice is ¥12,800", sourceRecord: "invoices/INV-4410" },
-        { claim: "Two charges of ¥12,800 on 3 Oct", sourceRecord: "payments/pay_7Q21, pay_7Q22" },
-        { claim: "Second charge is a retry of the first", sourceRecord: "payments/pay_7Q22.retry_of" },
-        { claim: "Message came from the registered email", sourceRecord: "accounts/acc_2207.email" },
+        { claim: "Customer reports two charges of ¥12,800 on 3 Oct", sourceRecord: "gmail/msg_18c4f2" },
+        { claim: "Sender matches the customer on an earlier case", sourceRecord: "sheets/support-cases#row-112" },
       ],
-      commitments: [{ commitment: "Refund the duplicate ¥12,800", policyAllowed: true, needsApproval: true }],
+      commitments: [{ commitment: "Check the charge and refund any duplicate", policyAllowed: true, needsApproval: true }],
       checks: [
-        { check: "identity", status: "pass", reason: "Sent from the registered email address." },
-        { check: "policy", status: "warn", reason: "Duplicate-charge refunds are allowed but need approval." },
-        { check: "accuracy", status: "pass", reason: "Amount, date and cause match the payment records." },
+        { check: "identity", status: "pass", reason: "Sender matches the customer on an earlier case in your support sheet." },
+        { check: "policy", status: "warn", reason: "Refund requests always go to a person." },
+        { check: "accuracy", status: "could_not_check", reason: "Payment records are outside this pack. The reply promises a check, not a refund." },
         { check: "tone", status: "pass", reason: "Consistent 敬語; apologises without admitting further liability." },
         { check: "privacy", status: "pass", reason: "No card number or other customers’ data in the reply." },
         { check: "escalation", status: "pass", reason: "No dispute, legal, regulator or repeat-contact triggers." },
       ],
-      reviewerActions: ["Approve the ¥12,800 refund in the billing system", "Send the reply once the refund is approved"],
+      reviewerActions: ["Confirm the two charges in your billing system", "Send the reply, then log the case for the refunds team"],
     },
   ],
   audit: {
-    toolsCalled: ["accounts.find", "invoices.find", "payments.find", "kb.search"],
-    policiesReferenced: ["refund-policy v4", "identity-verification v2", "brand-voice ja v3"],
+    toolsCalled: ["Gmail: read message", "Google Sheets: read cases", "Google Sheets: log case"],
+    policiesReferenced: ["refund-policy v4", "brand-voice ja v3"],
     checkedAt: "2026-10-11T09:31:40+09:00",
   },
 };

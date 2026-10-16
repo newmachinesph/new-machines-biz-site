@@ -20,7 +20,7 @@ export function Demos() {
       </section>
       <section aria-labelledby="demo-fields" className="grid max-w-prose gap-4 sm:grid-cols-2">
         <h3 id="demo-fields" className="col-span-full text-sm font-semibold">Input · Select</h3>
-        <Input label="Organization name" placeholder="Sumnora" hint="Shown on invoices" />
+        <Input label="Organisation name" placeholder="Sumnora" hint="Shown on invoices" />
         <Input label="Budget cap" defaultValue="abc" error="Must be a number" />
         <Select label="Region" placeholder="Choose a region" options={[{ value: "jp", label: "Japan" }, { value: "sg", label: "Singapore" }, { value: "au", label: "Australia" }, { value: "kr", label: "Korea" }]} />
       </section>

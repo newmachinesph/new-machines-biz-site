@@ -3,11 +3,11 @@ import userEvent from "@testing-library/user-event";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
-import { AVAILABLE_CONNECTORS, AVAILABLE_LABEL, CATEGORIES, CONNECTORS, MCP_ICON, availableSummary } from "../integrationCatalog";
+import { AVAILABLE_CONNECTORS, AVAILABLE_LABEL, CATEGORIES, CONNECTORS, MCP_ICON, ON_REQUEST_CONNECTORS, availableSummary } from "../integrationCatalog";
 import { IntegrationDirectory as Directory, formatCount } from "./IntegrationDirectory";
 
 const IntegrationDirectory = () => <Directory titleId="connectors-title" />;
-/** "Show all" mounts every tile in jsdom, which is slow while the whole suite runs in parallel. */
+/** Showing every tile mounts every tile in jsdom, which is slow while the whole suite runs in parallel. */
 const SHOW_ALL_TIMEOUT = 30_000;
 
 const tiles = () => [...document.querySelectorAll<HTMLLIElement>(".connector-grid li")];
@@ -37,13 +37,15 @@ describe("catalog data", () => {
 });
 
 describe("IntegrationDirectory", () => {
-  it("counts the whole catalog and renders the first twenty tiles until Show all", async () => {
+  it("leads with what is available today, then browses the requestable apps", async () => {
     const user = userEvent.setup();
     render(<IntegrationDirectory />);
-    expect(screen.getByText(`${formatCount(CONNECTORS.length)} business tools`)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 3 })).toHaveTextContent("7 available today · 1,511 more we connect on request");
+    expect(AVAILABLE_CONNECTORS.length + ON_REQUEST_CONNECTORS.length).toBe(CONNECTORS.length);
     expect(shown()).toEqual(CONNECTORS.slice(0, 20).map((connector) => connector.name));
+    expect(shown().slice(0, AVAILABLE_CONNECTORS.length)).toEqual(AVAILABLE_CONNECTORS.map((connector) => connector.name));
     expect(document.querySelectorAll(".connector-grid img")).toHaveLength(20);
-    const showAll = screen.getByRole("button", { name: `Show all ${formatCount(CONNECTORS.length)} connectors` });
+    const showAll = screen.getByRole("button", { name: `Browse ${formatCount(ON_REQUEST_CONNECTORS.length)} requestable apps` });
     expect(showAll).toHaveAttribute("aria-expanded", "false");
     await user.click(showAll);
     expect(shown()).toHaveLength(CONNECTORS.length);
@@ -109,7 +111,7 @@ describe("IntegrationDirectory", () => {
   it("gives every visible tile its own lazy, fixed-size logo", async () => {
     const user = userEvent.setup();
     render(<IntegrationDirectory />);
-    await user.click(screen.getByRole("button", { name: /Show all/ }));
+    await user.click(screen.getByRole("button", { name: /requestable apps/ }));
     const images = [...document.querySelectorAll<HTMLImageElement>(".connector-grid img")];
     expect(images).toHaveLength(CONNECTORS.length);
     expect(images.every((image) => image.getAttribute("src")?.startsWith("/brands/connectors/") && image.getAttribute("loading") === "lazy" && image.getAttribute("width") === "20" && image.getAttribute("height") === "20" && image.getAttribute("alt") === "")).toBe(true);

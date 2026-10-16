@@ -46,6 +46,7 @@ export const MARKETPLACE_COPY = {
     cta: { pack: "Add in the app", agent: "Use it in the app", human: "Open the app" } satisfies Record<Kind, string>,
     preview: { href: "/#work-explorer", label: "See a preview" },
     publisherVersion: (publisher: string, version: string) => `${publisher}, version ${version}`,
+    contributedBy: (contributor: string, publisher: string, version: string) => `Contributed by ${contributor} · Published by ${publisher}, version ${version}`,
     scope: {
       eyebrow: "Scope",
       lead: "Clear inputs.",
@@ -84,6 +85,7 @@ export const MARKETPLACE_COPY = {
       financeNotes: "Finance notes",
       warehouseNotes: "Warehouse notes",
       caption: "Exception desk report, one row per exception · demo data",
+      scrollHint: "Scroll the report sideways for the action and outcome",
       columns: { order: "Order", customer: "Customer", exception: "Exception", amount: "Amount", action: "Action", outcome: "Outcome" },
       kinds: {
         payment_pending_confirmation: "Payment pending confirmation",
@@ -151,7 +153,7 @@ export const MARKETPLACE_COPY = {
       checkStatus: { pass: "Pass", warn: "Warn", fail: "Fail", could_not_check: "Could not check" },
       reviewerActions: "Before you send",
       audit: "Audit",
-      note: "Illustrative sample · Synthetic data · No replies sent, no refunds issued",
+      note: "Illustrative sample · Synthetic data in JPY · No replies sent, no refunds issued",
     },
     steps: {
       eyebrow: "How a run works",

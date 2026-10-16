@@ -1,10 +1,10 @@
-import { ExampleBrand } from "../ExampleBrand";
 import { SectionCell } from "../Frame";
 import { Icon } from "../Icon";
 import { AgentPortrait } from "../mockups/AgentPortrait";
 import Link from "next/link";
 import Image from "next/image";
-import { AccountResearchIllustration } from "../mockups/AccountResearchIllustration";
+import { O2C_SAMPLE } from "@/marketplace/o2cSample";
+import { InboxLeadsIllustration } from "../mockups/InboxLeadsIllustration";
 
 export function CustomerStories() {
   return (
@@ -18,7 +18,7 @@ export function CustomerStories() {
           <div className="story-art finance-art" aria-hidden="true">
             <Image src="/editorial/tokyo-light-trails.jpg" fill sizes="(min-width: 1280px) 600px, (min-width: 768px) 45vw, 90vw" alt="" className="story-photograph" />
             <div className="story-sheet">
-              <div className="sheet-letterhead"><ExampleBrand name="aster-supply" /><strong>Aster Supply</strong><span>OCT / 2026</span></div>
+              <div className="sheet-letterhead"><strong>{O2C_SAMPLE.business}</strong><span>OCT / 2026</span></div>
               <div className="sheet-heading">All accounted for.<Icon name="check" /></div>
               {["Store orders", "Ledger payments", "Warehouse deliveries", "Approval record"].map((label) => <div className="sheet-row" key={label}><Icon name="file" /><span>{label}</span><Icon name="check" /></div>)}
               <div className="sheet-proof"><AgentPortrait kind="human" /><span>Approved by you<small>Every write counted</small></span><Icon name="shield" /></div>
@@ -28,7 +28,7 @@ export function CustomerStories() {
         </Link>
         <Link className="story-card story-sales" href="/?workflow=sales#work-explorer">
           <div className="story-art sales-art" aria-hidden="true">
-            <AccountResearchIllustration />
+            <InboxLeadsIllustration />
             <span className="sales-art-label">INBOX → LEADS SHEET → CONVERSATION</span>
           </div>
           <div className="story-content"><span className="micro-label">Sales & growth / Workflow story</span><h3>Let your team<br />get back to selling.</h3><p>Every real enquiry in your inbox lands in your leads sheet, with who asked, what for and how soon. Your team starts the conversation.</p><span className="text-link">Explore the sales workflow<Icon /></span></div>

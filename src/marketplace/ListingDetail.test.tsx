@@ -16,8 +16,8 @@ describe("ListingDetail", () => {
     const { container } = render(<ListingDetail listing={listing} />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Order & Payment Reconciliation");
     expect(screen.getByRole("link", { name: "All listings" })).toHaveAttribute("href", "/marketplace");
-    expect(screen.getByRole("link", { name: "Add in the app" })).toHaveAttribute("href", HOME_COPY.nav.appUrl);
-    expect(screen.getByRole("link", { name: "See a preview" })).toHaveAttribute("href", "/#work-explorer");
+    expect(screen.getByRole("link", { name: "Add in the app" })).toHaveAttribute("href", `${HOME_COPY.nav.appUrl}/app/marketplace/order-payment-reconciliation`);
+    expect(screen.getByRole("link", { name: "See a preview" })).toHaveAttribute("href", "/?workflow=finance#work-explorer");
     expect(screen.getByText("Certified")).toHaveAttribute("data-status", "verified");
     expect(container.querySelector(".listing-meta .listing-price")).toHaveTextContent("About $0.60–$2.40 / run");
     expect(screen.getByText("New Machines Labs, version 1.0.0")).toBeInTheDocument();
@@ -50,7 +50,7 @@ describe("ListingDetail", () => {
   it("says when a pack has no reviewer step", () => {
     const { container } = render(<ListingDetail listing={findListing("inbox-lead-tracker")!} />);
     expect(facts(container)).toMatchObject({
-      "Who does the work": "Lead Agent, A separate decision model",
+      "Who does the work": "Lead Agent, a separate decision model",
       "Where a person comes in": "No reviewer. You approve the rows before anything is added to your sheet.",
       "Who reviews": "No reviewer step. You approve before anything is written.",
       "Risk class": "Low",
@@ -59,6 +59,7 @@ describe("ListingDetail", () => {
 
   it("shows the Order-to-Cash deliverable on labelled demo data, with totals that add up", () => {
     const { container } = render(<ListingDetail listing={findListing("order-to-cash-exception-desk")!} />);
+    expect(screen.getByText("Contributed by Adrian Anton Ladia · Published by New Machines Labs, version 1.0.0")).toBeInTheDocument();
     expect(toolNames(container)).toEqual(["Business app (read-only, over MCP)", "Gmail"]);
     const report = within(container.querySelector<HTMLElement>("[data-component='o2cReport']")!);
     expect(report.getByText("Kalumpang Demo Supply Co.")).toBeInTheDocument();
@@ -106,14 +107,15 @@ describe("ListingDetail", () => {
     const card = container.querySelector<HTMLElement>('[data-component="listingDraftReview"]')!;
     const checks = within(within(card).getByRole("list", { name: "Checks" })).getAllByRole("listitem");
     expect(checks).toHaveLength(6);
-    expect(screen.getByText("Illustrative sample · Synthetic data · No replies sent, no refunds issued")).toBeInTheDocument();
+    expect(screen.getByText("Illustrative sample · Synthetic data in JPY · No replies sent, no refunds issued")).toBeInTheDocument();
     expect(accentViolations(container)).toEqual([]);
   });
 
   it("renders a platform agent: the packs it works in, no price of its own, and its own CTA", () => {
     const { container } = render(<ListingDetail listing={findListing("retail-agent")!} />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Retail Agent");
-    expect(screen.getByRole("link", { name: "Use it in the app" })).toHaveAttribute("href", HOME_COPY.nav.appUrl);
+    expect(screen.getByRole("link", { name: "Use it in the app" })).toHaveAttribute("href", `${HOME_COPY.nav.appUrl}/app/agents/retail-agent`);
+    expect(screen.getByRole("link", { name: "See a preview" })).toHaveAttribute("href", "/?workflow=operations#work-explorer");
     expect(container.querySelector(".listing-meta .listing-price")).toHaveTextContent("Free in your packs");
     expect(screen.getByText("New Machines Labs, version 1.1.0")).toBeInTheDocument();
     expect(facts(container)).toMatchObject({

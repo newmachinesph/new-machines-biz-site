@@ -2,7 +2,7 @@ import { cn } from "@/lib/cn";
 import Image from "next/image";
 
 /** A small visual identity based on each specialist's actual work. */
-export function AgentPortrait({ kind = "invoice", className }: { kind?: "invoice" | "pack" | "human" | "leads" | "receipt" | "support" | "contract" | "brief" | "vendor"; className?: string }) {
+export function AgentPortrait({ kind = "invoice", className }: { kind?: "invoice" | "pack" | "human" | "leads" | "receipt" | "support" | "contract" | "brief" | "vendor" | "reminder" | "calendar"; className?: string }) {
   if (kind === "human") return <span data-accent="human" className={cn("agent-portrait portrait-human", className)}><Image src="/reviewer.jpg" alt="" width={80} height={80} className="portrait-image" /></span>;
   return (
     <span data-accent={kind === "pack" ? undefined : "machine"} className={cn("agent-portrait", `portrait-${kind}`, className)}>
@@ -15,6 +15,8 @@ export function AgentPortrait({ kind = "invoice", className }: { kind?: "invoice
         {kind === "contract" ? <><path d="M12 6h17l7 7v29H12V6Z" /><path d="M29 6v7h7" /><path d="M18 20h12M18 26h12M18 32h6" /><circle cx="33" cy="34" r="4.5" /><path d="m31 34 1.5 1.5L35 33" /></> : null}
         {kind === "brief" ? <><path d="M8 8h32v32H8V8Z" /><path d="M14 14h12" /><path d="M15 33v-8M23 33V19M31 33v-5" /><path d="M14 33h20" /></> : null}
         {kind === "vendor" ? <><path d="m8 18 4-10h24l4 10H8Z" /><path d="M8 18c0 3 2.7 5 6 5s6-2 6-5c0 3 2.7 5 6 5s6-2 6-5c0 3 2.7 5 6 5s6-2 6-5" /><path d="M12 23v18h24V23M21 41V30h6v11" /></> : null}
+        {kind === "reminder" ? <><path d="M5 11h30v21H5V11Z" /><path d="m5 11 15 11 15-11" /><circle cx="36" cy="35" r="7" /><path d="M36 31v4l3 2" /></> : null}
+        {kind === "calendar" ? <><path d="M8 11h32v29H8V11Z" /><path d="M8 19h32M16 6v9M32 6v9" /><path d="M15 26h5M22 26h5M29 26h4M15 33h5M22 33h5" /></> : null}
       </svg>
     </span>
   );

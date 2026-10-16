@@ -1,6 +1,7 @@
 import { Badge } from "@/design-system/components/Badge";
 import { Card } from "@/design-system/components/Card";
 import { Table, type Column } from "@/design-system/components/Table";
+import { Icon } from "@/home/Icon";
 import { MARKETPLACE_COPY } from "./copy";
 import { O2C_KINDS, o2cTotals, peso, type O2CReportSample } from "./o2cSample";
 
@@ -44,7 +45,10 @@ export function O2CReport({ report }: { report: O2CReportSample }) {
           {facts.map((fact) => <div key={fact.label}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}
         </dl>
       </Card>
-      <Table caption={O.caption} columns={COLUMNS} rows={rows} rowKey={(row) => row.order} />
+      <div>
+        <Table caption={O.caption} columns={COLUMNS} rows={rows} rowKey={(row) => row.order} />
+        <p className="table-scroll-hint" aria-hidden="true">{O.scrollHint}<Icon /></p>
+      </div>
     </div>
   );
 }

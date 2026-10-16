@@ -17,9 +17,9 @@ describe("Frame", () => {
   });
 
   it("SectionHeader keeps its headline readable on a dark section", () => {
-    render(<SectionHeader id="d" eyebrow="Trust" lead="Policy authorizes." display dark />);
-    expect(screen.getByRole("heading", { level: 2, name: "Policy authorizes." })).toBeInTheDocument();
-    expect(screen.getByText("Policy authorizes.")).toHaveClass("text-paper");
+    render(<SectionHeader id="d" eyebrow="Trust" lead="Policy authorises." display dark />);
+    expect(screen.getByRole("heading", { level: 2, name: "Policy authorises." })).toBeInTheDocument();
+    expect(screen.getByText("Policy authorises.")).toHaveClass("text-paper");
   });
 
   it("SplitCell puts the text column on the requested side", () => {

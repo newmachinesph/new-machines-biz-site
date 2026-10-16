@@ -43,7 +43,7 @@ test("workflow demo requires review, verifies the outcome, and resets when teams
   await expect(page.locator(".workflow-chapter[data-active=true]").getByRole("button", { name: "Awaiting your approval", exact: true })).toBeDisabled();
   await expect(page.locator(".workflow-chapter[data-active=true] .task-review-state")).toContainText("Approved by you", { timeout: 10_000 });
   await expect(page.locator(".workflow-chapter[data-active=true] .workflow-result")).toContainText("Leads sheet rows");
-  await expect(page.locator(".workflow-chapter[data-active=true] .workflow-result")).toContainText("Human approved");
+  await expect(page.locator(".workflow-chapter[data-active=true] .workflow-result")).toContainText("Approved by you");
   await page.locator(".workflow-chapter[data-active=true]").getByRole("button", { name: "Reset demo", exact: true }).click();
   await page.getByRole("button", { name: "04 Support", exact: true }).click();
   await expect(page.locator(".workflow-chapter[data-active=true]").getByRole("button", { name: "Run demo", exact: true })).toBeEnabled();
@@ -103,13 +103,10 @@ test("product scenes keep measured alignment and the fictional company logos loa
   await page.getByRole("button", { name: "Sales operations", exact: true }).click();
   await expect(page.locator(".talent-detail h4")).toHaveText("Inbox Lead Tracker");
   await page.getByRole("button", { name: "All packs", exact: true }).click();
-  await page.locator(".scenario-switch").scrollIntoViewIfNeeded();
-  await page.getByRole("button", { name: /Success case/ }).click();
-  await expect(page.locator(".comparison-state")).toContainText("The numbers agree.");
-  await page.getByRole("button", { name: /Exception case/ }).click();
+  await page.locator(".sandbox-comparison").scrollIntoViewIfNeeded();
   await expect(page.locator(".comparison-state")).toContainText("Needs human");
   await page.getByRole("button", { name: "Approve as is", exact: true }).click();
-  await expect(page.locator(".review-decision-record")).toContainText("Approved as is");
+  await expect(page.locator(".review-decision-record")).toContainText("Verdict: approve as is");
   await page.getByRole("button", { name: "Reset review", exact: true }).click();
   await page.locator(".roster-primary").scrollIntoViewIfNeeded();
   await expect(page.locator(".roster-primary .japac-brand-logo")).toHaveCount(16);

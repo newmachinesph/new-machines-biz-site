@@ -22,7 +22,7 @@ export function LegalPage({ document, kind }: { document: LegalDocument; kind: L
             <MotionItem><p className="section-eyebrow"><span aria-hidden="true" />{document.eyebrow}</p></MotionItem>
             <MotionItem delay={0.06}><h1 id="legal-title">{document.lead}</h1></MotionItem>
           </div>
-          <MotionItem delay={0.12}><p className="legal-updated">{document.updated}</p><p>{document.intro} {LEGAL_COPY.counsel}</p></MotionItem>
+          <MotionItem delay={0.12}><p className="legal-updated">{document.updated}</p><p>{document.intro} {document.counsel}</p></MotionItem>
         </div>
         <div className="legal-prose">
           {document.sections.map((section) => (

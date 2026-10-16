@@ -25,6 +25,8 @@ export const CONNECTORS: readonly Connector[] = CONNECTOR_ROWS.map(([slug, name,
 }));
 
 export const AVAILABLE_CONNECTORS: readonly Connector[] = CONNECTORS.filter((connector) => connector.available);
+/** Every other row: apps whose connector we add for a business on request, not connected today. */
+export const ON_REQUEST_CONNECTORS: readonly Connector[] = CONNECTORS.filter((connector) => !connector.available);
 
 /** "Gmail, Google Calendar, … and your own MCP server." */
 export const availableSummary = (connectors: readonly Connector[] = AVAILABLE_CONNECTORS): string => {

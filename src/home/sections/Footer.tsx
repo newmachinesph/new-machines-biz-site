@@ -28,7 +28,7 @@ export function Footer({ home = true }: { home?: boolean }) {
       <div className="footer-bottom">
         <span>© 2026 New Machines</span>
         <nav aria-label="Legal" className="footer-legal">{legal.map((l) => <Link key={l.href} href={l.href} home={home}>{l.label}</Link>)}</nav>
-        <span className="footer-locale"><Icon name="globe" />日本語 / English · Japan & Asia-Pacific</span>
+        <span className="footer-locale"><Icon name="globe" />Support in Japanese and English · Japan & Asia-Pacific</span>
         <a href="#main-content">Back to top ↑</a>
       </div>
     </footer>

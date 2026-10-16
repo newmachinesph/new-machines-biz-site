@@ -76,13 +76,13 @@ test("reduced motion has static useful outcomes and manual controls still work",
   await expect(page.locator(".account-outreach")).toHaveClass(/outreach-ready/);
 });
 
-test("research becomes a specific brief and the cap preview pauses before a charge", async ({ page }) => {
+test("enquiries become leads-sheet rows and the cap preview pauses before a charge", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/#customer-stories");
   await page.locator(".story-sales").scrollIntoViewIfNeeded();
   await expect(page.locator(".account-research")).toHaveAttribute("data-research-phase", "3", { timeout: 7000 });
-  await expect(page.locator(".account-outreach")).toContainText("Singapore team");
-  await expect(page.locator(".account-fit")).toHaveText(["96", "91", "88"]);
+  await expect(page.locator(".account-outreach")).toContainText("You approve the rows.");
+  await expect(page.locator(".account-fit")).toHaveText(["This month", "Next week", "—"]);
   await page.getByRole("button", { name: "Preview cap reached", exact: true }).click();
   await expect(page.locator(".cap-preview-event")).toContainText("$310.00");
   await expect(page.locator(".settlement-rule")).toContainText("Run stopped");

@@ -23,6 +23,7 @@
 .listing-card-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 12px; }
 .listing-card-foot .text-link { font-size: 13px; min-height: 0; }
 .listing-price { font-size: 14px; font-weight: 500; letter-spacing: -.025em; }
+.listing-price small { display: block; margin-top: 2px; font-size: 12px; font-weight: 400; letter-spacing: 0; color: var(--color-grey-500); }
 .catalogue-empty { display: grid; justify-items: center; gap: 16px; padding: 64px 24px; text-align: center; font-size: 15px; color: var(--color-grey-500); }
 
 /* Listing hero */
@@ -150,4 +151,31 @@
   .related-section .catalogue-grid { padding-top: 0; }
   .catalogue-sources { padding: 0 64px 64px; }
   .listing-hero { gap: 96px; }
+}
+
+/* Cards in one grid row share a height; the foot (price and "View listing") sits on the card's bottom edge. */
+.catalogue-grid > li { display: flex; }
+.catalogue-grid .listing-card { display: flex; flex-direction: column; width: 100%; height: 100%; }
+.catalogue-grid .listing-card-body { display: flex; flex-direction: column; flex: 1; }
+.catalogue-grid .listing-card-foot { margin-top: auto; padding-top: 12px; }
+@media (min-width: 1024px) {
+  .catalogue-grid .listing-card-foot { padding-top: 10px; }
+}
+
+/* On a phone the three view filters (All, Packs, Agents) stay on one row instead of the shared two-column grid. */
+@media (max-width: 479px) {
+  .catalogue-toolbar .directory-filters { display: flex; flex-wrap: nowrap; gap: 0 20px; }
+}
+
+/* The O2C report keeps readable columns and scrolls inside its wrapper on a phone, with a hint that it does. */
+.o2c-report > * { min-width: 0; }
+.o2c-report table { min-width: 760px; }
+.o2c-report td:nth-child(1), .o2c-report td:nth-child(4) { white-space: nowrap; }
+.table-scroll-hint { display: flex; align-items: center; justify-content: flex-end; gap: 6px; margin-top: 8px; font: 10px/1.5 var(--font-mono); color: var(--color-grey-500); }
+.table-scroll-hint .nm-icon { width: 12px; height: 12px; }
+@media (min-width: 840px) {
+  .o2c-report .table-scroll-hint { display: none; }
+}
+@media (min-width: 640px) {
+  .product-evidence .table-scroll-hint { display: none; }
 }

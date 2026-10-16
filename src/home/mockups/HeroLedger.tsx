@@ -14,7 +14,7 @@ const ROWS = SAMPLE_BATCH.map((record) => ({ record, diffs: new Set(lineDiffs(re
 const RECORDS = [
   { symbol: "file", title: CHECKED, detail: "Comparing PO, receipt and invoice…", check: "arrow" },
   { symbol: "file", title: `${yen(EXCEPTION.difference)} needs a decision`, detail: DIFFERING, check: "arrow" },
-  { symbol: "shield", title: "PO revised. Invoice approved.", detail: "M. Tanaka · Source values preserved", check: "check" },
+  { symbol: "shield", title: "Verdict: approve as is.", detail: "M. Tanaka (illustrative) · Source values preserved", check: "check" },
 ] as const;
 
 function Items({ lines, diffs }: { lines: readonly ReceivedItem[]; diffs: ReadonlySet<string> }) {
@@ -28,7 +28,7 @@ export function HeroLedger({ phase, onPreviewOpenChange }: { phase: number; onPr
       <div className="ledger-toolbar"><span><Icon name="file" />Invoice review</span><span>Finance / NM-2291</span></div>
       <div className="ledger-paper">
         <div className="ledger-supplier"><strong>Supplier invoices</strong><span>{SAMPLE_BATCH.length} invoices · Oct 2026</span></div>
-        <div className="ledger-heading"><span className="scene-kicker">Bill to Sumnora · JPY</span><p className="ledger-headline">The details<br />make the difference.</p><span className="ledger-source-label"><Icon name="file" />supplier_invoices.csv</span></div>
+        <div className="ledger-heading"><span className="scene-kicker">Illustrative · Bill to Sumnora · JPY</span><p className="ledger-headline">The details<br />make the difference.</p><span className="ledger-source-label"><Icon name="file" />supplier_invoices.csv</span></div>
         <table className="ledger-lines">
           <thead><tr><th scope="col">Supplier</th><th scope="col">PO</th><th scope="col">Received</th><th scope="col">Invoice</th><th scope="col"><span className="sr-only">Review status</span></th></tr></thead>
           <tbody>{ROWS.map(({ record, diffs }) => {

@@ -1,6 +1,6 @@
 # New Machines
 
-> New Machines is a marketplace for verified intelligent work: businesses choose AI agents and workflow packs for defined work, bring in qualified human reviewers where judgment is needed, and accept each outcome with evidence attached. Built for Japan and Asia-Pacific; pre-launch.
+> New Machines is a marketplace for verified intelligent work: businesses choose Workflow Packs and the AI agents inside them for defined work, bring in qualified human reviewers where judgment is needed, and accept each outcome with evidence attached. Built for Japan and Asia-Pacific; pre-launch.
 
 Site: https://newmachin.es · Contact: hello@newmachin.es · Security: security@newmachin.es · Languages: 日本語 / English · Updated: 2026-10-17
 
@@ -15,7 +15,7 @@ Site: https://newmachin.es · Contact: hello@newmachin.es · Security: security@
 - [Home](https://newmachin.es): one-sentence definition, how it works in five steps, FAQ.
 - [Product](https://newmachin.es/product): marketplace, the eight platform packs, the workspace, simulated data, trust model, approvals and reviewers, usage and billing, runs and receipts, connections, Developer Studio, FAQ.
 - [Marketplace](https://newmachin.es/marketplace): Workflow Packs and the agents inside them, each with its outcome, apps, what it can change and its estimate per run.
-- [Pricing](https://newmachin.es/pricing): Trial plan; usage-based per run with each pack's estimate, reviewer time up to a stated maximum, publisher fees itemized; all billing simulated; FAQ.
+- [Pricing](https://newmachin.es/pricing): Trial plan; usage-based per run with each pack's estimate, reviewer time up to a stated maximum, publisher fees itemised; all billing simulated; FAQ.
 - [Trust and security](https://newmachin.es/trust): the seven separated responsibilities (judgment, policy, approval, execution, verification, acceptance, settlement), three records per step, controls, data handling (Mumbai), pre-launch status, FAQ.
 - [For developers](https://newmachin.es/developers): the Developer Studio, two kinds of listing (agents and Workflow Packs), release lifecycle, revenue share (simulated), FAQ.
 - [For reviewers](https://newmachin.es/work): review with a verdict, claiming a task with a timed hold, protections, simulated network pay, FAQ.

@@ -66,11 +66,9 @@ export async function createGlobe(canvas: HTMLCanvasElement, labels: (HTMLSpanEl
   };
   setPin(0);
   const routeMaterial = track(new THREE.LineBasicMaterial({ color: ink, transparent: true, opacity: .23 }));
-  const beijingRouteMaterial = track(new THREE.LineBasicMaterial({ color: ink, transparent: true, opacity: .5, depthWrite: false }));
   points.slice(1).forEach((point, marketIndex) => {
-    const isBeijing = REGIONAL_MARKETS[marketIndex + 1].city === "Beijing";
-    // Separate the short Beijing arc from the almost collinear Seoul route.
-    const bend = isBeijing ? points[0].clone().cross(point).normalize() : null;
+    // Separate the Manila arc from the almost collinear Singapore route.
+    const bend = REGIONAL_MARKETS[marketIndex + 1].city === "Manila" ? points[0].clone().cross(point).normalize() : null;
     const angle = points[0].clone().normalize().angleTo(point.clone().normalize());
     const path = Array.from({ length: 65 }, (_, i) => {
       const t = i / 64;
@@ -80,7 +78,7 @@ export async function createGlobe(canvas: HTMLCanvasElement, labels: (HTMLSpanEl
       if (bend) direction.addScaledVector(bend, -Math.sin(Math.PI * t) * .055).normalize();
       return direction.multiplyScalar(1.014 + Math.sin(Math.PI * t) * .13);
     });
-    earth.add(new THREE.Line(track(new THREE.BufferGeometry().setFromPoints(path)), isBeijing ? beijingRouteMaterial : routeMaterial));
+    earth.add(new THREE.Line(track(new THREE.BufferGeometry().setFromPoints(path)), routeMaterial));
   });
 
   let visible = true, frame = 0, destroyed = false;

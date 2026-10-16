@@ -61,7 +61,7 @@ export default function Page() {
         <SplitCell
           textSide="right"
           text={<SectionHeader id="product-sandbox-title" eyebrow={C.sandbox.eyebrow} lead={C.sandbox.lead} sub={C.sandbox.sub} />}
-          visual={<MockupStage presentation="scene" caption={C.sandbox.caption}><SandboxRun /></MockupStage>}
+          visual={<MockupStage presentation="scene"><SandboxRun /></MockupStage>}
         />
       </SectionCell>
 
@@ -90,10 +90,13 @@ export default function Page() {
 
       <SectionCell labelledBy="product-evidence-title">
         <Opener id="product-evidence-title" eyebrow={C.evidence.eyebrow} lead={C.evidence.lead} tail={C.evidence.tail} sub={C.evidence.sub} />
-        <div className="listing-evidence" data-component="productEvidence">
-          <Table caption={C.evidence.caption} columns={LOG_COLUMNS} rows={DEMO_LOG} rowKey={(row) => row.id} />
-          <div className="listing-evidence-files">
-            {DEMO_EVIDENCE.map((item) => <Card key={item.title} className="listing-evidence-file"><Icon name="file" /><div><strong>{item.title}</strong><span>{item.meta}</span></div><Icon name="check" /></Card>)}
+        <div className="product-evidence" data-component="productEvidence">
+          <div>
+            <Table caption={C.evidence.caption} columns={LOG_COLUMNS} rows={DEMO_LOG} rowKey={(row) => row.id} />
+            <p className="table-scroll-hint" aria-hidden="true">{C.evidence.scrollHint}<Icon /></p>
+          </div>
+          <div className="product-evidence-files">
+            {DEMO_EVIDENCE.map((item) => <Card key={item.title} className="product-evidence-file"><Icon name="file" /><div><strong>{item.title}</strong><span>{item.meta}</span></div><Icon name="check" /></Card>)}
           </div>
         </div>
         <p className="story-note">{C.evidence.note}</p>

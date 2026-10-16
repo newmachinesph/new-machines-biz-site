@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useId, useState } from "react";
-import { AVAILABLE_LABEL, CATEGORIES, CONNECTORS, ON_REQUEST_LABEL, ON_REQUEST_NOTE, availableSummary, type Connector, type ConnectorCategory } from "../integrationCatalog";
+import { AVAILABLE_CONNECTORS, AVAILABLE_LABEL, CATEGORIES, CONNECTORS, ON_REQUEST_CONNECTORS, ON_REQUEST_LABEL, ON_REQUEST_NOTE, availableSummary, type Connector, type ConnectorCategory } from "../integrationCatalog";
 
 type Filter = ConnectorCategory | "All" | typeof AVAILABLE_LABEL;
 const FILTERS: readonly Filter[] = ["All", AVAILABLE_LABEL, ...CATEGORIES];
@@ -10,7 +10,7 @@ const FILTERS: readonly Filter[] = ["All", AVAILABLE_LABEL, ...CATEGORIES];
 const COLLAPSED = 20;
 const MARK_SIZE = 20;
 
-/** "1,537" — the heading and the Show all button share the formatting. */
+/** "1,511" — the heading and the browse button share the formatting. */
 export const formatCount = (count: number): string => count.toLocaleString("en-US");
 
 const matchesFilter = (connector: Connector, filter: Filter) => filter === "All" || (filter === AVAILABLE_LABEL ? connector.available : connector.category === filter);
@@ -27,10 +27,12 @@ export function IntegrationDirectory({ titleId }: { titleId: string }) {
   const matches = CONNECTORS.filter((connector) => matchesFilter(connector, filter) && matchesQuery(connector, needle));
   const collapsible = matches.length > COLLAPSED;
   const shown = collapsible && !expanded ? matches.slice(0, COLLAPSED) : matches;
+  // Unfiltered, the tiles in view lead with every app available today; the rest of the catalog is on request.
+  const showAllLabel = filter === "All" && !needle ? `Browse ${formatCount(ON_REQUEST_CONNECTORS.length)} requestable apps` : `Show all ${formatCount(matches.length)} connectors`;
   return (
     <div className="connector-directory" data-component="integrationDirectory">
       <div className="connector-header">
-        <div><span className="micro-label">All connectors</span><h3 id={titleId}>{formatCount(CONNECTORS.length)} business tools</h3></div>
+        <div><span className="micro-label">All connectors</span><h3 id={titleId}>{formatCount(AVAILABLE_CONNECTORS.length)} {AVAILABLE_LABEL.toLowerCase()} <span aria-hidden="true">·</span> {formatCount(ON_REQUEST_CONNECTORS.length)} more we connect on request</h3></div>
         <label className="connector-search" htmlFor={searchId}>
           <span className="sr-only">Search connectors</span>
           <input id={searchId} type="search" placeholder="Search connectors" autoComplete="off" value={query} onChange={(event) => setQuery(event.target.value)} data-component="integrationSearch" />
@@ -49,7 +51,7 @@ export function IntegrationDirectory({ titleId }: { titleId: string }) {
       {matches.length === 0 ? <p className="connector-empty">No connector matches “{query.trim()}”.</p> : null}
       <div className="connector-footer">
         <span>{AVAILABLE_LABEL}: {availableSummary()}. {ON_REQUEST_LABEL}: we add an app’s connector for you.</span>
-        {collapsible ? <button type="button" className="text-link" aria-expanded={expanded} onClick={() => setExpanded(!expanded)} data-component="integrationShowAll">{expanded ? "Show fewer" : `Show all ${formatCount(matches.length)} connectors`}</button> : null}
+        {collapsible ? <button type="button" className="text-link" aria-expanded={expanded} onClick={() => setExpanded(!expanded)} data-component="integrationShowAll">{expanded ? "Show fewer" : showAllLabel}</button> : null}
       </div>
     </div>
   );

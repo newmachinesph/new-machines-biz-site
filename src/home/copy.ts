@@ -1,12 +1,3 @@
-import type { City } from "./clock";
-
-const CITIES: readonly City[] = [
-  { name: "Tokyo", native: "東京", zone: "Asia/Tokyo", abbr: "JST" },
-  { name: "Singapore", zone: "Asia/Singapore", abbr: "SGT" },
-  { name: "Sydney", zone: "Australia/Sydney", abbr: "AEST/AEDT" },
-  { name: "Seoul", zone: "Asia/Seoul", abbr: "KST" },
-];
-
 export const HOME_COPY = {
   nav: {
     links: [
@@ -34,7 +25,6 @@ export const HOME_COPY = {
     lead: "Built for Japan. Ready for everywhere.",
     sub: "Local expertise. Shared standards. Work across borders with confidence.",
     languages: "日本語 / English",
-    cities: CITIES,
   },
   hire: {
     eyebrow: "Marketplace",
@@ -50,8 +40,8 @@ export const HOME_COPY = {
   },
   trust: {
     eyebrow: "Trust",
-    lead: "Judgment recommends. Policy authorizes. Verification checks.",
-    sub: "An AI's confidence is never a substitute for authorization or proof. These responsibilities are kept separate on purpose.",
+    lead: "Judgment recommends. Policy authorises. Verification checks.",
+    sub: "An AI's confidence is never a substitute for authorisation or proof. These responsibilities are kept separate on purpose.",
   },
   human: {
     eyebrow: "Human work",

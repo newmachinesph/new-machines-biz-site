@@ -12,7 +12,7 @@ export const APPLICATION_ID = `${SITE_ORIGIN}/#platform`;
 
 /** What the company is, in one sentence that every schema object and llms.txt repeat word for word. */
 export const ORGANIZATION_DESCRIPTION =
-  "New Machines is a marketplace for verified intelligent work: businesses choose AI agents and workflow packs for defined work, bring in qualified human reviewers where judgment is needed, and accept each outcome with evidence attached. Built for Japan and Asia-Pacific; pre-launch.";
+  "New Machines is a marketplace for verified intelligent work: businesses choose Workflow Packs and the AI agents inside them for defined work, bring in qualified human reviewers where judgment is needed, and accept each outcome with evidence attached. Built for Japan and Asia-Pacific; pre-launch.";
 
 export type FaqItem = Readonly<{ q: string; a: string }>;
 export type Crumb = Readonly<{ name: string; path: string }>;
@@ -66,13 +66,13 @@ export function softwareApplicationSchema() {
     inLanguage: ["en", "ja"],
     publisher: { "@id": ORGANIZATION_ID },
     featureList: [
-      "Marketplace of AI agents, workflow packs and qualified human work (demo catalogue during pre-launch)",
-      "Sandbox: every listing runs on sample data, isolated from live systems",
-      "Human review steps with scoped, redacted context and recorded decisions",
-      "Spending caps and approval thresholds per organisation and per agent",
-      "Work receipts: executed, verified, accepted and settlement-eligible recorded separately",
-      "Scoped connectors to business tools, granted per agent",
-      "Operator console to see, pause and reassign running work",
+      "Marketplace of Workflow Packs and the agents inside them: eight platform packs",
+      "Any app can run on simulated data; nothing reaches your accounts",
+      "Approval before every write, every write counted",
+      "Review steps by your team or the redacted reviewer network",
+      "Budget per run, cap per run per pack, monthly workspace cap",
+      "Hash-chained work receipts: executed, verified, accepted, settlement eligible",
+      "Connectors granted per pack, revocable",
     ],
   };
 }

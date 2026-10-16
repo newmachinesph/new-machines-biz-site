@@ -5,7 +5,8 @@ import { DEMO_LISTINGS } from "@/home/mockups/data";
 import { MARKETPLACE_COPY } from "./copy";
 import { isKind, KIND_FILTERS } from "./kinds";
 import { factsFor, LISTING_FACTS } from "./listingFacts";
-import { findListing, MARKETPLACE_LISTINGS, relatedListings } from "./listings";
+import { findListing, fullPriceOf, MARKETPLACE_LISTINGS, relatedListings } from "./listings";
+import { appHref, previewHref } from "./listingLinks";
 
 const PACKS = [
   "order-to-cash-exception-desk",
@@ -94,5 +95,35 @@ describe("marketplace listings", () => {
     expect(text).not.toMatch(/\bhir(e|es|ed|ing)\b/i);
     expect(JSON.stringify(MARKETPLACE_LISTINGS)).not.toMatch(/¥/);
     expect(text).not.toMatch(/\d+%\s+(faster|more)|\d+x faster|trusted by/i);
+  });
+});
+
+describe("listing prices and links", () => {
+  it("states reviewer time next to the price exactly where the pack's facts do", () => {
+    for (const listing of MARKETPLACE_LISTINGS.filter((item) => item.kind === "pack")) {
+      const facts = factsFor(listing.slug);
+      const note = facts && facts.kind === "pack" ? facts.priceNote : "";
+      if (listing.reviewUpTo) expect(note).toContain(`up to ${listing.reviewUpTo} of reviewer time`);
+      else expect(note).not.toMatch(/up to \$\d/);
+    }
+    expect(fullPriceOf(findListing("order-payment-reconciliation")!)).toBe("About $0.60–$2.40 / run + up to $7.50 review");
+    expect(fullPriceOf(findListing("inbox-lead-tracker")!)).toBe("About $0.05–$0.40 / run");
+  });
+
+  it("previews each listing in its own team's chapter and opens its page in the app", () => {
+    expect(previewHref("support-inbox-triage")).toBe("/?workflow=support#work-explorer");
+    expect(previewHref("inbox-lead-tracker")).toBe("/?workflow=sales#work-explorer");
+    for (const listing of MARKETPLACE_LISTINGS) expect(previewHref(listing.slug)).toMatch(/^\/\?workflow=(finance|sales|operations|support)#work-explorer$/);
+    expect(appHref(findListing("order-to-cash-exception-desk")!)).toMatch(/\/app\/marketplace\/order-to-cash-exception-desk$/);
+    expect(appHref(findListing("order-to-cash-triage-agent")!)).toMatch(/\/app\/agents\/o2c-triage-agent$/);
+  });
+
+  it("credits the contributor of the Order-to-Cash Exception Desk", () => {
+    expect(findListing("order-to-cash-exception-desk")!.contributor).toBe("Adrian Anton Ladia");
+  });
+
+  it("gives every pack its own portrait", () => {
+    const packs = MARKETPLACE_LISTINGS.filter((item) => item.kind === "pack");
+    expect(new Set(packs.map((item) => item.portrait)).size).toBe(packs.length);
   });
 });

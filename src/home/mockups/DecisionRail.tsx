@@ -6,8 +6,8 @@ import { AgentPortrait } from "./AgentPortrait";
 export const RAIL_NODES = [
   { title: "Agent executed", meta: "Finance Agent · Order & Payment Reconciliation v1.0.0", detail: "09:35:02 JST" },
   { title: "Judgment recommended", meta: "Recommendation recorded", detail: "Advisory only" },
-  { title: "Policy authorized", meta: "Payment mismatch · A person must review", detail: "In scope" },
-  { title: "Human approved", meta: "Invoice reviewer · Your team", detail: "09:36:12 JST" },
+  { title: "Policy authorised", meta: "Payment mismatch · A person must review", detail: "In scope" },
+  { title: "Reviewer verdict", meta: "Invoice reviewer · Your team", detail: "09:36:12 JST" },
   { title: "Verification passed", meta: "Schema and rule checks", detail: "3 / 3 checks" },
 ] as const;
 const STATUSES = ["Executed", "Verified", "Accepted", "Settlement eligible"] as const;

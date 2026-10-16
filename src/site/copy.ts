@@ -2,6 +2,8 @@
  *  Same register as HOME_COPY: Japan and Asia-Pacific, agents are chosen or assigned, only people are hired,
  *  demo figures are labelled. No model vendors are named. */
 
+import { HUB_NAMES } from "./hubs";
+
 export const SITE = {
   domain: "newmachin.es",
   url: "https://newmachin.es",
@@ -66,17 +68,16 @@ export const PRODUCT_COPY = {
     eyebrow: "Simulated data",
     lead: "Try it on simulated data. Nothing reaches your accounts.",
     sub: "Add any pack and choose simulated data for its apps: the run is real, nothing reaches your accounts, and any write lands in the sandbox. Every pack page also shows a short preview on sample data before you add it.",
-    caption: "Illustrative preview",
   },
   trust: {
     eyebrow: "Trust",
-    lead: "Judgment recommends. Policy authorizes. Verification checks.",
+    lead: "Judgment recommends. Policy authorises. Verification checks.",
     sub: "Four distinct statuses: executed, verified, accepted and settlement eligible. An agent cannot approve its own work by reporting success.",
     link: { href: "/trust", label: "Read the trust model" },
   },
   human: {
     eyebrow: "Approvals and reviewers",
-    lead: "A person approves one exact action.",
+    lead: "You approve each action. Reviewers give verdicts.",
     sub: "When a run is about to change something in your apps, it waits in Approvals until a person approves that exact action. The card shows the app, the step and the tool call, counts every write, lists the steps the approval also covers and names who approved. Approvals expire after 24 hours, and if anything in the action changes you are asked again. Review steps go to your own team, to the New Machines reviewer network, which sees a redacted copy, or to your team first and the network after 30 minutes.",
     link: { href: "/work", label: "How reviewing works" },
   },
@@ -93,6 +94,7 @@ export const PRODUCT_COPY = {
     tail: "With a receipt.",
     sub: "A run shows its steps as they happen, what each one found and what it cost. It ends in a work receipt: a hash-chained record of every step, who did it, the pinned version of every definition used and any publisher fees. The evidence page adds what was produced, who did each part, and what was permitted and what changed outside New Machines. Executed, verified, accepted and settlement eligible are recorded separately.",
     caption: "Sample approval log · synthetic data",
+    scrollHint: "Scroll the log sideways for the time",
     note: "Synthetic data · No real actions or charges",
   },
   connected: {
@@ -137,15 +139,15 @@ export const PRICING_COPY = {
     sub: "Every new workspace starts on the Trial plan. Each pack shows its cost per run before you add it: AI work, plus reviewer time when the pack needs a reviewer. You pay for agent and tool use as it happens, up to the cap you set. During pre-launch, billing is simulated: costs are shown, but no money moves.",
   },
   plans: [
-    { name: "Trial", price: "Free", unit: "no plan fee", body: "Every new workspace starts here, with a monthly cap of $25 by default. Add packs, run them on simulated data or your own apps, and see every cost against the cap.", cta: { label: "Get started", external: true } },
-    { name: "Per run", price: "$0.05–$3.00", unit: "of AI work per run", body: "Usage-based. Each pack shows its estimate before you add it: the Order-to-Cash Exception Desk, for example, is about $0.80 to $3.00 of AI work per run. Platform agents have no price of their own.", cta: { href: "/marketplace", label: "Browse packs" } },
-    { name: "Reviewer time", price: "up to $7.50", unit: "per run", body: "Only when a pack sends work to a reviewer, up to the maximum the pack states: $5.00 or $7.50 on today’s packs. Reviews by your own team are unpaid.", cta: { href: "/work", label: "How reviewing works" } },
-    { name: "Publisher fee", price: "Itemized", unit: "per run or per call", body: "Packs and agents listed by other workspaces carry a fee per run or per call, shown before you add them and itemized on the work receipt. Platform packs carry no fee.", cta: { href: "/developers", label: "For developers" } },
+    { label: "The plan", name: "Trial", price: "Free", unit: "no plan fee", body: "Every new workspace starts here, with a monthly cap of $25 by default. Add packs, run them on simulated data or your own apps, and see every cost against the cap.", cta: { label: "Get started", external: true } },
+    { label: "What a run costs", name: "Per run", price: "$0.05–$3.00", unit: "of AI work per run", body: "Usage-based. Each pack shows its estimate before you add it: the Order-to-Cash Exception Desk, for example, is about $0.80 to $3.00 of AI work per run. Platform agents have no price of their own.", cta: { href: "/marketplace", label: "Browse packs" } },
+    { label: "What a run costs", name: "Reviewer time", price: "up to $7.50", unit: "per run", body: "Only when a pack sends work to a reviewer, up to the maximum the pack states: $5.00 or $7.50 on today’s packs. Reviews by your own team are unpaid.", cta: { href: "/work", label: "How reviewing works" } },
+    { label: "What a run costs", name: "Publisher fee", price: "Itemised", unit: "per run or per call", body: "Packs and agents listed by other workspaces carry a fee per run or per call, shown before you add them and itemised on the work receipt. Platform packs carry no fee.", cta: { href: "/developers", label: "For developers" } },
   ],
   note: "Estimates in US dollars, as the product shows them. Billing, reviewer pay and publisher fees are simulated during pre-launch: no payment is collected and no money moves. Final prices are set at launch.",
   included: {
     eyebrow: "Included",
-    lead: "Every plan.",
+    lead: "Every pack.",
     tail: "Every control.",
     sub: "Controls are not an upgrade. The same caps, approvals and evidence apply to every pack and every run.",
     items: [
@@ -187,7 +189,7 @@ export const DEVELOPERS_COPY = {
   intro: {
     eyebrow: "Developers",
     lead: "Publish agents people can trust.",
-    tail: "Get paid when they are used.",
+    tail: "Get paid when they are used (simulated in pre-launch).",
     sub: "The Developer Studio is where your company builds agents and Workflow Packs, tests them on sandbox apps and submits them for listing in other workspaces. Each listing declares what it reads, what it can change and where a person decides.",
     primary: { label: "Open the Developer Studio", external: true },
     secondary: { href: "/trust", label: "Read the trust model" },
@@ -199,7 +201,7 @@ export const DEVELOPERS_COPY = {
     tail: "One definition each.",
     sub: "A listing is a versioned definition, not a prompt. It names its tools, its inputs and outputs, where people review and approve, and its price.",
     items: [
-      { title: "Agents", body: "An agent does one kind of work: a summary, instructions, a Reasoning or Fast model profile, a limit on tool calls per step, read-only app tools and short skills. You set a price per call. Other workspaces can use a listed agent in their own packs, and its fee is itemized on their receipt." },
+      { title: "Agents", body: "An agent does one kind of work: a summary, instructions, a Reasoning or Fast model profile, a limit on tool calls per step, read-only app tools and short skills. You set a price per call. Other workspaces can use a listed agent in their own packs, and its fee is itemised on their receipt." },
       { title: "Workflow Packs", body: "A pack puts agents, app steps and review steps in order for one job: a start form, decisions with rules, human review, an approval before any write, a check at the end, and budgets for agents and reviewers. You set a price per run, and the listing carries its risk class and the apps it needs." },
     ],
     note: "Your own MCP server connects in your workspace and stays private: packs that use it cannot be listed.",
@@ -215,7 +217,7 @@ export const DEVELOPERS_COPY = {
       { title: "workflow.yaml", body: "Export or import a pack in the same file format the platform’s own packs use." },
       { title: "Test in sandbox", body: "A real run of the saved version on sandbox apps, not a preview. Its spend counts toward the monthly cap." },
       { title: "Edit a copy", body: "Copy a ready-made platform pack or one your team built, and save it as your own. Packs from other publishers can be added but not copied." },
-      { title: "Agents from other workspaces", body: "Use another publisher’s listed agent as a step in your pack. Its per-call fee is itemized on the work receipt." },
+      { title: "Agents from other workspaces", body: "Use another publisher’s listed agent as a step in your pack. Its per-call fee is itemised on the work receipt." },
     ],
   },
   lifecycle: {
@@ -237,18 +239,18 @@ export const DEVELOPERS_COPY = {
     tail: "The marketplace holds the line.",
     sub: "Authorisation, isolation, metering and evidence are the platform’s job, so a listing can be small and honest about what it does.",
     items: [
-      { title: "Tenant isolation", body: "Each installation has its own identity, permissions and memory. A publisher never sees a customer’s data, credentials or run history." },
+      { title: "Tenant isolation", body: "Each workspace keeps its own connections, permissions and memory. A publisher sees aggregate quality numbers only, never a customer’s data, credentials or run history." },
       { title: "Tool gateway", body: "Every tool call is checked before it runs: the capability must be in the pack’s contract, the app must be connected and granted, and policy must allow the action. Tools that delete records or move money are never offered." },
       { title: "Sandbox test", body: "The review runs your version on sandbox apps before it is listed. A Trust Passport with measured results is planned; publisher demonstrations are never presented as certification.", note: "Trust Passport planned" },
-      { title: "Evidence", body: "Each run leaves a hash-chained receipt of inputs, actions, checks and approvals, with your fee itemized. That is what buyers accept and what settlements follow." },
+      { title: "Evidence", body: "Each run leaves a hash-chained receipt of inputs, actions, checks and approvals, with your fee itemised. That is what buyers accept and what settlements follow." },
       { title: "Metering", body: "Usage is recorded per run step with the price version it was listed at. Settlement follows the contract, not a success flag." },
       { title: "Revenue share", body: "You set a price per run or per call; the publisher keeps 80% and New Machines 20%. Fees, earnings and payouts are simulated until billing starts.", note: "Simulated until launch" },
     ],
   },
   stack: {
     eyebrow: "Built on open parts",
-    lead: "Framework-agnostic edges.",
-    tail: "Google-native by default.",
+    lead: "Google-native today.",
+    tail: "Other frameworks through adapters, planned.",
     sub: "Agents are defined in the Developer Studio and run on Google’s Agent Development Kit today; agents built with other frameworks, or your own deployed code, will follow through adapters. Apps connect through the integration layer, and your own systems through MCP with a token; OAuth sign-in for MCP servers is planned. Workflows run on a durable engine that survives restarts and long human waits.",
   },
 } as const;
@@ -263,7 +265,7 @@ export const TRUST_COPY = {
   },
   receipt: {
     eyebrow: "Work receipt",
-    lead: "Judgment recommends. Policy authorizes. Verification checks.",
+    lead: "Judgment recommends. Policy authorises. Verification checks.",
     sub: "This is what a finished run looks like: who did what, what policy allowed, who approved it and what was verified. Blocked never becomes approved.",
   },
   separation: {
@@ -288,7 +290,7 @@ export const TRUST_COPY = {
     sub: "The run page shows each step’s records side by side, and the work receipt chains them together.",
     items: [
       { title: "Three separate records", body: "Every step shows what the evaluator recommends, what policy allows and who signs off, as three separate records." },
-      { title: "No score authorizes", body: "No confidence score is shown. Scores never authorize an action, and a blocked action has no override button." },
+      { title: "No score authorises", body: "No confidence score is shown. Scores never authorise an action, and a blocked action has no override button." },
       { title: "Hash-chained receipt", body: "Each run ends in a tamper-evident receipt: every step chained by hash, with the pinned version of every definition used." },
       { title: "What changed outside", body: "The evidence page lists what was permitted and what changed outside New Machines, counted from the run’s own tool calls." },
       { title: "Memory needs a person", body: "Agents propose what they learn; a person approves, edits or rejects each item before agents use it. Systems of record always win." },
@@ -436,7 +438,7 @@ export const ABOUT_COPY = {
     lead: "Operations teams",
     tail: "with real work to move.",
     sub: "Our first customers are operations owners and team leads at digitally enabled businesses: repetitive back-office work, existing spreadsheets and SaaS tools, little time to build automations, and a need for reliable exception handling.",
-    hubs: ["Tokyo", "Seoul", "Singapore", "Manila", "Sydney", "Bengaluru"],
+    hubs: HUB_NAMES,
     hubsLabel: "Launch market and the hubs that follow",
     languages: "日本語 / English",
   },
@@ -471,8 +473,8 @@ export const CONTACT_COPY = {
 } as const;
 
 export const LEGAL_COPY = {
-  counsel: "These pre-launch terms will be reviewed by counsel before commercial launch.",
   privacy: {
+    counsel: "This pre-launch policy will be reviewed by counsel before commercial launch.",
     meta: { title: "Privacy", description: "How New Machines collects, uses and protects information, in plain language." },
     eyebrow: "Privacy",
     lead: "Privacy policy",
@@ -480,12 +482,12 @@ export const LEGAL_COPY = {
     intro: "This policy explains what information New Machines collects, how it is used and the choices you have. It is written plainly on purpose. New Machines is pre-launch; as the service changes, this page will change with it, and the date above will tell you when.",
     sections: [
       { h: "Who we are", p: ["New Machines operates the website at newmachin.es and the New Machines marketplace and workspace (together, the “Service”). When this policy says “we”, it means New Machines as the operator of the Service."] },
-      { h: "Information we collect", p: ["Account information: your name, work email address, organisation and role, and the sign-in method you use.", "Workspace content: the listings you choose, the policies and spending caps you set, the runs you start, reviewer decisions, and the evidence records the Service produces for your organisation.", "Connected data: when your organisation connects a business tool, the Service reads data only within the scopes you grant and only for the work you ask it to do. Sandbox runs use sample data and never read your connected systems.", "Usage information: pages visited, actions taken in the workspace, device and browser type, and diagnostic logs needed to keep the Service working.", "Correspondence: what you send us by email or through the Service."] },
-      { h: "How we use it", p: ["To provide the Service: run the work you assign, pause for human review where your policy requires it, produce evidence records and show you costs.", "To keep the Service safe: authorise every action, enforce tenant isolation and spending caps, detect abuse and investigate incidents.", "To support you: answer questions, notify you about runs that are waiting on a decision, and tell you about changes to the Service.", "To improve the Service: understand how it is used in aggregate. We do not use your connected data or your organisation’s content to train models."] },
-      { h: "How we share it", p: ["Within your organisation: members see what their role allows. Reviewers you assign see only the task-scoped, redacted records a task needs.", "Service providers: we use infrastructure providers, including Google Cloud for hosting, that process data on our instructions and under contract.", "Connected tools: when you authorise a connector, data moves between the Service and that tool within the scopes you granted. The tool’s own terms apply to it.", "Legal requirements: we disclose information when the law requires it, and we tell you unless we are prohibited from doing so.", "We do not sell personal information."] },
-      { h: "Human reviewers", p: ["Qualified reviewers who work on your tasks are bound by confidentiality terms and see only redacted and task-scoped records. Their verdicts and feedback become part of your organisation’s evidence record."] },
-      { h: "Retention", p: ["Account information is kept while your account is active and for a reasonable period afterwards to meet legal and audit obligations. Run history is kept for 30 days. You can revoke any connector at any time; access ends immediately, including for runs in progress."] },
-      { h: "Security", p: ["Data is encrypted in transit and at rest. Every action in the Service is authorised against your organisation, the acting identity and your policy. Privileged access by our staff is controlled and logged. No system is perfectly secure; if an incident affects your information, we will tell you promptly."] },
+      { h: "Information we collect", p: ["Account information: your name, work email address, organisation and role, and the sign-in method you use.", "Workspace content: the listings you choose, the spending caps you set, the runs you start, reviewer decisions, and the evidence records the Service produces for your organisation.", "Connected data: when your organisation connects a business tool, the Service reads data only within the scopes you grant and only for the work you ask it to do. Sandbox runs use sample data and never read your connected systems.", "Usage information: pages visited, actions taken in the workspace, device and browser type, and diagnostic logs needed to keep the Service working.", "Correspondence: what you send us by email or through the Service."] },
+      { h: "How we use it", p: ["To provide the Service: run the work you assign, wait for your approval before every write and for human review where a pack requires it, produce evidence records and show you costs.", "To keep the Service safe: authorise every action, enforce tenant isolation and spending caps, detect abuse and investigate incidents.", "To support you: answer questions, notify you about runs that are waiting on a decision, and tell you about changes to the Service.", "To improve the Service: understand how it is used in aggregate. We do not use your connected data or your organisation’s content to train models."] },
+      { h: "How we share it", p: ["Within your organisation: members see what their role allows. Reviewers on your own team see only the task-scoped records a task needs.", "Service providers: we use infrastructure providers, including Google Cloud for hosting, that process data on our instructions and under contract.", "Connected tools: when you authorise a connector, data moves between the Service and that tool within the scopes you granted. The tool’s own terms apply to it.", "Legal requirements: we disclose information when the law requires it, and we tell you unless we are prohibited from doing so.", "We do not sell personal information."] },
+      { h: "Human reviewers", p: ["Reviewers on your own team see only the task-scoped records a task needs. If you allow the New Machines reviewer network, its reviewers see a redacted copy, without your workspace name, emails or phone numbers, and are bound by confidentiality terms. Their verdicts and feedback become part of your organisation’s evidence record."] },
+      { h: "Retention", p: ["Account information is kept while your account is active and for a reasonable period afterwards to meet legal and audit obligations. Run history is kept for 30 days. You can revoke any connector at any time; new runs cannot use it, and a run in progress stops at its next step for that app."] },
+      { h: "Security", p: ["Data is encrypted in transit and at rest. Every action in the Service is authorised against your organisation, the acting identity and the platform’s policy. Privileged access by our staff is controlled and logged. No system is perfectly secure; if an incident affects your information, we will tell you promptly."] },
       { h: "Your choices and rights", p: ["You can view and update your account information and revoke connectors in the workspace. You can export your organisation’s evidence records or close your account on request by email. Depending on where you live, you may have rights to access, correct, delete or restrict the use of your personal information. Write to us and we will respond within the period the applicable law allows."] },
       { h: "Where data is processed", p: ["Customer data is stored and processed on Google Cloud in Mumbai, India (asia-south1). Requests to AI models are not pinned to a region. Per-organisation workspace regions are planned. Where information crosses borders, we rely on contractual safeguards with our providers."] },
       { h: "Children", p: ["The Service is for businesses and is not directed at children. We do not knowingly collect information from anyone under 16."] },
@@ -494,19 +496,20 @@ export const LEGAL_COPY = {
     ],
   },
   terms: {
+    counsel: "These pre-launch terms will be reviewed by counsel before commercial launch.",
     meta: { title: "Terms", description: "The terms on which New Machines provides its website, marketplace and workspace during pre-launch." },
     eyebrow: "Terms",
     lead: "Terms of service",
     updated: `Last updated ${SITE.updated}`,
     intro: "These terms govern your use of the New Machines website, marketplace and workspace (the “Service”). They are a sensible baseline for a pre-launch service. Organisations that work with us before launch will also receive a written agreement, and where the two differ, the written agreement applies.",
     sections: [
-      { h: "The Service", p: ["New Machines is a marketplace where organisations choose AI agents and workflow packs, assign work, bring in qualified human reviewers and receive evidence of the work. During pre-launch the Service is provided for evaluation, with features, listings and prices that may change."] },
-      { h: "Accounts and organisations", p: ["You must provide accurate information and keep your sign-in credentials secure. An organisation’s administrators are responsible for the members they invite, the policies they set, the connectors they authorise and the spending caps they choose. You are responsible for activity under your account."] },
-      { h: "Roles", p: ["Buyers assign work, set policy and accept outcomes. Publishers list versioned agents and packs and are responsible for what their listings declare. Reviewers accept bounded tasks under their own task agreements. A person may hold several roles, but every action is authorised in the organisation and session it is taken in."] },
-      { h: "How work is authorised", p: ["Agents act only within the permissions, connectors and caps your organisation grants. An agent’s recommendation is never an authorisation. Where your policy requires a human decision, the work waits for it. Unconfirmed actions are recorded as unconfirmed, not as successful."] },
+      { h: "The Service", p: ["New Machines is a marketplace where organisations choose Workflow Packs and the AI agents inside them, assign work, bring in qualified human reviewers and receive evidence of the work. During pre-launch the Service is provided for evaluation, with features, listings and prices that may change."] },
+      { h: "Accounts and organisations", p: ["You must provide accurate information and keep your sign-in credentials secure. An organisation’s administrators are responsible for the members they invite, the connectors they authorise and the spending caps they choose. You are responsible for activity under your account."] },
+      { h: "Roles", p: ["Buyers choose packs, start runs, approve each write and accept outcomes. Publishers list versioned agents and packs and are responsible for what their listings declare. Reviewers accept bounded tasks under their own task agreements. A person may hold several roles, but every action is authorised in the organisation and session it is taken in."] },
+      { h: "How work is authorised", p: ["Agents act only within the permissions, connectors and caps your organisation grants. An agent’s recommendation is never an authorisation. Where a pack or the platform’s policy requires a human decision, the work waits for it. Unconfirmed actions are recorded as unconfirmed, not as successful."] },
       { h: "Evidence and acceptance", p: ["The Service records what was requested, who did each part, what was checked and who approved it. Executed, verified, accepted and settlement eligible are distinct statuses. Where a contract requires buyer acceptance, you may accept or dispute a deliverable within the period the contract states."] },
       { h: "Fees", p: ["Prices are shown on each listing before you choose it and estimated before each run. During pre-launch, usage and charges are shown for transparency and no payment is collected unless agreed in writing. When paid plans launch, fees, billing periods and refund terms will be stated before you commit, and spending caps you set will be enforced."] },
-      { h: "Reviewers", p: ["Reviewers see the pay, deadline and criteria of a task before accepting it. Pay for correctly performed work follows the task agreement and does not depend on the success of later automated steps. Reviewers keep customer information confidential and work only within the jurisdictions and data scopes they are eligible for."] },
+      { h: "Reviewers", p: ["Reviewers see the pay, deadline and criteria of a task before accepting it. Pay for correctly performed work follows the task agreement and does not depend on the success of later automated steps. Reviewers keep customer information confidential and work only within the data scope of each task."] },
       { h: "Acceptable use", p: ["Do not use the Service to break the law, to process data you have no right to process, to attempt to access another organisation’s data, to circumvent policy or spending controls, or to misrepresent a listing’s capabilities or test results. We may suspend access to protect the Service or other users."] },
       { h: "Your content and ours", p: ["You keep ownership of the data you connect and the content you create. You grant us the rights needed to operate the Service for you. We keep ownership of the Service, its software and its brand. Publishers keep ownership of their listings and grant buyers the right to use the versions they choose."] },
       { h: "Sandbox and demonstrations", p: ["Sandbox runs use sample or synthetic data and inert tools. Figures labelled demo, sample, synthetic or illustrative are not measurements of your work or guarantees of future performance."] },
@@ -519,7 +522,7 @@ export const LEGAL_COPY = {
 } as const;
 
 export const NOT_FOUND_COPY = {
-  meta: { title: "Page not found" },
+  meta: { title: "Page not found", description: "This page does not exist. Browse the marketplace or go home." },
   eyebrow: "404",
   lead: "Nothing here.",
   tail: "Yet.",
