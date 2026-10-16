@@ -800,7 +800,6 @@ export const CONNECTOR_ROWS: readonly ConnectorRow[] = [
   ["jev", "Jev", 8, "svg"],
   ["jigsawstack", "Jigsawstack", 1, "svg"],
   ["jinko", "Jinko", 4, "svg"],
-  ["job_search", "Job Search", 7, "svg"],
   ["jobber", "Jobber", 0, "svg"],
   ["jobnimbus", "JobNimbus", 0, "svg"],
   ["jogg_ai", "JoggAI", 1, "svg"],
