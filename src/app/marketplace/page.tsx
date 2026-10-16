@@ -5,8 +5,9 @@ import { Close } from "@/home/sections/Close";
 import { Catalogue, CatalogueFromUrl } from "@/marketplace/Catalogue";
 import { MARKETPLACE_COPY } from "@/marketplace/copy";
 import { PageShell } from "@/marketplace/PageShell";
+import { pageMetadata } from "@/site/metadata";
 
-export const metadata: Metadata = { title: MARKETPLACE_COPY.meta.title, description: MARKETPLACE_COPY.meta.description };
+export const metadata: Metadata = pageMetadata({ title: MARKETPLACE_COPY.meta.title, description: MARKETPLACE_COPY.meta.description, path: "/marketplace" });
 
 export default function Page() {
   const { eyebrow, lead, tail, sub, closeSecondary } = MARKETPLACE_COPY.catalogue;

@@ -8,7 +8,8 @@ const INVOICE_DATA_NOTE = "Real invoices, names and dates changed";
 /** Every string on /marketplace and /marketplace/[slug]. Same register as HOME_COPY: Japan and Asia-Pacific only. */
 export const MARKETPLACE_COPY = {
   meta: {
-    title: "Marketplace · New Machines",
+    // The layout's title template appends " · New Machines".
+    title: "Marketplace",
     description: "Browse AI agents, workflow packs and qualified human work for Japan and Asia-Pacific. Every listing shows its scope, price and verification status.",
   },
   catalogue: {

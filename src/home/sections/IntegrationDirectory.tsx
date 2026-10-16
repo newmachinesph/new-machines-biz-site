@@ -49,7 +49,7 @@ export function IntegrationDirectory({ titleId }: { titleId: string }) {
       </ul>
       {matches.length === 0 ? <p className="connector-empty">No connector matches “{query.trim()}”.</p> : null}
       <div className="connector-footer">
-        <span>Connector availability varies by plan and region.</span>
+        <span>Available today: Gmail, Google Drive, Sheets, Docs, Calendar, Slack and your own MCP server. The rest are planned.</span>
         {collapsible ? <button type="button" className="text-link" aria-expanded={expanded} onClick={() => setExpanded(!expanded)} data-component="integrationShowAll">{expanded ? "Show fewer" : `Show all ${matches.length} connectors`}</button> : null}
       </div>
     </div>

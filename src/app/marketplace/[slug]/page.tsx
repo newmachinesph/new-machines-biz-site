@@ -4,6 +4,7 @@ import { MARKETPLACE_COPY } from "@/marketplace/copy";
 import { findListing, MARKETPLACE_LISTINGS } from "@/marketplace/listings";
 import { ListingDetail } from "@/marketplace/ListingDetail";
 import { PageShell } from "@/marketplace/PageShell";
+import { pageMetadata } from "@/site/metadata";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -17,7 +18,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const listing = findListing((await params).slug);
   if (!listing) return { title: MARKETPLACE_COPY.meta.title };
-  return { title: `${listing.title} · ${MARKETPLACE_COPY.meta.title}`, description: listing.summary };
+  return pageMetadata({ title: `${listing.title} · ${MARKETPLACE_COPY.meta.title}`, description: listing.summary, path: `/marketplace/${listing.slug}` });
 }
 
 export default async function Page({ params }: Props) {

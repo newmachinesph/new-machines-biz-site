@@ -11,10 +11,10 @@ export const HOME_COPY = {
   nav: {
     links: [
       { href: "/marketplace", label: "Marketplace" },
-      { href: "/#work-explorer", label: "Solutions" },
-      { href: "/#customers", label: "Customers" },
-      { href: "/#integrations", label: "Integrations" },
-      { href: "/#faq", label: "Resources" },
+      { href: "/product", label: "Product" },
+      { href: "/pricing", label: "Pricing" },
+      { href: "/developers", label: "Developers" },
+      { href: "/trust", label: "Trust" },
     ],
     secondaryAction: "Try a workflow",
     getStarted: "Get started",
@@ -85,9 +85,10 @@ export const HOME_COPY = {
   footer: {
     domain: "newmachin.es",
     columns: [
-      { title: "Platform", links: [{ href: "/marketplace", label: "Marketplace" }, { href: "/#sandbox", label: "Sandbox" }, { href: "/#trust", label: "Verification" }, { href: "/#control", label: "Spend controls" }] },
-      { title: "Solutions", links: [{ href: "/?workflow=finance#work-explorer", label: "Finance & operations" }, { href: "/?workflow=sales#work-explorer", label: "Sales & growth" }, { href: "/#human", label: "Expert review" }, { href: "/#integrations", label: "Connected tools" }] },
-      { title: "Explore", links: [{ href: "/#integrations", label: "Tools ecosystem" }, { href: "/#human", label: "Human work" }, { href: "/#customer-stories", label: "Workflow stories" }, { href: "/#faq", label: "Questions & answers" }] },
+      { title: "Platform", links: [{ href: "/marketplace", label: "Marketplace" }, { href: "/product", label: "Product" }, { href: "/pricing", label: "Pricing" }, { href: "/#sandbox", label: "Sandbox" }, { href: "/#connectors", label: "Connectors" }] },
+      { title: "Solutions", links: [{ href: "/?workflow=finance#work-explorer", label: "Finance & operations" }, { href: "/?workflow=sales#work-explorer", label: "Sales & growth" }, { href: "/#customer-stories", label: "Workflow stories" }, { href: "/work", label: "For reviewers" }, { href: "/developers", label: "For developers" }] },
+      { title: "Company", links: [{ href: "/about", label: "About" }, { href: "/trust", label: "Trust & security" }, { href: "/contact", label: "Contact" }, { href: "/#faq", label: "Questions & answers" }] },
     ],
+    legal: [{ href: "/privacy", label: "Privacy" }, { href: "/terms", label: "Terms" }],
   },
 } as const;

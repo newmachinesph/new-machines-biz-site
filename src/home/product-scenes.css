@@ -297,7 +297,7 @@
 .review-entry[data-state="review"] .review-entry-box { border-color: var(--color-grey-700); }
 .review-caret { display: inline-block; width: 1px; height: 1.1em; margin-left: 1px; vertical-align: text-bottom; background: var(--color-ink); animation: review-caret 900ms steps(1) infinite; }
 .review-entry-actions { position: relative; display: flex; justify-content: flex-end; margin-top: 10px; }
-.review-submit { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border-radius: 5px; background: var(--color-grey-100); color: var(--color-grey-500); font-size: 11px; transition: background 160ms ease, color 160ms ease, transform 120ms ease; }
+.review-submit { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border-radius: 5px; background: var(--color-grey-100); color: var(--color-grey-700); font-size: 11px; transition: background 160ms ease, color 160ms ease, transform 120ms ease; }
 .review-submit .nm-icon { width: 12px; height: 12px; }
 .review-submit[data-enabled] { background: var(--color-ink); color: var(--color-paper); }
 .review-submit[data-pressed] { transform: scale(.96); }

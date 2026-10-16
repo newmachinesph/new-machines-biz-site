@@ -4,7 +4,7 @@ import { HOME_COPY } from "../copy";
 import { Icon } from "../Icon";
 
 export function Footer({ home = true }: { home?: boolean }) {
-  const { columns } = HOME_COPY.footer;
+  const { columns, legal } = HOME_COPY.footer;
   return (
     <footer className="site-footer bg-paper">
       <div className="footer-top mx-auto grid max-w-frame gap-10 border-x border-grey-200 px-6 py-14 md:grid-cols-[1.5fr_1fr_1fr_1fr] md:px-10">
@@ -25,7 +25,12 @@ export function Footer({ home = true }: { home?: boolean }) {
           ))}
         </nav>
       </div>
-      <div className="footer-bottom"><span>© 2026 New Machines</span><span><Icon name="globe" />日本語 / English · Japan & Asia-Pacific</span><a href="#main-content">Back to top ↑</a></div>
+      <div className="footer-bottom">
+        <span>© 2026 New Machines</span>
+        <nav aria-label="Legal" className="footer-legal">{legal.map((l) => <Link key={l.href} href={l.href} home={home}>{l.label}</Link>)}</nav>
+        <span className="footer-locale"><Icon name="globe" />日本語 / English · Japan & Asia-Pacific</span>
+        <a href="#main-content">Back to top ↑</a>
+      </div>
     </footer>
   );
 }

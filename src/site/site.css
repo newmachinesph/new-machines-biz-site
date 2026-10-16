@@ -1,0 +1,146 @@
+/* Company pages (/product, /pricing, /developers, /trust, /work, /about, /contact, legal, 404): the home's boxed
+   frame, type and hairlines, nothing new in colour. Openers and split cells take the home rules (home.css,
+   home-motion.css, scroll-polish.css); this file adds the blocks those pages need. Imported after marketplace.css.
+   Every rule is scoped to `.site-page` (PageShell className) or `.site-footer`, so nothing here restyles the home. */
+
+/* Page intro: eyebrow, two-tone h1, lede and actions, like the marketplace h1 but with room for buttons. */
+.site-page .page-intro { display: grid; gap: 28px; padding: 48px 24px 40px; }
+.site-page .page-intro h1 { margin-top: 20px; font-size: clamp(32px, 4.4vw, 56px); line-height: 1.05; font-weight: 500; letter-spacing: -.05em; text-wrap: balance; overflow-wrap: anywhere; min-width: 0; }
+.site-page .page-intro h1 span { color: var(--color-grey-500); }
+.site-page .page-intro-lede { display: flex; flex-direction: column; justify-content: flex-end; gap: 22px; }
+.site-page .page-intro-lede > p { max-width: 460px; font-size: 17px; line-height: 1.6; color: var(--color-muted-ink); }
+.site-page .page-intro-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; }
+.site-page .page-intro-note { font: 11px/1.6 var(--font-mono); color: var(--color-grey-500); }
+
+/* A text link inside a dark cell (home.css sets .text-link to ink). */
+.site-page .section-dark .split-copy .text-link { color: var(--color-paper); }
+
+/* Hairline grid of short feature cells. One column on a phone, two from 640, three (or the data-cols count) from 1024. */
+.site-page .feature-grid { display: grid; margin: 0 24px 40px; border-top: var(--rule-page); }
+.site-page .feature-grid > li { display: grid; gap: 10px; align-content: start; padding: 22px 0 24px; border-bottom: var(--rule-page); min-width: 0; }
+.site-page .feature-grid .feature-index { font: 300 24px/1.2 var(--font-mono); letter-spacing: -.06em; color: var(--color-grey-500); }
+.site-page .feature-grid h3 { font-size: 16px; font-weight: 500; letter-spacing: -.025em; line-height: 1.3; }
+.site-page .feature-grid p { font-size: 15px; line-height: 1.6; color: var(--color-grey-500); }
+.site-page .feature-grid .feature-note { font: 10px/1.6 var(--font-mono); text-transform: uppercase; letter-spacing: .05em; color: var(--color-grey-500); }
+.site-page .feature-grid .text-link { font-size: 13px; min-height: 36px; }
+
+/* Plan cards: four Cards with a price line, a body and one action. */
+.site-page .plan-grid { display: grid; gap: 16px; margin: 0; padding: 0 24px 24px; list-style: none; }
+.site-page .plan-card { display: grid; gap: 14px; align-content: start; padding: 24px; }
+.site-page .plan-card h3 { font-size: 13px; font-weight: 500; letter-spacing: -.01em; }
+.site-page .plan-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 8px; }
+.site-page .plan-price strong { font-size: 28px; font-weight: 500; line-height: 1.1; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.site-page .plan-price span { font-size: 12px; color: var(--color-grey-500); }
+.site-page .plan-card p { font-size: 14px; line-height: 1.6; color: var(--color-grey-700); }
+.site-page .plan-card .text-link { font-size: 13px; min-height: 36px; margin-top: auto; }
+
+/* Table and prose blocks share the frame's gutters. */
+.site-page .site-block { padding: 0 24px 40px; }
+.site-page .site-block .story-note, .site-page .site-note { padding: 12px 0 0; }
+
+/* Pull quote on About. */
+.site-page .pull-quote { margin: 0 24px 32px; padding: 24px 0 0; border-top: var(--rule-page); }
+.site-page .pull-quote .micro-label { display: block; margin-bottom: 14px; }
+.site-page .pull-quote blockquote { max-width: 720px; font-size: clamp(20px, 2.4vw, 28px); line-height: 1.35; letter-spacing: -.03em; text-wrap: pretty; }
+.site-page .pull-quote blockquote::before { content: "“"; color: var(--color-grey-300); }
+.site-page .pull-quote blockquote::after { content: "”"; color: var(--color-grey-300); }
+.site-page .pull-quote p { max-width: 560px; margin-top: 16px; font-size: 15px; line-height: 1.6; color: var(--color-muted-ink); }
+
+/* Stage list on About: Now / Next / Then. */
+.site-page .stage-list { display: grid; margin: 0 24px 40px; border-top: var(--rule-page); }
+.site-page .stage-list > li { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; padding: 22px 0 24px; border-bottom: var(--rule-page); }
+.site-page .stage-list .stage-label { font: 10px/1.6 var(--font-mono); text-transform: uppercase; letter-spacing: .08em; color: var(--color-grey-500); padding-top: 4px; }
+.site-page .stage-list h3 { font-size: 18px; font-weight: 500; letter-spacing: -.03em; }
+.site-page .stage-list p { margin-top: 8px; max-width: 640px; font-size: 15px; line-height: 1.6; color: var(--color-grey-500); }
+
+/* Hubs: a row of mono labels. */
+.site-page .hub-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 24px 8px; }
+.site-page .hub-row li { padding: 6px 12px; border: var(--rule-page); border-radius: 999px; font-size: 12px; color: var(--color-grey-700); }
+.site-page .hub-caption { padding: 8px 24px 40px; font: 10px/1.6 var(--font-mono); color: var(--color-grey-500); }
+
+/* Status note (Trust) and contact general card. */
+.site-page .status-note { display: grid; gap: 20px; margin: 0 24px 40px; padding: 24px; }
+.site-page .status-note p { max-width: 720px; font-size: 15px; line-height: 1.65; color: var(--color-grey-700); }
+.site-page .status-note .status-disclosure { display: grid; gap: 6px; padding-top: 18px; border-top: var(--rule-page); font-size: 14px; }
+.site-page .status-note .status-disclosure strong { font-weight: 500; }
+.site-page .status-note .status-disclosure a { color: var(--color-ink); text-decoration: underline; text-underline-offset: 3px; }
+
+.site-page .contact-grid { display: grid; gap: 16px; margin: 0; padding: 0 24px 24px; list-style: none; }
+.site-page .contact-card { display: grid; gap: 14px; align-content: start; padding: 24px; }
+.site-page .contact-card h3 { font-size: 20px; font-weight: 500; letter-spacing: -.03em; }
+.site-page .contact-card p { font-size: 14px; line-height: 1.6; color: var(--color-grey-700); }
+.site-page .contact-card .listing-actions { margin-top: auto; }
+.site-page .contact-general { display: grid; gap: 16px; margin: 0 24px 40px; padding: 24px; }
+.site-page .contact-general dl { display: grid; gap: 14px; }
+.site-page .contact-general dt { font: 10px/1.6 var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--color-grey-500); }
+.site-page .contact-general dd { margin-top: 2px; font-size: 15px; }
+.site-page .contact-general dd a { text-decoration: underline; text-underline-offset: 3px; }
+.site-page .contact-general > p { font-size: 13px; line-height: 1.6; color: var(--color-grey-500); }
+
+/* Legal prose. */
+.site-page .legal-intro { display: grid; gap: 20px; padding: 48px 24px 24px; }
+.site-page .legal-intro h1 { margin-top: 20px; font-size: clamp(32px, 4vw, 48px); line-height: 1.05; font-weight: 500; letter-spacing: -.05em; }
+.site-page .legal-intro .legal-updated { font: 11px/1.6 var(--font-mono); color: var(--color-grey-500); }
+.site-page .legal-intro > p:last-child { max-width: 640px; font-size: 16px; line-height: 1.65; color: var(--color-muted-ink); }
+.site-page .legal-prose { max-width: 42rem; padding: 0 24px 56px; }
+.site-page .legal-prose section + section { margin-top: 36px; }
+.site-page .legal-prose h2 { font-size: 18px; font-weight: 500; letter-spacing: -.025em; line-height: 1.3; }
+.site-page .legal-prose p { margin-top: 12px; font-size: 15px; line-height: 1.7; color: var(--color-grey-700); }
+.site-page .legal-prose a { color: var(--color-ink); text-decoration: underline; text-underline-offset: 3px; }
+.site-page .legal-prose nav { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 40px; padding-top: 20px; border-top: var(--rule-page); }
+.site-page .legal-prose nav a { min-height: 44px; display: inline-flex; align-items: center; font-size: 13px; text-decoration: none; color: var(--color-grey-700); }
+
+/* 404 */
+.site-page .not-found { display: grid; justify-items: center; gap: 20px; padding: 96px 24px; text-align: center; }
+.site-page .not-found h1 { font-size: clamp(32px, 4.4vw, 56px); line-height: 1.05; font-weight: 500; letter-spacing: -.05em; }
+.site-page .not-found h1 span { color: var(--color-grey-500); }
+.site-page .not-found p { max-width: 420px; font-size: 16px; line-height: 1.6; color: var(--color-muted-ink); }
+.site-page .not-found ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 20px; }
+
+/* Footer legal links sit between the copyright and the language note. */
+.site-footer .footer-legal { display: flex; gap: 20px; }
+.site-footer .footer-legal a { color: var(--color-grey-500); transition: color var(--dur-quick); }
+
+@media (hover: hover) {
+  .site-footer .footer-legal a:hover, .site-page .legal-prose nav a:hover { color: var(--color-ink); }
+}
+
+@media (min-width: 640px) {
+  .site-page .page-intro { padding: 56px 40px 44px; }
+  .site-page .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; margin: 0 40px 48px; }
+  .site-page .plan-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 0 40px 24px; }
+  .site-page .site-block { padding: 0 40px 48px; }
+  .site-page .pull-quote { margin: 0 40px 32px; }
+  .site-page .stage-list { margin: 0 40px 48px; }
+  .site-page .stage-list > li { grid-template-columns: 72px minmax(0, 1fr); gap: 24px; }
+  .site-page .hub-row { margin: 0 40px 8px; }
+  .site-page .hub-caption { padding: 8px 40px 48px; }
+  .site-page .status-note { margin: 0 40px 48px; padding: 28px; }
+  .site-page .contact-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 0 40px 24px; }
+  .site-page .contact-general { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; margin: 0 40px 48px; padding: 28px; }
+  .site-page .contact-general dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-page .legal-intro { padding: 56px 40px 24px; }
+  .site-page .legal-prose { padding: 0 40px 64px; }
+  .site-page .not-found { padding: 120px 40px; }
+}
+
+@media (min-width: 1024px) {
+  .site-page .page-intro { grid-template-columns: 1.6fr 1fr; align-items: end; gap: 80px; padding: 72px 64px 52px; }
+  .site-page .page-intro-lede { padding-bottom: 6px; }
+  .site-page .feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 40px; margin: 0 64px 64px; }
+  .site-page .feature-grid[data-cols="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-page .feature-grid[data-cols="4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 32px; }
+  .site-page .plan-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 0 64px 24px; }
+  .site-page .site-block { padding: 0 64px 64px; }
+  .site-page .pull-quote { margin: 0 64px 40px; }
+  .site-page .stage-list { margin: 0 64px 64px; }
+  .site-page .hub-row { margin: 0 64px 8px; }
+  .site-page .hub-caption { padding: 8px 64px 64px; }
+  .site-page .status-note { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; margin: 0 64px 64px; padding: 32px; }
+  .site-page .status-note .status-disclosure { padding-top: 0; padding-left: 28px; border-top: 0; border-left: var(--rule-page); }
+  .site-page .contact-grid { padding: 0 64px 24px; }
+  .site-page .contact-general { margin: 0 64px 64px; padding: 32px; }
+  .site-page .legal-intro { grid-template-columns: 1.6fr 1fr; align-items: end; gap: 80px; padding: 72px 64px 32px; }
+  .site-page .legal-prose { padding: 0 64px 80px; }
+  .site-page .not-found { padding: 140px 64px; }
+}
