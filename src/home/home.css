@@ -166,6 +166,49 @@ body { overflow-x: clip; }
 .integration-tool p { font-size: 11px; color: var(--color-grey-500); margin-top: 3px; }
 .integration-tool > .nm-icon { margin-left: auto; width: 15px; color: var(--color-grey-300); }
 .integration-footnote { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 0 24px 32px; font: 9px/1.5 var(--font-mono); color: var(--color-grey-500); }
+/* Custom MCP server: a full-width "bring your own" row under the eight featured tools. */
+.integration-custom { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; padding: 20px 16px; border-top: var(--rule-page); border-bottom: var(--rule-page); background: var(--color-grey-50); }
+.integration-custom .tool-mark { width: 40px; height: 40px; border: var(--rule-page); border-radius: 8px; justify-content: center; background: var(--color-paper); }
+.integration-custom .tool-mark img { width: 22px; height: 22px; }
+.integration-custom h3 { font-size: 14px; font-weight: 500; letter-spacing: -.025em; }
+.integration-custom > div p { margin-top: 3px; font-size: 12px; color: var(--color-grey-500); }
+.integration-custom > p { flex: 1 1 260px; font-size: 12px; line-height: 1.55; color: var(--color-grey-700); }
+/* Connector directory: every business tool, searchable and filterable. */
+.connector-directory { padding: 22px 22px 18px; }
+.connector-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px; }
+.connector-system { margin-top: 24px; }
+.connector-header h3 { margin-top: 6px; font-size: 18px; font-weight: 500; line-height: 1.2; letter-spacing: -.025em; }
+.connector-search { flex: 1 1 220px; max-width: 320px; }
+.connector-search input { width: 100%; min-height: 40px; padding: 0 12px; border: var(--rule-page); border-radius: 6px; background: var(--color-paper); font: inherit; font-size: 12px; color: var(--color-ink); }
+.connector-search input::placeholder { color: var(--color-grey-500); }
+.connector-search input:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 1px; }
+.connector-filters { display: flex; gap: 6px; margin: 16px -22px 0; padding: 0 22px 4px; overflow-x: auto; scrollbar-width: none; }
+.connector-filters::-webkit-scrollbar { display: none; }
+.connector-filters button { flex-shrink: 0; min-height: 34px; padding: 0 12px; border: var(--rule-page); border-radius: 999px; font-size: 11px; color: var(--color-grey-700); white-space: nowrap; cursor: pointer; transition: background var(--dur-quick), color var(--dur-quick); }
+.connector-filters button[aria-pressed="true"] { background: var(--color-ink); border-color: var(--color-ink); color: var(--color-paper); }
+.connector-filters button:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; }
+.connector-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 14px; }
+.connector-grid li { display: flex; align-items: center; gap: 10px; min-width: 0; padding: 10px; border: var(--rule-page); border-radius: 6px; }
+.connector-grid li[hidden] { display: none; }
+.connector-grid li > span:last-child { min-width: 0; }
+.connector-mark { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; flex-shrink: 0; border-radius: 6px; background: var(--color-grey-50); font: 600 10px var(--font-mono); color: var(--color-grey-700); }
+.connector-mark img { opacity: .82; }
+.connector-grid strong { display: block; overflow: hidden; font-size: 12px; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
+.connector-grid small { display: block; margin-top: 2px; overflow: hidden; font-size: 9px; color: var(--color-grey-500); text-overflow: ellipsis; white-space: nowrap; }
+.connector-empty { margin-top: 16px; font-size: 12px; color: var(--color-grey-500); }
+.connector-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 12px; margin-top: 10px; font: 9px/1.5 var(--font-mono); color: var(--color-grey-500); }
+.connector-footer .text-link { min-height: 44px; font-family: var(--font-sans); font-size: 12px; cursor: pointer; }
+@media (min-width: 640px) {
+  .connector-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  .integration-custom { padding: 22px 24px; }
+  .integration-custom > p { margin-left: auto; max-width: 520px; text-align: right; }
+  .connector-directory { padding: 26px 24px 20px; }
+  .connector-filters { flex-wrap: wrap; overflow: visible; margin: 18px 0 0; padding: 0; }
+  .connector-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (min-width: 1280px) { .connector-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
 .story-grid { display: grid; gap: 24px; padding: 0 24px; }
 .story-card { display: block; overflow: hidden; border: var(--rule-page); border-radius: var(--radius-panel); background: var(--color-paper); transition: border-color var(--dur-quick); }
 .story-art { position: relative; display: flex; align-items: center; justify-content: center; height: 290px; padding: 28px; overflow: hidden; background: var(--color-stage); border-bottom: var(--rule-page); }
