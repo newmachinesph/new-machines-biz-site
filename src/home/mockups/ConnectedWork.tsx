@@ -15,6 +15,7 @@ const SOURCES = [
   { app: "Gmail", icon: "gmail-official", file: "Customer conversations", detail: "Recent feedback · Read access" },
   { app: "Google Drive", icon: "google-drive-official", file: "Your product strategy", detail: "One folder · Read access" },
   { app: "Google Sheets", icon: "google-sheets-official", file: "Your market watchlist", detail: "One sheet · Read access" },
+  { app: "Custom MCP server", icon: "connectors/modelcontextprotocol", file: "Your pricing API", detail: "One endpoint · Read access" },
 ] as const;
 
 export function ConnectedWork() {
@@ -39,7 +40,7 @@ export function ConnectedWork() {
             <span className="scene-kicker">{LABELS[phase]}</span>
             <p>{["The right context, together.", "Finding the useful signals.", "One insight needs your view.", "Work done. Proof included."][phase]}</p>
             <div className="connected-fields">
-              <span><span>Read the source material<small>Conversations, strategy, watchlist</small></span><span className="work-step-state"><Icon name={phase > 0 ? "check" : "file"} /></span></span>
+              <span><span>Read the source material<small>Conversations, strategy, watchlist, pricing</small></span><span className="work-step-state"><Icon name={phase > 0 ? "check" : "file"} /></span></span>
               <span><span>Find the common signal<small>Japan launch interest</small></span><span className="work-step-state"><Icon name={phase > 0 ? "check" : "file"} /></span></span>
               <span className={phase === 2 ? "field-needs-review" : ""}><span>Review the next step<small>Human decision required</small></span><strong>{phase < 2 ? "Checking" : phase === 2 ? "Needs review" : "Confirmed"}</strong></span>
             </div>
@@ -56,11 +57,11 @@ export function ConnectedWork() {
             <div className="brief-content" data-ready={phase > 0}>
               <span className="brief-topic">Japan launch interest <sup>[1]</sup></span>
               <p>Start with five discovery calls. Test demand before committing a team.</p>
-              <div className="brief-citations"><span>[1] Customer conversations</span><span>[2] Product strategy</span><span>[3] Market watchlist</span></div>
+              <div className="brief-citations"><span>[1] Customer conversations</span><span>[2] Product strategy</span><span>[3] Market watchlist</span><span>[4] Pricing API</span></div>
             </div>
             <div className="brief-placeholder" aria-hidden="true"><i /><i /><i /><i /></div>
           </div>
-          <div className="brief-proof"><span className="output-status"><Icon name={phase === 3 ? "shield" : "file"} />{phase === 3 ? "Verified" : phase === 2 ? "Awaiting approval" : phase === 1 ? "Building the brief" : "Awaiting the work"}</span><span>{phase === 3 ? "3 sources · Human approved" : "Sources stay attached"}</span></div>
+          <div className="brief-proof"><span className="output-status"><Icon name={phase === 3 ? "shield" : "file"} />{phase === 3 ? "Verified" : phase === 2 ? "Awaiting approval" : phase === 1 ? "Building the brief" : "Awaiting the work"}</span><span>{phase === 3 ? `${SOURCES.length} sources · Human approved` : "Sources stay attached"}</span></div>
         </div>
       </div>
       <SceneControls playback={playback} labels={LABELS} durations={DURATIONS} name="connected work" />
