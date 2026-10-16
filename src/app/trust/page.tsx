@@ -8,6 +8,8 @@ import { PageShell } from "@/marketplace/PageShell";
 import { clauses, FeatureGrid, Opener, PageIntro } from "@/site/blocks";
 import { SITE, TRUST_COPY as C } from "@/site/copy";
 import { pageMetadata } from "@/site/metadata";
+import { TRUST_FAQ } from "@/site/seo/answers";
+import { SiteFaq } from "@/site/seo/SiteFaq";
 
 export const metadata = pageMetadata({ ...C.meta, path: "/trust" });
 
@@ -48,6 +50,7 @@ export default function Page() {
         </Card>
       </SectionCell>
 
+      <SiteFaq {...TRUST_FAQ} />
       <Close home={false} />
     </PageShell>
   );

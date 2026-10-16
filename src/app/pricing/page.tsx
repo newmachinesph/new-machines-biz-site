@@ -10,6 +10,7 @@ import { PageShell } from "@/marketplace/PageShell";
 import { FeatureGrid, Opener, PageIntro } from "@/site/blocks";
 import { PRICING_COPY as C } from "@/site/copy";
 import { pageMetadata } from "@/site/metadata";
+import { FaqJsonLd } from "@/site/seo/SiteFaq";
 
 export const metadata = pageMetadata({ ...C.meta, path: "/pricing" });
 
@@ -66,6 +67,7 @@ export default function Page() {
           <div><p className="section-eyebrow"><span aria-hidden="true" />{C.faq.eyebrow}</p><h2 id="pricing-faq-title">{C.faq.lead}<br /><span>{C.faq.tail}</span></h2></div>
           <div className="faq-list">{C.faq.items.map((item) => <details key={item.q}><summary>{item.q}<Icon name="plus" /></summary><p>{item.a}</p></details>)}</div>
         </div>
+        <FaqJsonLd items={C.faq.items} />
       </SectionCell>
 
       <Close home={false} />

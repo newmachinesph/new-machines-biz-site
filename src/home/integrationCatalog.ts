@@ -1,35 +1,33 @@
-/** Every connector shown in the Integrations directory. `icon` is a Simple Icons slug, synced into
- *  public/brands/connectors/ by scripts/sync-integration-icons.mjs; entries without one render as a monogram.
- *  Only add a slug after checking its source domain is the same company (e.g. Simple Icons' "Fathom" is Fathom Analytics).
- *  Microsoft products are left out: the home page must not name Microsoft, AWS or GitHub (tests/e2e/home.spec.ts). */
+/** The integrations directory catalog. Rows are generated into connectors.data.ts (one logo per tool in
+ *  public/brands/connectors/); this module turns them into typed entries and holds the wording shared by the
+ *  tiles, the filter and the footer. Microsoft products, AWS and GitHub are left out: the home page must not
+ *  name them (tests/e2e/home.spec.ts). */
+import { CATEGORIES, CONNECTOR_ROWS } from "./connectors.data";
 
-export const CATEGORIES = [
-  "CRM & sales",
-  "Marketing & content",
-  "Finance & commerce",
-  "Productivity & docs",
-  "Communication & meetings",
-  "Customer support",
-  "Data & analytics",
-  "People & HR",
-] as const;
-
+export { CATEGORIES };
 export type ConnectorCategory = (typeof CATEGORIES)[number];
-export type Connector = Readonly<{ name: string; category: ConnectorCategory; icon?: string }>;
+export type Connector = Readonly<{ slug: string; name: string; category: ConnectorCategory; logo: string; available: boolean }>;
 
-const group = (category: ConnectorCategory, entries: readonly (readonly [name: string, icon?: string])[]): Connector[] =>
-  entries.map(([name, icon]) => ({ name, category, icon }));
+/** Status wording: tools the product connects to now, and everything else. */
+export const AVAILABLE_LABEL = "Available today";
+export const ON_REQUEST_LABEL = "On request";
+export const ON_REQUEST_NOTE = "Through the integration layer, on request";
 
-export const CONNECTORS: readonly Connector[] = [
-  ...group("CRM & sales", [["Salesforce"], ["HubSpot", "hubspot"], ["Pipedrive"], ["Attio"], ["Affinity"], ["Close"], ["Freshsales"], ["Apollo"], ["Clay"], ["Findymail"], ["Outreach"], ["Salesloft"], ["Gong"], ["Chorus"], ["Seismic"]]),
-  ...group("Marketing & content", [["Google Ads", "googleads"], ["Google Analytics", "googleanalytics"], ["Google Search Console", "googlesearchconsole"], ["Google DV360", "googledisplayandvideo360"], ["Google PageSpeed", "pagespeedinsights"], ["Semrush", "semrush"], ["Ahrefs"], ["Klaviyo"], ["Brevo", "brevo"], ["Loops", "loops"], ["beehiiv"], ["Webflow", "webflow"], ["Gamma"], ["Descript"], ["Foreplay"], ["Adobe Marketing Agent"], ["Instagram", "instagram"], ["TikTok", "tiktok"], ["YouTube", "youtube"], ["X", "x"], ["Reddit", "reddit"]]),
-  ...group("Finance & commerce", [["freee"], ["QuickBooks", "quickbooks"], ["NetSuite"], ["Stripe", "stripe"], ["PayPal", "paypal"], ["Expensify", "expensify"], ["Carta"], ["Shopify", "shopify"], ["DocuSign"]]),
-  ...group("Productivity & docs", [["Google Drive", "googledrive"], ["Google Docs", "googledocs"], ["Google Sheets", "googlesheets"], ["Google Slides", "googleslides"], ["Google Tasks", "googletasks"], ["Google AppSheet"], ["Notion", "notion"], ["Airtable", "airtable"], ["Confluence", "confluence"], ["Jira", "jira"], ["Linear", "linear"], ["Asana", "asana"], ["ClickUp", "clickup"], ["Monday.com"], ["Trello", "trello"], ["Todoist", "todoist"], ["Miro", "miro"], ["Box", "box"], ["Dropbox", "dropbox"], ["Kintone"]]),
-  ...group("Communication & meetings", [["Gmail", "gmail"], ["Slack"], ["LINE WORKS"], ["Google Calendar", "googlecalendar"], ["Google Meet", "googlemeet"], ["Zoom", "zoom"], ["Cal.com", "caldotcom"], ["Fathom"], ["Fellow"], ["Luma"]]),
-  ...group("Customer support", [["Zendesk", "zendesk"], ["Intercom", "intercom"], ["Freshdesk"], ["Sprig"]]),
-  ...group("Data & analytics", [["BigQuery", "googlebigquery"], ["Snowflake", "snowflake"], ["Databricks", "databricks"], ["PostgreSQL", "postgresql"], ["ClickHouse", "clickhouse"], ["Looker", "looker"], ["Tableau"], ["Hex"], ["Sigma Computing"], ["Google Cloud Storage", "googlecloudstorage"], ["Google Maps", "googlemaps"]]),
-  ...group("People & HR", [["SmartHR"], ["Workday"], ["Greenhouse", "greenhouse"], ["Ashby"]]),
-];
-
-/** The custom MCP server mark, also synced from Simple Icons. */
+/** The custom MCP server mark; also the "Your MCP server" row in the directory. */
 export const MCP_ICON = "modelcontextprotocol";
+
+export const CONNECTORS: readonly Connector[] = CONNECTOR_ROWS.map(([slug, name, category, ext, available]) => ({
+  slug,
+  name,
+  category: CATEGORIES[category] ?? CATEGORIES[0],
+  logo: `/brands/connectors/${slug}.${ext}`,
+  available: available === 1,
+}));
+
+export const AVAILABLE_CONNECTORS: readonly Connector[] = CONNECTORS.filter((connector) => connector.available);
+
+/** "Gmail, Google Calendar, … and your own MCP server." */
+export const availableSummary = (connectors: readonly Connector[] = AVAILABLE_CONNECTORS): string => {
+  const names = connectors.filter((connector) => connector.slug !== MCP_ICON).map((connector) => connector.name);
+  return `${names.join(", ")} and your own MCP server`;
+};

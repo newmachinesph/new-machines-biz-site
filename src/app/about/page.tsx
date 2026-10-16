@@ -9,6 +9,8 @@ import { PageShell } from "@/marketplace/PageShell";
 import { FeatureGrid, Opener, PageIntro } from "@/site/blocks";
 import { ABOUT_COPY as C } from "@/site/copy";
 import { pageMetadata } from "@/site/metadata";
+import { ABOUT_FAQ } from "@/site/seo/answers";
+import { SiteFaq } from "@/site/seo/SiteFaq";
 
 export const metadata = pageMetadata({ ...C.meta, path: "/about" });
 
@@ -48,6 +50,7 @@ export default function Page() {
         </div>
       </SectionCell>
 
+      <SiteFaq {...ABOUT_FAQ} />
       <Close home={false} />
     </PageShell>
   );

@@ -5,6 +5,7 @@ import { findListing, MARKETPLACE_LISTINGS } from "@/marketplace/listings";
 import { ListingDetail } from "@/marketplace/ListingDetail";
 import { PageShell } from "@/marketplace/PageShell";
 import { pageMetadata } from "@/site/metadata";
+import { ListingJsonLd } from "@/site/seo/MarketplaceJsonLd";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -27,6 +28,7 @@ export default async function Page({ params }: Props) {
   return (
     <PageShell home={false} current="/marketplace" dataComponent="listingPage">
       <ListingDetail listing={listing} />
+      <ListingJsonLd listing={listing} />
     </PageShell>
   );
 }

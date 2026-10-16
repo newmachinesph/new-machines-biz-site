@@ -19,6 +19,9 @@ import { PageShell } from "@/marketplace/PageShell";
 import { clauses, FeatureGrid, Opener, PageIntro, StepGuide } from "@/site/blocks";
 import { PRODUCT_COPY as C } from "@/site/copy";
 import { pageMetadata } from "@/site/metadata";
+import { PRODUCT_FAQ } from "@/site/seo/answers";
+import { Definition } from "@/site/seo/Definition";
+import { SiteFaq } from "@/site/seo/SiteFaq";
 
 export const metadata = pageMetadata({ ...C.meta, path: "/product" });
 
@@ -33,6 +36,7 @@ export default function Page() {
   return (
     <PageShell home={false} current="/product" dataComponent="productPage" className="site-page">
       <PageIntro id="product-title" {...C.intro} />
+      <Definition id="product-definition-title" />
 
       <SectionCell labelledBy="product-marketplace-title">
         <SplitCell
@@ -40,6 +44,12 @@ export default function Page() {
           text={<><SectionHeader id="product-marketplace-title" eyebrow={C.marketplace.eyebrow} lead={C.marketplace.lead} sub={C.marketplace.sub} /><Link href={C.marketplace.link.href} home={false} className="text-link mt-6">{C.marketplace.link.label}<Icon /></Link></>}
           visual={<MockupStage presentation="scene" caption={C.marketplace.note}><MarketplaceGrid /></MockupStage>}
         />
+      </SectionCell>
+
+      <SectionCell labelledBy="product-packs-title">
+        <Opener id="product-packs-title" eyebrow={C.packs.eyebrow} lead={C.packs.lead} tail={C.packs.tail} sub={C.packs.sub} />
+        <FeatureGrid items={C.packs.items} cols={4} label="Packs in the demo workspace" />
+        <p className="story-note">{C.packs.note}</p>
       </SectionCell>
 
       <SectionCell labelledBy="product-sandbox-title">
@@ -99,6 +109,7 @@ export default function Page() {
         <StepGuide steps={HOME_COPY.how.steps} dataComponent="productSteps" />
       </SectionCell>
 
+      <SiteFaq {...PRODUCT_FAQ} />
       <Close home={false} />
     </PageShell>
   );

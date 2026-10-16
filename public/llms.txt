@@ -1,0 +1,30 @@
+# New Machines
+
+> New Machines is a marketplace for verified intelligent work: businesses choose AI agents and workflow packs for defined work, bring in qualified human reviewers where judgment is needed, and accept each outcome with evidence attached. Built for Japan and Asia-Pacific; pre-launch.
+
+Site: https://newmachin.es · Contact: hello@newmachin.es · Security: security@newmachin.es · Languages: 日本語 / English · Updated: 2026-10-17
+
+## What is live and what is planned
+
+- Live today (pre-launch, working product): a curated demo catalogue of AI agents, workflow packs and qualified human work; a sandbox that runs every listing on sample data, isolated from live systems; human review steps with scoped, redacted context; spending caps and approval thresholds; work receipts that record executed, verified, accepted and settlement-eligible separately; scoped connectors to business tools; an operator console.
+- Shown but not real yet: prices and spend are illustrative demo values in Japanese yen; no payment is collected. Listing data and reviewer names are demo content. Trust Passport results are labelled sample until measured.
+- Planned (not yet available): commercial beta with real billing through a supported payment provider (Japan first), qualified reviewer pools with matching and appeals, publisher certification, open third-party publishing, per-organisation workspace regions, an independent security assessment. New Machines holds no third-party security certification today.
+- Publishing and reviewer onboarding are invitation-only during pre-launch.
+
+## Key pages
+
+- [Home](https://newmachin.es): one-sentence definition, how it works in five steps, FAQ.
+- [Product](https://newmachin.es/product): marketplace, sandbox, trust model, human work, spending control, evidence, connectors, FAQ.
+- [Marketplace](https://newmachin.es/marketplace): the demo catalogue (12 listings: AI agents, workflow packs, human work), each with scope, price basis and verification status.
+- [Pricing](https://newmachin.es/pricing): free sandbox; planned per-run, per-decision and per-pack pricing inside a spending cap; FAQ on billing status.
+- [Trust and security](https://newmachin.es/trust): the seven separated responsibilities (judgment, policy, approval, execution, verification, acceptance, settlement), controls, data handling, pre-launch status, FAQ.
+- [For developers](https://newmachin.es/developers): publishing versioned agents and workflow packs, release lifecycle, Trust Passport, revenue share (illustrative), FAQ.
+- [For reviewers](https://newmachin.es/work): six modes of paid human work, pay shown before accepting, protections, FAQ.
+- [About](https://newmachin.es/about): why it exists, principles in priority order, stage (now / next / then), market, FAQ.
+- [Contact](https://newmachin.es/contact)
+- [Privacy](https://newmachin.es/privacy) · [Terms](https://newmachin.es/terms)
+
+## Optional
+
+- [llms-full.txt](https://newmachin.es/llms-full.txt): the same facts in more detail, with the definitions used on the site.
+- [Sitemap](https://newmachin.es/sitemap.xml)

@@ -3,8 +3,10 @@ import { Mark } from "@/design-system/logo/Mark";
 import { Demos } from "./Demos";
 import { Mockups } from "./Mockups";
 import { TokenChips } from "./TokenChips";
+import type { Metadata } from "next";
 
-export const metadata = { title: "Styleguide - New Machines" };
+// An internal page: never indexed (SEO.neverIndex), not in the sitemap.
+export const metadata: Metadata = { title: "Styleguide", robots: { index: false, follow: false }, alternates: { canonical: "/styleguide" } };
 
 const FONT_SAMPLES = [
   { name: "font-display (Michroma)", cls: "font-display", text: "Verified intelligent work" },

@@ -4,6 +4,8 @@ import { PageShell } from "@/marketplace/PageShell";
 import { FeatureGrid, Opener, PageIntro, StepGuide } from "@/site/blocks";
 import { WORK_COPY as C } from "@/site/copy";
 import { pageMetadata } from "@/site/metadata";
+import { WORK_FAQ } from "@/site/seo/answers";
+import { SiteFaq } from "@/site/seo/SiteFaq";
 
 export const metadata = pageMetadata({ ...C.meta, path: "/work" });
 
@@ -27,6 +29,7 @@ export default function Page() {
         <FeatureGrid items={C.protections.items} />
       </SectionCell>
 
+      <SiteFaq {...WORK_FAQ} />
       <Close home={false} secondary={C.intro.primary} />
     </PageShell>
   );

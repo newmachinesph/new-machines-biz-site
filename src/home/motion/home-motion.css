@@ -187,7 +187,11 @@
 .review-context-disclosure[open] > summary .nm-icon { transform: rotate(45deg); }
 .review-context-disclosure .permission-details, .review-context-disclosure .approval-history { border: 0; border-radius: 0; }
 .review-context-disclosure[open] .review-side-content { animation: scene-switch 180ms var(--scene-ease); }
-.story-art.sales-art { height: 370px; padding: 20px 18px 40px; }
+.story-art.sales-art { height: 370px; padding: 20px 18px; }
+/* Below 1024 the band is 370px: tighter window rows keep the research window and its hanging brief clear of both rules. */
+@media (max-width: 1023px) {
+  .research-toolbar, .research-query, .research-bottom, .research-account-row { padding-top: 8px; padding-bottom: 8px; }
+}
 .spend-workspace[data-chart-entered="true"] .daily-spend-chart rect { transform-box: fill-box; transform-origin: bottom; animation: bar-enter 650ms var(--scene-ease) both; }
 .spend-workspace[data-chart-entered="true"] .budget-meter span { transform-origin: left; animation: bar-meter 700ms var(--scene-ease) both; }
 .cap-preview-button { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; font-size: 11px; cursor: pointer; margin-top: 12px; padding: 8px 10px; border: var(--rule-page); border-radius: 5px; background: var(--color-paper); }

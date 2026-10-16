@@ -6,6 +6,7 @@ import { Catalogue, CatalogueFromUrl } from "@/marketplace/Catalogue";
 import { MARKETPLACE_COPY } from "@/marketplace/copy";
 import { PageShell } from "@/marketplace/PageShell";
 import { pageMetadata } from "@/site/metadata";
+import { MarketplaceJsonLd } from "@/site/seo/MarketplaceJsonLd";
 
 export const metadata: Metadata = pageMetadata({ title: MARKETPLACE_COPY.meta.title, description: MARKETPLACE_COPY.meta.description, path: "/marketplace" });
 
@@ -23,6 +24,7 @@ export default function Page() {
           <CatalogueFromUrl />
         </Suspense>
       </SectionCell>
+      <MarketplaceJsonLd />
       <Close secondary={closeSecondary} home={false} />
     </PageShell>
   );

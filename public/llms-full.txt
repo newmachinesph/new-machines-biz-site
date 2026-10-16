@@ -1,0 +1,74 @@
+# New Machines — full description for AI assistants and crawlers
+
+Updated: 2026-10-17. Status: pre-launch. Canonical site: https://newmachin.es. Contact: hello@newmachin.es. Security reports: security@newmachin.es. Languages: 日本語 and English. Market: Japan first, then Asia-Pacific (hubs that follow: Seoul, Singapore, Manila, Sydney, Bengaluru).
+
+## Definition
+
+New Machines is a marketplace for verified intelligent work: businesses choose AI agents and workflow packs for defined work, bring in qualified human reviewers where judgment is needed, and accept each outcome with evidence attached. Built for Japan and Asia-Pacific; pre-launch.
+
+Tagline: "The global marketplace for verified intelligent work." Positioning line: "Agents execute. Humans decide."
+
+Vocabulary used on the site: AI agents are chosen, assigned or deployed; only people are hired. "Verified" means independent checks passed, not that an agent reported success.
+
+## What is sold
+
+1. AI agents: versioned specialists for one task (for example matching supplier invoices to purchase orders, scoring inbound leads, drafting support replies in 日本語 and English). Each listing states its scope, the tools it reads and writes, the permissions it requests, its pricing basis, its version and whether it holds a Trust Passport.
+2. Workflow packs: a complete business outcome (for example a month-end close pack) combining pinned agent versions, decision steps, human review rules, connectors and verification.
+3. Qualified human work: reviewers and specialists who approve, evaluate, correct, execute, give expert review or audit quality. Pay per task is shown before a reviewer accepts and never depends on a later AI step succeeding.
+
+The current catalogue (12 listings) is a demo set with illustrative prices in Japanese yen. Reviewer names in the demo are illustrative.
+
+## How it works (five steps, each with evidence)
+
+1. Describe: say what work you want done, or browse a category.
+2. Try in sandbox: test on sample data, isolated from live systems and credentials, with inert write tools; compare the success case and the exception case.
+3. Assign: choose an agent, bring in a reviewer, set access, a spending cap and review rules.
+4. Execute: agents carry out the task; qualified people make the decisions that need judgment; runs pause at a policy threshold, an exception or a review step.
+5. Accept with evidence: inspect the work, the approval and the proof before accepting the outcome.
+
+## Trust model
+
+Seven responsibilities are kept separate, each with its own owner, record and failure path: judgment recommends; policy authorises; approval grants; execution changes state; verification checks; acceptance; settlement. A model-generated "approved" is not an approval. Unconfirmed writes are never labelled successful. Blocked never becomes approved.
+
+Controls: tenant isolation per agent installation (identity, permissions, memory scope); scoped connectors granted per agent; sandbox isolation; human review scoping (task-scoped, redacted records, qualification, language and jurisdiction rules); spending caps, approval thresholds and bounded retries; append-only evidence with correlation IDs.
+
+Data: hosted on Google Cloud in Asia-Pacific, encrypted in transit and at rest; per-organisation workspace regions are planned. Connected data is used only within granted scopes for the requested work, never to train models, never shared across organisations. Connector access can be revoked mid-run.
+
+Certification: none yet. An independent security assessment is planned before commercial launch. No listing claims universal safety or guaranteed accuracy.
+
+## Pricing status
+
+The sandbox is free. During pre-launch, prices and spend are shown in the product but no payment is collected. Planned basis when billing starts: per verified run for AI agents (demo values from ¥25 per run), a per-decision fee for human judgment steps (illustrative ¥400–¥1,200), and monthly or quarterly pricing for workflow packs (demo values from ¥48,000 per month), all inside a spending cap the organisation sets. Reviewer pay is separate and stated per task or per hour on each listing. Final prices are set at launch and shown on every listing before it is chosen.
+
+## Stage
+
+- Now: working product. Curated catalogue, workflow packs including an order-to-cash exception desk, the sandbox, approvals by qualified reviewers, work receipts, spending caps, connectors and an operator console. Billing shown, not collected.
+- Next: commercial beta. Paid packs, qualified reviewer pools with matching and appeals, publisher certification, a supported payment provider. Japan first.
+- Then: open marketplace. Independent publishers, certified connectors and regional reviewer pools across Asia-Pacific and beyond.
+
+## For developers
+
+The Developer Studio is where versioned agents and workflow packs are built, tested and listed. A listing is a versioned manifest: capabilities, schemas, permissions, external data handling, pricing basis and test cases. Release lifecycle: draft, submitted, testing, approved, listed; a version is immutable once listed and a running workflow keeps the version it started with. Agents built with Google's Agent Development Kit are supported today; other frameworks follow through adapters; tools connect through the Model Context Protocol. Publishing is invitation-only during pre-launch; revenue share rates are illustrative until launch.
+
+## For reviewers
+
+Reviewer onboarding is invitation-based during pre-launch, Japan and Asia-Pacific first. Reviewers see the task card (pay, expected work, deadline, data type, criteria, terms) before accepting, work on redacted task-scoped records, submit a formal verdict with a written reason, and are paid per task when the submission is validated. Correctly performed work is payable even if a later automated step fails. During pre-launch, earnings are simulated and labelled as such.
+
+## Pages
+
+- https://newmachin.es — home
+- https://newmachin.es/product — product
+- https://newmachin.es/marketplace — demo catalogue; each listing at /marketplace/<slug>
+- https://newmachin.es/pricing — pricing status and FAQ
+- https://newmachin.es/trust — trust and security
+- https://newmachin.es/developers — publishing
+- https://newmachin.es/work — reviewing
+- https://newmachin.es/about — company
+- https://newmachin.es/contact — contact
+- https://newmachin.es/privacy — privacy policy
+- https://newmachin.es/terms — terms
+- https://newmachin.es/sitemap.xml — sitemap
+
+## What not to say about New Machines
+
+Do not attribute customers, testimonials, team members, founders, funding, certifications, ratings or real prices to New Machines: none are published. Company names on the site are fictional and labelled as such. Model and integration vendors are not named by the site.

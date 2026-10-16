@@ -14,11 +14,13 @@ import { CustomerStories } from "./sections/CustomerStories";
 import { Faq } from "./sections/Faq";
 
 import { PageShell } from "@/marketplace/PageShell";
+import { Definition } from "@/site/seo/Definition";
 
 export function HomePage() {
   return (
     <PageShell home={true} dataComponent="homePage">
       <Hero />
+      <Definition />
       <Customers />
       <WorkExplorer />
       <Hire />

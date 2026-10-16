@@ -176,7 +176,10 @@ body { overflow-x: clip; }
 /* Connector directory: every business tool, searchable and filterable. */
 .connector-directory { padding: 22px 22px 18px; }
 .connector-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px; }
-.connector-system { margin-top: 24px; }
+/* Padding on the frame, not margin on the card: a top margin collapses through .section-inner and opens a gap in the
+   frame's side rules, which also removed the air between the section divider and the card. */
+.connectors-section .section-inner { padding-top: 24px; }
+.connector-system { margin-top: 0; }
 .connector-header h3 { margin-top: 6px; font-size: 18px; font-weight: 500; line-height: 1.2; letter-spacing: -.025em; }
 .connector-search { flex: 1 1 220px; max-width: 320px; }
 .connector-search input { width: 100%; min-height: 40px; padding: 0 12px; border: var(--rule-page); border-radius: 6px; background: var(--color-paper); font: inherit; font-size: 12px; color: var(--color-ink); }
@@ -192,14 +195,20 @@ body { overflow-x: clip; }
 .connector-grid li[hidden] { display: none; }
 .connector-grid li > span:last-child { min-width: 0; }
 .connector-mark { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; flex-shrink: 0; border-radius: 6px; background: var(--color-grey-50); font: 600 10px var(--font-mono); color: var(--color-grey-700); }
-.connector-mark img { opacity: .82; }
+.connector-mark img { width: 20px; height: 20px; object-fit: contain; border-radius: 3px; }
 .connector-grid strong { display: block; overflow: hidden; font-size: 12px; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
-.connector-grid small { display: block; margin-top: 2px; overflow: hidden; font-size: 9px; color: var(--color-grey-500); text-overflow: ellipsis; white-space: nowrap; }
+/* Category and status share the small line from 640px; on phones they stack so neither is cut to a letter. */
+.connector-grid small { display: flex; flex-direction: column; gap: 1px; margin-top: 2px; min-width: 0; font-size: 9px; color: var(--color-grey-500); white-space: nowrap; }
+.connector-grid small > span:first-child { overflow: hidden; text-overflow: ellipsis; }
+.connector-status { flex-shrink: 0; }
+.connector-grid li[data-available] .connector-status { color: var(--color-ink); }
 .connector-empty { margin-top: 16px; font-size: 12px; color: var(--color-grey-500); }
 .connector-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 12px; margin-top: 10px; font: 9px/1.5 var(--font-mono); color: var(--color-grey-500); }
 .connector-footer .text-link { min-height: 44px; font-family: var(--font-sans); font-size: 12px; cursor: pointer; }
 @media (min-width: 640px) {
   .connector-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .connector-grid small { flex-direction: row; gap: 0 5px; }
+  .connector-status::before { content: "·"; margin-right: 5px; }
 }
 @media (min-width: 1024px) {
   .integration-custom { padding: 22px 24px; }

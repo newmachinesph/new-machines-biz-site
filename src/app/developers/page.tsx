@@ -5,6 +5,8 @@ import { PageShell } from "@/marketplace/PageShell";
 import { FeatureGrid, Opener, PageIntro, StepGuide } from "@/site/blocks";
 import { DEVELOPERS_COPY as C } from "@/site/copy";
 import { pageMetadata } from "@/site/metadata";
+import { DEVELOPERS_FAQ } from "@/site/seo/answers";
+import { SiteFaq } from "@/site/seo/SiteFaq";
 
 export const metadata = pageMetadata({ ...C.meta, path: "/developers" });
 
@@ -35,6 +37,7 @@ export default function Page() {
         </div>
       </SectionCell>
 
+      <SiteFaq {...DEVELOPERS_FAQ} />
       <Close home={false} secondary={C.intro.secondary} />
     </PageShell>
   );

@@ -10,33 +10,21 @@ import "@/home/motion/home-motion.css";
 import "@/home/scroll-polish.css";
 import "@/marketplace/marketplace.css";
 import "@/site/site.css";
+import "@/site/seo/seo.css";
 import { fontClassNames } from "@/design-system/fonts";
-import { SITE } from "@/site/copy";
+import { SEO } from "@/site/seo/config";
+import { rootMetadata } from "@/site/seo/rootMetadata";
+import { SiteJsonLd } from "@/site/seo/SiteJsonLd";
 
-const DEFAULT_TITLE = `${SITE.name} - ${SITE.tagline}`;
-const DEFAULT_DESCRIPTION = "Assign AI agents that work in your business tools, hire qualified reviewers when judgment is needed, and see evidence that the work was done.";
-
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE.url),
-  title: { default: DEFAULT_TITLE, template: `%s · ${SITE.name}` },
-  description: DEFAULT_DESCRIPTION,
-  applicationName: SITE.name,
-  openGraph: { type: "website", siteName: SITE.name, locale: "en", url: "/", title: DEFAULT_TITLE, description: DEFAULT_DESCRIPTION },
-  twitter: { card: "summary_large_image", title: DEFAULT_TITLE, description: DEFAULT_DESCRIPTION },
-  // Pre-launch: keep every page out of search engines. robots.ts and the host headers say the same.
-  robots: {
-    index: false,
-    follow: false,
-    nocache: true,
-    googleBot: { index: false, follow: false, noimageindex: true },
-  },
-};
+// Title, description, metadataBase and the pre-launch robots switch live in src/site/seo (config.ts, rootMetadata.ts).
+export const metadata: Metadata = rootMetadata();
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={fontClassNames} data-scroll-behavior="smooth">
+    <html lang={SEO.language} className={fontClassNames} data-scroll-behavior="smooth">
       <body className="min-h-dvh bg-paper font-sans text-ink">
         <div className="isolate">{children}</div>
+        <SiteJsonLd />
       </body>
     </html>
   );
