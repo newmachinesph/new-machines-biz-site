@@ -20,7 +20,8 @@ test("connectors meet card edges and stay outside every card through responsive 
       heights.push((await scene.boundingBox())!.height);
       measurements.push({ width, phase: index, layout: await scene.evaluate((element) => [...element.querySelectorAll(".connected-agent, .connected-action > p, .connected-fields > span, .brief-proof, .connected-output")].map((child) => ({ className: child.className, text: child.textContent?.slice(0, 40), height: child.getBoundingClientRect().height }))) });
       if (width >= 1024) {
-        await expect(scene.locator(".route-track")).toHaveCount(4);
+        // One route per source (Gmail, Drive, Sheets, custom MCP server) plus the evidence route.
+        await expect(scene.locator(".route-track")).toHaveCount(5);
         const routes = await scene.evaluate((element) => {
           const cards = [...element.querySelectorAll(".context-source, .connected-agent, .connected-output")].map((card) => card.getBoundingClientRect());
           const sources = [...element.querySelectorAll(".context-source")].map((card) => card.getBoundingClientRect());
@@ -31,8 +32,8 @@ test("connectors meet card edges and stay outside every card through responsive 
             const total = path.getTotalLength();
             const start = path.getPointAtLength(0).matrixTransform(matrix);
             const end = path.getPointAtLength(total).matrixTransform(matrix);
-            const expectedStart = i < 3 ? { x: sources[i].right, y: sources[i].top + sources[i].height / 2 } : { x: agent.right, y: agent.top + agent.height / 2 };
-            const expectedEnd = i < 3 ? { x: agent.left, y: agent.top + agent.height / 2 } : { x: output.left, y: output.top + output.height / 2 };
+            const expectedStart = i < sources.length ? { x: sources[i].right, y: sources[i].top + sources[i].height / 2 } : { x: agent.right, y: agent.top + agent.height / 2 };
+            const expectedEnd = i < sources.length ? { x: agent.left, y: agent.top + agent.height / 2 } : { x: output.left, y: output.top + output.height / 2 };
             const crossesCard = Array.from({ length: 31 }, (_, pointIndex) => path.getPointAtLength(total * pointIndex / 30).matrixTransform(matrix)).some((point) => cards.some((card) => point.x > card.left + .75 && point.x < card.right - .75 && point.y > card.top + .75 && point.y < card.bottom - .75));
             return { startError: Math.hypot(start.x - expectedStart.x, start.y - expectedStart.y), endError: Math.hypot(end.x - expectedEnd.x, end.y - expectedEnd.y), crossesCard };
           });
@@ -92,6 +93,6 @@ test("brief and source checks develop during playback, then approval stays attac
   await expect(scene).toHaveAttribute("data-phase", "2", { timeout: 4000 });
   await expect(scene.locator(".output-status")).toHaveText("Awaiting approval");
   await expect(scene).toHaveAttribute("data-phase", "3", { timeout: 4000 });
-  await expect(scene.locator(".brief-citations > span")).toHaveCount(3);
-  await expect(scene.locator(".brief-proof")).toContainText("3 sources · Human approved");
+  await expect(scene.locator(".brief-citations > span")).toHaveCount(4);
+  await expect(scene.locator(".brief-proof")).toContainText("4 sources · Human approved");
 });
