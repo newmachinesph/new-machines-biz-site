@@ -31,6 +31,11 @@
 .workflow-chapters { min-width: 0; }
 .workflow-chapter { padding-top: 36px; }
 .workflow-chapter[hidden] { display: none; }
+/* The chapter a tap reveals fades in, so the swap reads as a change of content rather than a jump. */
+@media (prefers-reduced-motion: no-preference) {
+  .workflow-chapter:not([hidden]) { animation: workflow-chapter-in 240ms ease-out; }
+}
+@keyframes workflow-chapter-in { from { opacity: 0; } to { opacity: 1; } }
 .workflow-chapter .workflow-description { padding-bottom: 24px; }
 .workflow-chapter .workflow-description h3 { margin-top: 12px; font-size: 26px; line-height: 1.22; letter-spacing: -.035em; max-width: 560px; }
 .workflow-chapter .workflow-description > p { max-width: 580px; margin-top: 12px; font-size: 15px; line-height: 1.6; }

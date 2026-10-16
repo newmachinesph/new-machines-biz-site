@@ -89,18 +89,33 @@ export function WorkExplorer() {
   const [keyboard, setKeyboard] = useState(false);
   const [resets, setResets] = useState([0, 0, 0, 0]);
   const chapters = useRef<HTMLDivElement | null>(null);
-  const selectTeam = useCallback((index: number) => {
+  const sidebar = useRef<HTMLElement | null>(null);
+  const motion = useMotionAllowed();
+  const choose = useCallback((index: number) => {
     setSelected(index);
     setResets((values) => values.map((value, i) => i === index ? value + 1 : value));
-    // The chapters column is always rendered (unlike the chapter React is about to show), so it is the scroll target.
-    chapters.current?.scrollIntoView({ block: "start", behavior: "instant" });
   }, []);
+  // A link to `?workflow=<team>` lands on the chapters column. The column is always rendered (unlike the chapter React is
+  // about to show), so it is the scroll target.
+  const selectFromUrl = useCallback((index: number) => {
+    choose(index);
+    chapters.current?.scrollIntoView({ block: "start", behavior: "instant" });
+  }, [choose]);
+  // A tap only scrolls when the visitor has read past the top of the chapter, and then glides back to it: the page never
+  // jumps under their thumb, and a tap with the chapter's opening already in view leaves the page where it is.
+  const selectTeam = useCallback((index: number) => {
+    choose(index);
+    const column = chapters.current?.getBoundingClientRect().top;
+    const stuck = sidebar.current?.getBoundingClientRect().bottom;
+    if (column === undefined || stuck === undefined || column >= stuck - 1) return;
+    chapters.current?.scrollIntoView({ block: "start", behavior: motion ? "smooth" : "instant" });
+  }, [choose, motion]);
   return (
     <SectionCell id="work-explorer" labelledBy="explorer-title" className="explorer-section">
-      <Suspense fallback={null}><WorkflowFromUrl onSelect={selectTeam} /></Suspense>
+      <Suspense fallback={null}><WorkflowFromUrl onSelect={selectFromUrl} /></Suspense>
       <div className="section-opener"><div><p className="section-eyebrow"><span aria-hidden="true" />Your workforce, in action</p><h2 id="explorer-title">Less busywork.<br /><span>More business.</span></h2></div><p>Give work to agents that know how to do it, and bring in people when it needs a human touch.</p></div>
       <div className="workflow-browser">
-        <aside className="workflow-sidebar">
+        <aside className="workflow-sidebar" ref={sidebar}>
           <span className="micro-label">Explore by team</span>
           <div className="workflow-selector" role="group" aria-label="Choose a team workflow" data-keyboard={keyboard} style={{ "--tab-index": selected } as CSSProperties} onKeyDown={() => setKeyboard(true)} onPointerDown={() => setKeyboard(false)}>
             <span className="workflow-selection" aria-hidden="true" />

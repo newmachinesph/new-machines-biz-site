@@ -16,7 +16,7 @@ const visibleChapters = () => [...document.querySelectorAll<HTMLElement>(".workf
 afterEach(() => { searchParams.current = new URLSearchParams(); vi.restoreAllMocks(); });
 
 describe("WorkExplorer", () => {
-  it("shows one chapter at a time and the team buttons switch it, scrolling the chapters column", async () => {
+  it("shows one chapter at a time and the team buttons switch it, without moving a page already at the chapter", async () => {
     const scroll = vi.spyOn(HTMLElement.prototype, "scrollIntoView");
     render(<WorkExplorer />);
     expect(visibleChapters().map((chapter) => chapter.id)).toEqual(["workflow-finance"]);
@@ -34,11 +34,22 @@ describe("WorkExplorer", () => {
     expect(screen.getByRole("button", { name: "01 Finance" })).toHaveAttribute("aria-pressed", "false");
     expect(screen.getByRole("heading", { name: "More conversations. Less preparation." })).toBeVisible();
     expect(screen.queryByRole("heading", { name: "Close the books. Open up your time." })).toBeNull();
-    // The column, not the chapter: it is rendered before React shows the new chapter, so the scroll lands every time.
-    expect(scroll).toHaveBeenCalledWith({ block: "start", behavior: "instant" });
-    expect(scroll.mock.instances.at(-1)).toBe(document.querySelector(".workflow-chapters"));
+    expect(scroll).not.toHaveBeenCalled();
     expect(document.querySelector(".workflow-selector")).toHaveStyle({ "--tab-index": "1" });
     expect(document.querySelector(".workflow-selection")).toBeInTheDocument();
+  });
+
+  it("scrolls back to the top of the chapters column when a team is chosen from further down the chapter", async () => {
+    const scroll = vi.spyOn(HTMLElement.prototype, "scrollIntoView");
+    render(<WorkExplorer />);
+    const column = document.querySelector(".workflow-chapters")!;
+    const sidebar = document.querySelector(".workflow-sidebar")!;
+    vi.spyOn(column, "getBoundingClientRect").mockReturnValue({ top: -400 } as DOMRect);
+    vi.spyOn(sidebar, "getBoundingClientRect").mockReturnValue({ bottom: 138 } as DOMRect);
+    await userEvent.click(screen.getByRole("button", { name: "02 Sales" }));
+    // The column, not the chapter: it is rendered before React shows the new chapter, so the scroll lands every time.
+    expect(scroll).toHaveBeenCalledTimes(1);
+    expect(scroll.mock.instances[0]).toBe(column);
   });
 
   it("switches with the keyboard and resets a chapter's demo when its team is selected again", async () => {
