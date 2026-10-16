@@ -91,8 +91,8 @@ test("brief and source checks develop during playback, then approval stays attac
   await expect(scene).toHaveAttribute("data-phase", "1", { timeout: 4000 });
   await expect(scene.locator(".brief-content")).toHaveAttribute("data-ready", "true");
   await expect(scene).toHaveAttribute("data-phase", "2", { timeout: 4000 });
-  await expect(scene.locator(".output-status")).toHaveText("Awaiting approval");
+  await expect(scene.locator(".output-status")).toHaveText("Awaiting review");
   await expect(scene).toHaveAttribute("data-phase", "3", { timeout: 4000 });
-  await expect(scene.locator(".brief-citations > span")).toHaveCount(4);
-  await expect(scene.locator(".brief-proof")).toContainText("4 sources · Human approved");
+  await expect(scene.locator(".brief-citations > span")).toHaveCount(3);
+  await expect(scene.locator(".brief-proof")).toContainText("3 sources · Human approved");
 });

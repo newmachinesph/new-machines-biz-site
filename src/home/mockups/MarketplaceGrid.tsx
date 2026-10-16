@@ -5,36 +5,39 @@ import { HomepageLink as Link } from "../HomepageLink";
 import Image from "next/image";
 import { cn } from "@/lib/cn";
 import { Icon } from "../Icon";
-import { DEMO_LISTINGS, KIND_FILTER_GROUP_LABEL, KIND_FILTERS, KIND_LABEL, type KindFilter } from "./data";
+import { DEMO_LISTINGS, PACK_FUNCTIONS, type PackFunction } from "./data";
 import { AgentPortrait } from "./AgentPortrait";
 import { Check } from "./parts";
 
+type Filter = "all" | PackFunction;
+const FILTERS: readonly { label: string; value: Filter }[] = [{ label: "All packs", value: "all" }, ...PACK_FUNCTIONS.map((value) => ({ label: value, value }))];
+
 export function MarketplaceGrid({ className }: { className?: string }) {
-  const [filter, setFilter] = useState<KindFilter>("all");
+  const [filter, setFilter] = useState<Filter>("all");
   const [selected, setSelected] = useState(1);
   const listing = DEMO_LISTINGS[selected];
-  function changeFilter(kind: KindFilter) {
-    setFilter(kind);
-    if (kind !== "all" && listing.kind !== kind) {
-      setSelected(DEMO_LISTINGS.findIndex((item) => item.kind === kind));
+  function changeFilter(value: Filter) {
+    setFilter(value);
+    if (value !== "all" && listing.function !== value) {
+      setSelected(DEMO_LISTINGS.findIndex((item) => item.function === value));
     }
   }
   return (
     <div className={cn("talent-directory", className)}>
       <div className="directory-heading">
-        <div><span className="scene-kicker">The marketplace</span><h3>A specialist for every task.</h3></div>
+        <div><span className="scene-kicker">The marketplace</span><h3>A pack for every outcome.</h3></div>
         <Icon name="grid" />
       </div>
-      <div className="directory-filters" role="group" aria-label={KIND_FILTER_GROUP_LABEL}>
-        {KIND_FILTERS.map((item) => <button key={item.kind} type="button" aria-pressed={filter === item.kind} onClick={() => changeFilter(item.kind)}>{item.label}</button>)}
+      <div className="directory-filters" role="group" aria-label="Filter Workflow Packs by function">
+        {FILTERS.map((item) => <button key={item.value} type="button" aria-pressed={filter === item.value} onClick={() => changeFilter(item.value)}>{item.label}</button>)}
       </div>
       <div className="directory-body">
-        <ul className="talent-list" aria-label="Example marketplace listings">
-          {DEMO_LISTINGS.map((item, index) => filter === "all" || filter === item.kind ? (
-            <li key={item.title}>
+        <ul className="talent-list" aria-label="Platform Workflow Packs">
+          {DEMO_LISTINGS.map((item, index) => filter === "all" || filter === item.function ? (
+            <li key={item.slug}>
               <button type="button" aria-pressed={selected === index} onClick={() => setSelected(index)} className="talent-row">
                 <AgentPortrait kind={item.portrait} />
-                <span className="talent-row-copy"><strong>{item.title}</strong><span>{KIND_LABEL[item.kind]}<i aria-hidden="true">·</i>{item.certified ? <span className="listing-passport"><Check />Trust Passport</span> : <span>Not yet certified</span>}</span></span>
+                <span className="talent-row-copy"><strong>{item.title}</strong><span>{item.function}<i aria-hidden="true">·</i>{item.certified ? <span className="listing-passport"><Check />Certified</span> : <span>Not yet certified</span>}</span></span>
                 <Icon />
               </button>
             </li>
@@ -42,16 +45,17 @@ export function MarketplaceGrid({ className }: { className?: string }) {
         </ul>
         <div className="talent-detail">
           <AgentPortrait kind={listing.portrait} className="portrait-large" />
-          <span className="scene-kicker">{KIND_LABEL[listing.kind]}</span>
+          <span className="scene-kicker">Workflow Pack · {listing.function}</span>
           <h4>{listing.title}</h4>
           <p>{listing.body}</p>
           <div className="detail-divider" />
-          {listing.kind === "pack" ? <><span className="scene-kicker">Your workforce</span><div className="pack-members"><span><AgentPortrait kind="invoice" />Invoice matcher</span><span><AgentPortrait kind="receipt" />Receipt reconciler</span><span><AgentPortrait kind="human" />Qualified reviewer</span></div></> : <div className="specialist-scope"><span className="scene-kicker">Scope of work</span><p>{listing.kind === "human" ? "Bilingual review, with a recorded decision and scoped access." : "A versioned specialist, with clear inputs and inspectable outputs."}</p></div>}
-          <div className="detail-apps"><span className="scene-kicker">Works with</span><span><Image src="/brands/google-drive-official.svg" alt="Google Drive" width={16} height={16} /><Image src="/brands/google-sheets-official.svg" alt="Google Sheets" width={16} height={16} /><Image src="/brands/gmail-official.svg" alt="Gmail" width={16} height={16} /></span></div>
-          <div className="detail-price"><span>{listing.price}</span><Link href="#work-explorer" aria-label={`Explore ${listing.title}`}><Icon /></Link></div>
+          <span className="scene-kicker">Who does the work</span>
+          <div className="pack-members">{listing.members.map((member) => <span key={member.name}><AgentPortrait kind={member.portrait} />{member.name}</span>)}</div>
+          <div className="detail-apps"><span className="scene-kicker">Works with</span><span>{listing.apps.map((app) => <Image key={app.name} src={app.src} alt={app.name} title={app.name} width={16} height={16} />)}</span></div>
+          <div className="detail-price"><span>{listing.price}</span><Link href="/marketplace" aria-label={`Explore ${listing.title} in the marketplace`}><Icon /></Link></div>
         </div>
       </div>
-      <div className="directory-footer"><span>Versioned talent. Clearly scoped work.</span><Link href="/marketplace">Explore all listings<Icon /></Link></div>
+      <div className="directory-footer"><span>Pinned versions. Writes wait for your approval.</span><Link href="/marketplace">Explore all packs<Icon /></Link></div>
     </div>
   );
 }

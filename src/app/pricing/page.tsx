@@ -3,6 +3,7 @@ import { Table, type Column } from "@/design-system/components/Table";
 import { SectionCell } from "@/home/Frame";
 import { HomepageLink as Link } from "@/home/HomepageLink";
 import { Icon } from "@/home/Icon";
+import { HOME_COPY } from "@/home/copy";
 import { Close } from "@/home/sections/Close";
 import { KIND_LABEL } from "@/marketplace/kinds";
 import { MARKETPLACE_LISTINGS } from "@/marketplace/listings";
@@ -41,7 +42,7 @@ export default function Page() {
                 <h3>{plan.name}</h3>
                 <div className="plan-price"><strong>{plan.price}</strong>{plan.unit ? <span>{plan.unit}</span> : null}</div>
                 <p>{plan.body}</p>
-                <Link href={plan.cta.href} home={false} className="text-link">{plan.cta.label}<Icon /></Link>
+                <Link href={"href" in plan.cta ? plan.cta.href : HOME_COPY.nav.appUrl} home={false} className="text-link">{plan.cta.label}<Icon /></Link>
               </Card>
             </li>
           ))}

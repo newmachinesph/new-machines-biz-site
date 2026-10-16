@@ -9,9 +9,10 @@ import { WorkExplorer } from "./WorkExplorer";
 
 const chapterOf = (team: string) => document.getElementById(`workflow-${team}`) as HTMLElement;
 const recordName = (cell: Element) => { const copy = cell.cloneNode(true) as Element; copy.querySelector(".workflow-record-reason")?.remove(); return copy.textContent; };
-const rowsOf = (chapter: HTMLElement) => within(chapter).getAllByRole("row").slice(1).map((row) => [...row.querySelectorAll("td")].map((cell, i) => i === 0 ? recordName(cell) : cell.textContent));
-const reasonsOf = (chapter: HTMLElement) => [...chapter.querySelectorAll("tbody tr")].map((row) => row.querySelector(".workflow-record-reason")?.textContent ?? null);
+const rowsOf = (chapter: HTMLElement) => [...chapter.querySelectorAll(".workflow-record-table tbody tr")].map((row) => [...row.querySelectorAll("td")].map((cell, i) => i === 0 ? recordName(cell) : cell.textContent));
+const reasonsOf = (chapter: HTMLElement) => [...chapter.querySelectorAll(".workflow-record-table tbody tr")].map((row) => row.querySelector(".workflow-record-reason")?.textContent ?? null);
 const visibleChapters = () => [...document.querySelectorAll<HTMLElement>(".workflow-chapter")].filter((chapter) => !chapter.hidden);
+const calls = (chapter: HTMLElement) => [...chapter.querySelectorAll(".approval-calls li")].map((item) => item.textContent);
 
 afterEach(() => { searchParams.current = new URLSearchParams(); vi.restoreAllMocks(); });
 
@@ -33,12 +34,21 @@ describe("WorkExplorer", () => {
     expect(sales).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByRole("button", { name: "01 Finance" })).toHaveAttribute("aria-pressed", "false");
     expect(screen.getByRole("heading", { name: "More conversations. Less preparation." })).toBeVisible();
-    expect(screen.queryByRole("heading", { name: "Close the books. Open up your time." })).toBeNull();
+    expect(screen.queryByRole("heading", { name: "Every order, followed to cash." })).toBeNull();
     // The column, not the chapter: it is rendered before React shows the new chapter, so the scroll lands every time.
     expect(scroll).toHaveBeenCalledWith({ block: "start", behavior: "instant" });
     expect(scroll.mock.instances.at(-1)).toBe(document.querySelector(".workflow-chapters"));
     expect(document.querySelector(".workflow-selector")).toHaveStyle({ "--tab-index": "1" });
     expect(document.querySelector(".workflow-selection")).toBeInTheDocument();
+  });
+
+  it("names real packs and agents, and no named or assigned reviewer", () => {
+    const { container } = render(<WorkExplorer />);
+    for (const [team, pack] of [["finance", "Order-to-Cash Exception Desk"], ["sales", "Inbox Lead Tracker"], ["operations", "Weekly Expense Check"], ["support", "Support Inbox Triage"]]) {
+      expect(chapterOf(team).querySelector(".workflow-canvas-toolbar")).toHaveTextContent(pack);
+      expect(chapterOf(team).querySelector(".workflow-description .micro-label")).toHaveTextContent(pack);
+    }
+    expect(container.textContent).not.toMatch(/Assigned reviewer|M\. Tanaka|S\. Lim|J\. Park|A\. Sato|Invoice matcher|Lead qualifier|Vendor intake|Support reply drafter|\bhire/i);
   });
 
   it("switches with the keyboard and resets a chapter's demo when its team is selected again", async () => {
@@ -50,11 +60,12 @@ describe("WorkExplorer", () => {
     await user.click(within(support).getByRole("button", { name: "Run demo" }));
     expect(within(support).getByRole("button", { name: "Running…" })).toBeDisabled();
     expect(within(support).getByText("Agent working on synthetic data…")).toBeInTheDocument();
-    expect(within(support).getByText("Yamada-sama was charged ¥12,800 twice for the October invoice. Approve the refund so the reply can go out?")).toBeInTheDocument();
-    expect(within(support).getByText("The agent drafts the replies. A. Sato decides what gets sent.")).toBeInTheDocument();
-    expect(within(support).getByText("Run six checks")).toBeInTheDocument();
+    expect(within(support).getByText("A customer was charged ₱1,280.00 twice for the October invoice and asks for a refund. The draft confirms the double charge. Is it right to send?")).toBeInTheDocument();
+    expect(within(support).getByText("The agent sorts and drafts. A reviewer checks complaints and refund requests; nothing is sent from here.")).toBeInTheDocument();
+    expect(within(support).getByText("Send complaints and refunds to a person")).toBeInTheDocument();
+    expect(within(support).getByText("From your team or the network")).toBeInTheDocument();
     // Tab order only reaches the visible chapter: from the sidebar link, the next stop is inside the Support chapter.
-    screen.getByRole("link", { name: "Find your next agent" }).focus();
+    screen.getByRole("link", { name: "Find your next pack" }).focus();
     await user.tab();
     expect(document.activeElement?.closest(".workflow-chapter")).toBe(support);
     // Keyboard selection of another team, then back again: the Support demo starts over.
@@ -76,55 +87,63 @@ describe("WorkExplorer", () => {
     expect(screen.getByRole("button", { name: "03 Operations" })).toHaveAttribute("aria-pressed", "true");
   });
 
-  it("shows the lead qualifier's shortlist with an exclusion and the review it needs", async () => {
+  it("adds the inbox's real enquiries to the leads sheet only after your approval", async () => {
     const user = userEvent.setup();
     render(<WorkExplorer />);
     await user.click(screen.getByRole("button", { name: "02 Sales" }));
-    const sales = within(chapterOf("sales"));
-    expect(sales.getByText("Excluded")).toHaveAttribute("data-excluded", "true");
-    expect(sales.getByText("Review")).toHaveAttribute("data-review", "true");
-    expect(reasonsOf(chapterOf("sales"))).toEqual([null, "Enterprise tier, about 1,400 employees", "Existing customer with an owner. Routed to them, not a new lead."]);
-    expect(sales.getByText("Meridian scored 88 but is enterprise tier, with about 1,400 employees. Is it worth the enterprise sales cycle?")).toBeInTheDocument();
-    expect(sales.getByText("The agent researches and scores. S. Lim decides who gets contacted.")).toBeInTheDocument();
-    expect(sales.queryByText(/outreach brief/i)).toBeNull();
-    expect(sales.getByText("Flagged by the agent")).toBeInTheDocument();
+    const chapter = chapterOf("sales");
+    const sales = within(chapter);
+    expect(sales.getByText("Not a lead")).toHaveAttribute("data-excluded", "true");
+    expect(rowsOf(chapter)).toEqual([["Aster Labs · bulk order", "This month", "Add row"], ["Meridian · price list", "Next week", "Add row"], ["Newsletter signup", "—", "Not a lead"]]);
+    expect(reasonsOf(chapter)).toEqual([null, null, "Sorted as not an enquiry"]);
+    expect(calls(chapter)).toEqual(["Google SheetsAppend a rowCalls × 2"]);
+    expect(sales.getByText("What you are approving")).toBeInTheDocument();
     await user.click(sales.getByRole("button", { name: "Run demo" }));
-    expect(await sales.findByRole("button", { name: "Awaiting S. Lim" }, { timeout: 2000 })).toBeDisabled();
-    // The visitor does not approve: S. Lim's typed decision is submitted and recorded.
-    expect(await sales.findByText("Submitted by S. Lim · Decision recorded", {}, { timeout: 3000 })).toBeInTheDocument();
-    expect(sales.getByText("S. Lim submitted: Worth it. Strong fit across Tokyo, Singapore and Seoul. Approve Meridian and route it to the enterprise team.")).toBeInTheDocument();
-    expect(rowsOf(chapterOf("sales"))).toEqual([["Aster Labs", "92", "Sent to owner"], ["Meridian", "88", "Approved"], ["Kanso Studio", "—", "Excluded"]]);
+    expect(await sales.findByRole("button", { name: "Awaiting your approval" }, { timeout: 2000 })).toBeDisabled();
+    expect(await sales.findByText("Approved by you · Every write counted", {}, { timeout: 3000 })).toBeInTheDocument();
+    expect(sales.getByText("Approved by you: Add rows to your leads sheet")).toBeInTheDocument();
+    expect(rowsOf(chapter)).toEqual([["Aster Labs · bulk order", "This month", "Added"], ["Meridian · price list", "Next week", "Added"], ["Newsletter signup", "—", "Not a lead"]]);
   });
 
-  it("shows the vendor register as ready, review and blocked, and records the reviewer's call on each", async () => {
+  it("shows the expense flags for review, and records the reviewer's verdict on each", async () => {
     searchParams.current = new URLSearchParams("workflow=operations");
     const user = userEvent.setup();
     render(<WorkExplorer />);
     const operations = chapterOf("operations");
-    const states = () => rowsOf(operations);
-    expect(states()).toEqual([["Aster Supply", "4 / 4", "Ready"], ["Meridian", "3 / 4", "Review"], ["Kanso Studio", "4 / 4", "Blocked"]]);
-    expect(reasonsOf(operations)).toEqual([null, "Tax certificate missing. Request drafted.", "Bank account name differs from the legal entity"]);
-    expect(within(operations).getByText("Kanso Studio’s bank account is in a different name from its legal entity. Hold it until a callback confirms the account?")).toBeInTheDocument();
+    expect(rowsOf(operations)).toEqual([["Taxi · client visit", "₱486.00", "Ready"], ["Team lunch", "₱6,240.00", "Review"], ["Design software", "₱2,950.00", "Review"]]);
+    expect(reasonsOf(operations)).toEqual([null, "₱1,240.00 over the meal limit", "Possible duplicate of a 7 October charge"]);
     await user.click(within(operations).getByRole("button", { name: "Run demo" }));
-    await within(operations).findByText("Submitted by J. Park · Decision recorded", {}, { timeout: 4000 });
-    expect(states()).toEqual([["Aster Supply", "4 / 4", "Onboarded"], ["Meridian", "3 / 4", "Request sent"], ["Kanso Studio", "4 / 4", "On hold"]]);
+    await within(operations).findByText("Verdict recorded with the work", {}, { timeout: 6000 });
+    expect(rowsOf(operations)).toEqual([["Taxi · client visit", "₱486.00", "Categorised"], ["Team lunch", "₱6,240.00", "Accepted"], ["Design software", "₱2,950.00", "Duplicate"]]);
+    expect(operations.querySelector(".workflow-result")).toHaveTextContent("Human approved");
   });
 
-  it("shows the invoice matcher's approve and review recommendations on the real batch, and records the reviewer's call", async () => {
+  it("follows every order across four systems, counts every write in one approval and lists what it holds back", async () => {
     const user = userEvent.setup();
     render(<WorkExplorer />);
     const finance = chapterOf("finance");
-    const states = () => rowsOf(finance);
-    const highlighted = () => [...finance.querySelectorAll(".workflow-record-state")].map((state) => state.getAttribute("data-review"));
-    expect(states()).toEqual([["014592", "¥28,000", "Approve"], ["028222", "¥29,505", "Approve"], ["030679", "¥76,177", "Review"]]);
-    expect(highlighted()).toEqual(["false", "false", "true"]);
-    expect(reasonsOf(finance)).toEqual([null, null, "Two PO lines differ from the receipt"]);
-    expect(within(finance).getByText("Receipt 030679: two PO quantities differ from what was received. Revise the PO and approve the invoice?")).toBeInTheDocument();
-    expect(within(finance).getByText("Match PO, receipt and invoice")).toBeInTheDocument();
-    expect(within(finance).getByText("Interactive demo · Real invoices, names and dates changed · No real actions or charges")).toBeInTheDocument();
-    expect(within(finance).getByRole("button", { name: "Aster Supply 030679, show the source document" })).toHaveAttribute("data-component", "financeInvoicePhoto");
-    await user.click(within(finance).getByRole("button", { name: "Run demo" }));
-    await within(finance).findByText("Submitted by M. Tanaka · Decision recorded", {}, { timeout: 4000 });
-    expect(states()).toEqual([["014592", "¥28,000", "Approved"], ["028222", "¥29,505", "Approved"], ["030679", "¥76,177", "Approved"]]);
+    const desk = within(finance);
+    expect([...finance.querySelectorAll(".task-systems > span")].map((system) => system.textContent)).toEqual(["Store", "Ledger", "Warehouse", "Sales app"]);
+    expect(desk.getByText("Kalumpang Demo Supply Co.")).toBeInTheDocument();
+    expect(rowsOf(finance)).toEqual([
+      ["SO-2041 · Bakawan Bakeshop", "₱48,600.00", "Reminder"],
+      ["SO-2044 · Dalisay Hardware", "₱31,250.00", "Reminder"],
+      ["SO-2047 · Liwayway Catering", "₱27,900.00", "Warehouse note"],
+      ["SO-2052 · Malaya Grocery", "₱12,350.00", "Finance note"],
+      ["SO-2058 · Tala Eatery", "₱9,480.00", "Finance note"],
+      ["SO-2063 · Sampaguita Café", "₱3,200.00", "Listed only"],
+    ]);
+    expect(desk.getByText("Listed only")).toHaveAttribute("data-excluded", "true");
+    expect(calls(finance)).toEqual(["GmailSave a reminder draftCalls × 2", "LedgerPost a finance note · sandbox onlyCalls × 2", "WarehousePost a warehouse note · sandbox onlyCalls × 1"]);
+    expect(desk.getByText("Also covered by this approval")).toBeInTheDocument();
+    expect(desk.getByText("Save reminder drafts and post notes")).toBeInTheDocument();
+    expect(desk.getByText("None until you approve")).toBeInTheDocument();
+    expect(desk.getByText("Interactive demo · Illustrative demo data, Kalumpang Demo Supply Co. · No real actions or charges")).toBeInTheDocument();
+    await user.click(desk.getByRole("button", { name: "Run demo" }));
+    await desk.findByText("Approved by you · Every write counted", {}, { timeout: 4000 });
+    expect(rowsOf(finance).map((row) => row[2])).toEqual(["Drafted", "Drafted", "Noted", "Noted", "Noted", "Listed only"]);
+    expect(desk.getByText("5, all after your approval")).toBeInTheDocument();
+    expect(desk.getByText("Work receipt · Verified")).toBeInTheDocument();
+    expect(finance.querySelector(".workflow-result")).toHaveTextContent("Verified · Human approved · 5 writes counted · Work receipt ready");
   });
 });

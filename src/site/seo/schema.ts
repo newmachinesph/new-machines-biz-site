@@ -52,7 +52,7 @@ export function webSiteSchema() {
   };
 }
 
-/** The platform itself. No `offers`: prices in the product are illustrative demo values and nothing is collected pre-launch. */
+/** The platform itself. No `offers`: billing is simulated and nothing is collected pre-launch. */
 export function softwareApplicationSchema() {
   return {
     "@context": CONTEXT,

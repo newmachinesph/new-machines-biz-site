@@ -18,6 +18,8 @@ const tile = (name: string) => tiles().find((item) => item.querySelector("strong
 describe("catalog data", () => {
   it("holds the full catalog with a unique slug, a real category and a logo file for every tool", () => {
     expect(CONNECTORS.length).toBeGreaterThan(1000);
+    // The site never names a model vendor or the integration vendor.
+    expect(CONNECTORS.filter((connector) => /openai|gemini|provider|model|cohere|deepseek|mistral|^grok|groq|openrouter|perplexity|composio|typesafe|^jev$/i.test(connector.name))).toEqual([]);
     expect(new Set(CONNECTORS.map((connector) => connector.slug)).size).toBe(CONNECTORS.length);
     expect(new Set(CONNECTORS.map((connector) => connector.name.toLowerCase())).size).toBe(CONNECTORS.length);
     expect(CONNECTORS.every((connector) => (CATEGORIES as readonly string[]).includes(connector.category))).toBe(true);
@@ -77,7 +79,7 @@ describe("IntegrationDirectory", () => {
     expect(shown()).toEqual(AVAILABLE_CONNECTORS.map((connector) => connector.name));
     expect(liveCount()).toBe("7 connectors");
     expect(screen.queryByRole("button", { name: /Show all/ })).toBeNull();
-    expect(screen.getByText(`${AVAILABLE_LABEL}: ${availableSummary()}. The rest connect through our integration layer on request.`)).toBeInTheDocument();
+    expect(screen.getByText(`${AVAILABLE_LABEL}: ${availableSummary()}. On request: we add an app’s connector for you.`)).toBeInTheDocument();
   });
 
   it("searches name and category case-insensitively, combines with the category, and shows an empty state", async () => {

@@ -16,11 +16,11 @@ async function auditPage(page: Page) {
   };
 }
 
-test("marketplace catalogue renders twelve listings, has no horizontal scroll, and passes axe", async ({ page }) => {
+test("marketplace catalogue renders the fourteen platform listings, has no horizontal scroll, and passes axe", async ({ page }) => {
   const audit = await auditPage(page);
   await page.goto("/marketplace");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("The right fit.");
-  await expect(page.locator(".listing-card")).toHaveCount(12);
+  await expect(page.locator(".listing-card")).toHaveCount(14);
   await expect(page.getByText("United States")).toHaveCount(0);
   await expect(page.locator('nav[aria-label="Primary"] a[aria-current="page"]')).toHaveAttribute("href", "/marketplace");
   await audit();
@@ -30,48 +30,48 @@ test("marketplace catalogue renders twelve listings, has no horizontal scroll, a
 test("marketplace filters and search live in the URL and survive a reload", async ({ page }) => {
   const audit = await auditPage(page);
   await page.goto("/marketplace");
-  await expect(page.locator(".listing-card")).toHaveCount(12);
-  await page.getByRole("button", { name: "Human work", exact: true }).click();
-  await expect(page.locator(".listing-card")).toHaveCount(3);
-  await expect(page).toHaveURL(/\/marketplace\?kind=human$/);
+  await expect(page.locator(".listing-card")).toHaveCount(14);
+  await page.getByRole("button", { name: "Agents", exact: true }).click();
+  await expect(page.locator(".listing-card")).toHaveCount(6);
+  await expect(page).toHaveURL(/\/marketplace\?kind=agent$/);
   await page.reload();
-  await expect(page.locator(".listing-card")).toHaveCount(3);
-  await expect(page.getByRole("button", { name: "Human work", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator(".listing-card")).toHaveCount(6);
+  await expect(page.getByRole("button", { name: "Agents", exact: true })).toHaveAttribute("aria-pressed", "true");
   await audit();
-  await page.getByRole("button", { name: "All talent", exact: true }).click();
-  await expect(page.locator(".listing-card")).toHaveCount(12);
-  await page.getByRole("searchbox", { name: "Search listings" }).fill("invoice");
+  await page.getByRole("button", { name: "All", exact: true }).click();
+  await expect(page.locator(".listing-card")).toHaveCount(14);
+  await page.getByRole("searchbox", { name: "Search listings" }).fill("calendar");
   await expect(page.locator(".listing-card")).toHaveCount(1);
-  await expect(page).toHaveURL(/\/marketplace\?q=invoice$/);
-  await page.getByRole("button", { name: "Trust Passport only", exact: true }).click();
-  await expect(page).toHaveURL(/\/marketplace\?certified=1&q=invoice$/);
-  await page.getByRole("button", { name: "Human work", exact: true }).click();
+  await expect(page).toHaveURL(/\/marketplace\?q=calendar$/);
+  await page.getByRole("button", { name: "Certified only", exact: true }).click();
+  await expect(page).toHaveURL(/\/marketplace\?certified=1&q=calendar$/);
+  await page.getByRole("button", { name: "Agents", exact: true }).click();
   await expect(page.getByText("No listings match.")).toBeVisible();
   await page.getByRole("button", { name: "Clear filters", exact: true }).click();
-  await expect(page.locator(".listing-card")).toHaveCount(12);
+  await expect(page.locator(".listing-card")).toHaveCount(14);
   await expect(page).toHaveURL(/\/marketplace$/);
-  await page.getByRole("button", { name: "Workflow packs", exact: true }).click();
-  await expect(page.locator(".listing-card")).toHaveCount(2);
+  await page.getByRole("button", { name: "Packs", exact: true }).click();
+  await expect(page.locator(".listing-card")).toHaveCount(8);
   await page.getByRole("button", { name: "Clear", exact: true }).click();
-  await expect(page.locator(".listing-card")).toHaveCount(12);
+  await expect(page.locator(".listing-card")).toHaveCount(14);
   await page.locator(".listing-card").first().click();
-  await expect(page).toHaveURL(/\/marketplace\/invoice-matcher$/);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Invoice matcher");
+  await expect(page).toHaveURL(/\/marketplace\/order-to-cash-exception-desk$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Order-to-Cash Exception Desk");
   await page.getByRole("link", { name: "All listings" }).click();
   await expect(page).toHaveURL(/\/marketplace$/);
 });
 
 test("the controls follow the URL when a link navigates back to the plain catalogue", async ({ page }) => {
   const audit = await auditPage(page);
-  await page.goto("/marketplace?kind=human");
-  await expect(page.locator(".listing-card")).toHaveCount(3);
+  await page.goto("/marketplace?kind=agent");
+  await expect(page.locator(".listing-card")).toHaveCount(6);
   await page.locator("footer").getByRole("link", { name: "Marketplace", exact: true }).click();
   await expect(page).toHaveURL(/\/marketplace$/);
-  await expect(page.locator(".listing-card")).toHaveCount(12);
-  await expect(page.getByRole("button", { name: "All talent", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator(".listing-card")).toHaveCount(14);
+  await expect(page.getByRole("button", { name: "All", exact: true })).toHaveAttribute("aria-pressed", "true");
   await page.goBack();
-  await expect(page).toHaveURL(/\/marketplace\?kind=human$/);
-  await expect(page.locator(".listing-card")).toHaveCount(3);
+  await expect(page).toHaveURL(/\/marketplace\?kind=agent$/);
+  await expect(page.locator(".listing-card")).toHaveCount(6);
   await audit();
 });
 
@@ -83,7 +83,7 @@ test("on desktop the toolbar and a complete first row of cards fit a short viewp
   // at 1440 from toolbar top to first-card bottom, the compact ones 382 / 360, so 420 leaves ~40px headroom at 1024.
   await page.setViewportSize({ width, height: 640 });
   await page.goto("/marketplace");
-  await expect(page.locator(".listing-card")).toHaveCount(12);
+  await expect(page.locator(".listing-card")).toHaveCount(14);
   await page.getByRole("searchbox", { name: "Search listings" }).fill("a");
   // The inline Clear only renders once hydration has landed and the toolbar is in its search-active state.
   await expect(page.getByRole("button", { name: "Clear", exact: true })).toBeVisible();
@@ -97,14 +97,16 @@ test("on desktop the toolbar and a complete first row of cards fit a short viewp
   await expect(firstCard.locator(".listing-card-foot")).toBeInViewport({ ratio: 1 });
 });
 
-test("listing page shows the pack with its steps and passport, and passes axe", async ({ page }) => {
+test("listing page shows the pack with its demo report, steps and Certified badge, and passes axe", async ({ page }) => {
   const audit = await auditPage(page);
-  await page.goto("/marketplace/month-end-close-pack");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Month-end close pack");
+  await page.goto("/marketplace/order-to-cash-exception-desk");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Order-to-Cash Exception Desk");
   await expect(page.locator(".work-guide li")).toHaveCount(5);
-  await expect(page.locator(".listing-meta")).toContainText("Trust Passport");
+  await expect(page.locator(".listing-meta")).toContainText("Certified");
+  await expect(page.locator("[data-component='o2cReport']")).toContainText("Demo data");
   await expect(page.getByRole("list", { name: "Related listings" }).locator(".listing-card")).toHaveCount(3);
-  await expect(page.getByRole("link", { name: "Try this pack" })).toHaveAttribute("href", "/#work-explorer");
+  await expect(page.getByRole("link", { name: "Add in the app" })).toHaveAttribute("href", /^https:\/\//);
+  await expect(page.getByRole("link", { name: "See a preview" })).toHaveAttribute("href", "/#work-explorer");
   await audit();
   await expect(page).toHaveScreenshot("listing.png", { fullPage: true, maxDiffPixelRatio: 0.01 });
 });

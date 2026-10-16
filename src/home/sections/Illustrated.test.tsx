@@ -13,7 +13,8 @@ describe("illustrated sections", () => {
     render(<Hire />);
     expect(screen.getByText(HOME_COPY.hire.eyebrow)).toHaveClass("font-mono");
     expect(screen.getByRole("region", { name: `${HOME_COPY.hire.lead} ${HOME_COPY.hire.tail}` })).toBeInTheDocument();
-    expect(screen.getAllByText("Trust Passport")).toHaveLength(4);
+    expect(screen.getAllByText("Certified")).toHaveLength(6);
+    expect(screen.queryByText("Trust Passport")).toBeNull();
     expect(screen.queryByText("Demo data")).toBeNull();
   });
 
@@ -41,14 +42,14 @@ describe("illustrated sections", () => {
   it("Control explains the spending rules and shows the spend panel", () => {
     render(<Control />);
     expect(screen.getByRole("region", { name: `${HOME_COPY.control.lead} ${HOME_COPY.control.tail}` })).toBeInTheDocument();
-    expect(screen.getByText("Spending cap")).toBeInTheDocument();
+    expect(screen.getByText("Monthly cap")).toBeInTheDocument();
   });
 
   it("HowItWorks links each stage to the relevant product section", () => {
     render(<HowItWorks />);
     expect(screen.getByRole("list").querySelectorAll("li")).toHaveLength(5);
     expect(screen.getByText("01")).toHaveClass("font-mono", "font-light");
-    expect(screen.getByRole("link", { name: /Try in sandbox/ })).toHaveAttribute("href", "#sandbox");
+    expect(screen.getByRole("link", { name: /Try on simulated data/ })).toHaveAttribute("href", "#sandbox");
     expect(screen.getByRole("link", { name: /Accept with evidence/ })).toHaveAttribute("href", "#trust");
   });
 });

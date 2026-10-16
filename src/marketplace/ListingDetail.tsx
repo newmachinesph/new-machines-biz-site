@@ -3,50 +3,54 @@ import Link from "next/link";
 import { Badge } from "@/design-system/components/Badge";
 import { Button } from "@/design-system/components/Button";
 import { Card } from "@/design-system/components/Card";
-import { Table, type Column } from "@/design-system/components/Table";
 import { SectionCell, SplitCell } from "@/home/Frame";
+import { HomepageLink } from "@/home/HomepageLink";
 import { Icon } from "@/home/Icon";
 import { SectionHeader } from "@/home/SectionHeader";
 import { AgentPortrait } from "@/home/mockups/AgentPortrait";
-import { DEMO_EVIDENCE, DEMO_LOG, DEMO_STEPS } from "@/home/mockups/data";
 import { Check } from "@/home/mockups/parts";
 import { Close } from "@/home/sections/Close";
 import { MARKETPLACE_COPY } from "./copy";
 import { DraftReview } from "./DraftReview";
-import { SAMPLE_RUN } from "./invoiceMatcher";
 import { KIND_LABEL } from "./kinds";
 import { ListingCard } from "./ListingCard";
-import { LEAD_QUALIFIER_SAMPLE } from "./leadQualifierSample";
-import { MatchReport } from "./MatchReport";
-import { relatedListings, type ListingReviewer, type MarketplaceListing } from "./listings";
-import { QualifierReport } from "./QualifierReport";
+import { DATA_REGION, factsFor, PUBLISHER, type ListingFacts } from "./listingFacts";
+import { relatedListings, type MarketplaceListing } from "./listings";
+import { O2C_SAMPLE } from "./o2cSample";
+import { O2CReport } from "./O2CReport";
 import { sampleRunFor } from "./supportDraft";
 
 const L = MARKETPLACE_COPY.listing;
+const F = L.facts;
 
-const LOG_COLUMNS: readonly Column<(typeof DEMO_LOG)[number]>[] = [
-  { key: "id", header: "Record", mono: true },
-  { key: "who", header: "Who" },
-  { key: "what", header: "Decision" },
-  { key: "at", header: "Time", align: "right" },
-];
-
-/** The one reviewer with a photograph (`/reviewer.jpg`); everyone else gets initials, as on the homepage explorer. */
-const PHOTOGRAPHED_REVIEWER = "M. Tanaka";
-
-function initials(name: string) {
-  return name.split(/[\s.]+/).filter(Boolean).map((part) => part[0]).join("");
-}
-
-function ReviewerAvatar({ reviewer }: { reviewer: ListingReviewer }) {
-  if (reviewer.name === PHOTOGRAPHED_REVIEWER) return <AgentPortrait kind="human" />;
-  return <span className="review-avatar" data-accent="human">{initials(reviewer.name)}</span>;
+/** The listing's facts as label and value pairs: who does the work, where a person comes in, cost, risk and region. */
+function factRows(facts: ListingFacts, price: string): readonly { label: string; value: string }[] {
+  if (facts.kind === "agent") {
+    return [
+      { label: F.usedIn, value: facts.usedIn.length ? facts.usedIn.join(", ") : F.usedInNone },
+      { label: F.personInLoop, value: F.agentReview },
+      { label: F.price, value: `${price}. ${F.agentPrice}` },
+      { label: F.model, value: facts.model },
+      { label: F.region, value: DATA_REGION },
+    ];
+  }
+  return [
+    { label: F.whoWorks, value: facts.agents.join(", ") },
+    { label: F.personInLoop, value: facts.humanReview },
+    { label: F.whoReviews, value: facts.reviewStep ? F.reviewers : F.noReviewer },
+    { label: F.price, value: facts.priceNote },
+    { label: F.risk, value: facts.risk },
+    { label: F.category, value: facts.functionName },
+    { label: F.industries, value: facts.industries.join(", ") },
+    { label: F.region, value: DATA_REGION },
+  ];
 }
 
 export function ListingDetail({ listing }: { listing: MarketplaceListing }) {
-  const { title, kind, summary, price, certified, portrait, scope, reviewer, tools } = listing;
+  const { slug, title, kind, summary, price, certified, portrait, scope, tools } = listing;
+  const facts = factsFor(slug);
   const related = relatedListings(listing, 3);
-  const draftRun = sampleRunFor(listing.slug);
+  const draftRun = sampleRunFor(slug);
   return (
     <>
       <SectionCell labelledBy="listing-title" className="listing-hero-section">
@@ -60,9 +64,10 @@ export function ListingDetail({ listing }: { listing: MarketplaceListing }) {
           </div>
           <div className="listing-hero-aside">
             <div className="listing-meta"><span className="listing-price">{price}</span>{certified ? <Badge status="verified">{L.certified}</Badge> : <Badge>{L.notCertified}</Badge>}</div>
+            {facts ? <p className="listing-publisher">{L.publisherVersion(PUBLISHER, facts.version)}</p> : null}
             <div className="listing-actions">
-              <Button asChild size="lg" data-component="listingTryWorkflow"><Link href="/#work-explorer">{L.cta[kind]}</Link></Button>
-              <Link href="/#sandbox" className="text-link" data-component="listingSeeSandbox">{L.sandbox}<Icon name="arrow-up" /></Link>
+              <Button asChild size="lg" data-component="listingAddInApp"><HomepageLink href={L.appHref} home={false}>{L.cta[kind]}<Icon /></HomepageLink></Button>
+              <HomepageLink href={L.preview.href} home={false} className="text-link" data-component="listingSeePreview">{L.preview.label}<Icon name="arrow-up" /></HomepageLink>
             </div>
           </div>
         </div>
@@ -77,33 +82,24 @@ export function ListingDetail({ listing }: { listing: MarketplaceListing }) {
               <span className="scene-kicker">{L.scope.heading}</span>
               <ul className="listing-scope-list">{scope.map((item) => <li key={item}><Check />{item}</li>)}</ul>
               <div className="detail-apps"><span className="scene-kicker">{L.scope.worksWith}</span><span>{tools.map((tool) => <Image key={tool.name} src={tool.src} alt={tool.name} width={16} height={16} />)}</span></div>
-              {reviewer ? (
-                <div className="listing-reviewer"><ReviewerAvatar reviewer={reviewer} /><div><span className="scene-kicker">{L.scope.reviewer}</span><strong>{reviewer.name}</strong><span>{`${reviewer.role} · ${reviewer.city}`}</span></div></div>
+              {facts ? (
+                <dl className="listing-facts" aria-label={F.label} data-component="listingFacts">
+                  {factRows(facts, price).map((row) => <div key={row.label}><dt className="scene-kicker">{row.label}</dt><dd>{row.value}</dd></div>)}
+                </dl>
               ) : null}
             </Card>
           }
         />
       </SectionCell>
 
-      {listing.slug === "lead-qualifier" ? (
-        <SectionCell labelledBy="qualifier-title" className="listing-qualifier-section">
+      {slug === "order-to-cash-exception-desk" ? (
+        <SectionCell labelledBy="o2c-title" className="listing-o2c-section">
           <div className="section-opener">
-            <SectionHeader id="qualifier-title" eyebrow={L.qualifier.eyebrow} lead={L.qualifier.lead} tail={L.qualifier.tail} />
-            <p>{L.qualifier.sub}</p>
+            <SectionHeader id="o2c-title" eyebrow={L.o2c.eyebrow} lead={L.o2c.lead} tail={L.o2c.tail} />
+            <p>{L.o2c.sub}</p>
           </div>
-          <QualifierReport run={LEAD_QUALIFIER_SAMPLE} />
-          <p className="story-note">{L.evidence.note}</p>
-        </SectionCell>
-      ) : null}
-
-      {listing.slug === "invoice-matcher" ? (
-        <SectionCell labelledBy="sample-run-title" className="listing-run-section">
-          <div className="section-opener">
-            <SectionHeader id="sample-run-title" eyebrow={L.run.eyebrow} lead={L.run.lead} tail={L.run.tail} />
-            <p>{L.run.sub}</p>
-          </div>
-          <MatchReport run={SAMPLE_RUN} />
-          <p className="story-note">{L.run.note}</p>
+          <O2CReport report={O2C_SAMPLE} />
+          <p className="story-note">{L.o2c.note}</p>
         </SectionCell>
       ) : null}
       {draftRun ? <DraftReview run={draftRun} /> : null}
@@ -114,11 +110,11 @@ export function ListingDetail({ listing }: { listing: MarketplaceListing }) {
           <p>{L.steps.sub}</p>
         </div>
         <ol className="work-guide" data-component="listingSteps">
-          {DEMO_STEPS.map((step, i) => (
-            <li key={step}>
+          {L.steps.items.map((step, i) => (
+            <li key={step.title}>
               <div className="guide-step">
                 <span className="guide-number font-mono font-light">{String(i + 1).padStart(2, "0")}</span>
-                <div><h3>{step}</h3><p>{L.steps.bodies[step]}</p></div>
+                <div><h3>{step.title}</h3><p>{step.body}</p></div>
               </div>
             </li>
           ))}
@@ -130,12 +126,9 @@ export function ListingDetail({ listing }: { listing: MarketplaceListing }) {
           <SectionHeader id="evidence-title" eyebrow={L.evidence.eyebrow} lead={L.evidence.lead} tail={L.evidence.tail} />
           <p>{L.evidence.sub}</p>
         </div>
-        <div className="listing-evidence" data-component="listingEvidence">
-          <Table caption={L.evidence.caption} columns={LOG_COLUMNS} rows={DEMO_LOG} rowKey={(row) => row.id} />
-          <div className="listing-evidence-files">
-            {DEMO_EVIDENCE.map((item) => <Card key={item.title} className="listing-evidence-file"><Icon name="file" /><div><strong>{item.title}</strong><span>{item.meta}</span></div><Icon name="check" /></Card>)}
-          </div>
-        </div>
+        <ul className="listing-evidence" aria-label={L.evidence.label} data-component="listingEvidence">
+          {L.evidence.items.map((item) => <li key={item.title}><Card className="listing-evidence-item"><Icon name="file" /><div><strong>{item.title}</strong><p>{item.body}</p></div></Card></li>)}
+        </ul>
         <p className="story-note">{L.evidence.note}</p>
       </SectionCell>
 

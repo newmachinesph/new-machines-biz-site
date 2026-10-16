@@ -11,7 +11,7 @@ export type Connector = Readonly<{ slug: string; name: string; category: Connect
 /** Status wording: tools the product connects to now, and everything else. */
 export const AVAILABLE_LABEL = "Available today";
 export const ON_REQUEST_LABEL = "On request";
-export const ON_REQUEST_NOTE = "Through the integration layer, on request";
+export const ON_REQUEST_NOTE = "On request: we add this app’s connector for you";
 
 /** The custom MCP server mark; also the "Your MCP server" row in the directory. */
 export const MCP_ICON = "modelcontextprotocol";

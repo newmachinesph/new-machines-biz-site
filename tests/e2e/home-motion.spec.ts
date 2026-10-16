@@ -48,8 +48,8 @@ test("connected work plays, pauses, holds offscreen and offers manual stages", a
   const stopped = await scene.getAttribute("data-phase");
   await page.waitForTimeout(3100);
   await expect(scene).toHaveAttribute("data-phase", stopped!);
-  await page.getByRole("button", { name: "03 Approval", exact: true }).click();
-  await expect(scene).toContainText("One insight needs your view.");
+  await page.getByRole("button", { name: "03 Review", exact: true }).click();
+  await expect(scene).toContainText("Every decision goes to a person.");
   await expect(scene.locator(".connected-fields")).toContainText("Needs review");
   await page.getByRole("button", { name: "04 Evidence", exact: true }).click();
   await expect(scene.locator(".output-status")).toHaveText("Verified");
@@ -84,8 +84,8 @@ test("research becomes a specific brief and the cap preview pauses before a char
   await expect(page.locator(".account-outreach")).toContainText("Singapore team");
   await expect(page.locator(".account-fit")).toHaveText(["96", "91", "88"]);
   await page.getByRole("button", { name: "Preview cap reached", exact: true }).click();
-  await expect(page.locator(".cap-preview-event")).toContainText("¥310,000");
-  await expect(page.locator(".settlement-rule")).toContainText("Run paused");
+  await expect(page.locator(".cap-preview-event")).toContainText("$310.00");
+  await expect(page.locator(".settlement-rule")).toContainText("Run stopped");
   await page.getByRole("button", { name: "Reset cap preview", exact: true }).click();
   await expect(page.locator(".cap-preview-event")).toHaveCount(0);
   await expect(page.locator(".settlement-rule")).toContainText("Eligible");

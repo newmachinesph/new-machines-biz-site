@@ -10,12 +10,11 @@ import { ConnectedRoutes } from "../motion/ConnectedRoutes";
 import { cn } from "@/lib/cn";
 
 const DURATIONS = [2600, 2800, 3000, 4000] as const;
-const LABELS = ["Context", "Agent work", "Approval", "Evidence"] as const;
+const LABELS = ["Context", "Agent work", "Review", "Evidence"] as const;
 const SOURCES = [
-  { app: "Gmail", icon: "gmail-official", file: "Customer conversations", detail: "Recent feedback · Read access" },
-  { app: "Google Drive", icon: "google-drive-official", file: "Your product strategy", detail: "One folder · Read access" },
-  { app: "Google Sheets", icon: "google-sheets-official", file: "Your market watchlist", detail: "One sheet · Read access" },
-  { app: "Custom MCP server", icon: "connectors/modelcontextprotocol", file: "Your pricing API", detail: "One endpoint · Read access" },
+  { app: "Gmail", icon: "connectors/gmail", file: "Refund requests", detail: "Inbox · Runs freely" },
+  { app: "Shopify", icon: "connectors/shopify", file: "The matching orders", detail: "Orders · Runs freely" },
+  { app: "Stripe", icon: "connectors/stripe", file: "The payments behind them", detail: "Charges · Runs freely" },
 ] as const;
 
 export function ConnectedWork() {
@@ -35,33 +34,33 @@ export function ConnectedWork() {
           </div>)}
         </div>
         <div className="connected-agent">
-          <div className="connected-agent-heading"><AgentPortrait kind="pack" /><div><strong>Market brief</strong><span>New Machines / Research</span></div><i className={phase === 1 ? "scene-working-dot" : ""} /></div>
+          <div className="connected-agent-heading"><AgentPortrait kind="pack" /><div><strong>Refund Triage</strong><span>Refunds Agent · Writer Agent</span></div><i className={phase === 1 ? "scene-working-dot" : ""} /></div>
           <div className="connected-action" key={phase}>
             <span className="scene-kicker">{LABELS[phase]}</span>
-            <p>{["The right context, together.", "Finding the useful signals.", "One insight needs your view.", "Work done. Proof included."][phase]}</p>
+            <p>{["The right context, together.", "Matching each request to its order.", "Every decision goes to a person.", "Work done. Proof included."][phase]}</p>
             <div className="connected-fields">
-              <span><span>Read the source material<small>Conversations, strategy, watchlist, pricing</small></span><span className="work-step-state"><Icon name={phase > 0 ? "check" : "file"} /></span></span>
-              <span><span>Find the common signal<small>Japan launch interest</small></span><span className="work-step-state"><Icon name={phase > 0 ? "check" : "file"} /></span></span>
-              <span className={phase === 2 ? "field-needs-review" : ""}><span>Review the next step<small>Human decision required</small></span><strong>{phase < 2 ? "Checking" : phase === 2 ? "Needs review" : "Confirmed"}</strong></span>
+              <span><span>Read the request, order and payment<small>Gmail, Shopify, Stripe · read only</small></span><span className="work-step-state"><Icon name={phase > 0 ? "check" : "file"} /></span></span>
+              <span><span>Propose a decision<small>From your refund policy</small></span><span className="work-step-state"><Icon name={phase > 0 ? "check" : "file"} /></span></span>
+              <span className={phase === 2 ? "field-needs-review" : ""}><span>Confirm the decision<small>A reviewer confirms every one</small></span><strong>{phase < 2 ? "Checking" : phase === 2 ? "Needs review" : "Confirmed"}</strong></span>
             </div>
           </div>
           <div className={cn("connected-approval", phase >= 2 && "approval-present")}>
-            <AgentPortrait kind="human" /><div><strong>M. Tanaka</strong><span>{phase === 3 ? "Approval preserved" : "Qualified reviewer · Tokyo"}</span></div><span className="approval-indicator">{phase === 3 ? <Icon name="check" /> : "Review"}</span>
+            <AgentPortrait kind="human" /><div><strong>Reviewer</strong><span>{phase === 3 ? "Verdict preserved" : "From your team or the network"}</span></div><span className="approval-indicator">{phase === 3 ? <Icon name="check" /> : "Review"}</span>
           </div>
         </div>
         <div className={cn("connected-output", phase === 3 && "output-ready")}>
-          <div className="brief-file-header"><Icon name="file" /><span>market_brief.pdf</span><span>01 / 01</span></div>
+          <div className="brief-file-header"><Icon name="file" /><span>refund_decisions.json</span><span>01 / 01</span></div>
           <div className="brief-document">
-            <span className="scene-kicker">Your weekly market brief</span>
-            <strong>A signal worth<br />acting on.</strong>
+            <span className="scene-kicker">Refund decisions · Illustrative</span>
+            <strong>Three requests.<br />Three replies drafted.</strong>
             <div className="brief-content" data-ready={phase > 0}>
-              <span className="brief-topic">Japan launch interest <sup>[1]</sup></span>
-              <p>Start with five discovery calls. Test demand before committing a team.</p>
-              <div className="brief-citations"><span>[1] Customer conversations</span><span>[2] Product strategy</span><span>[3] Market watchlist</span><span>[4] Pricing API</span></div>
+              <span className="brief-topic">Approve 2 · Partial 1 <sup>[1]</sup></span>
+              <p>Each reply is drafted for you to check. The pack never issues a refund.</p>
+              <div className="brief-citations"><span>[1] Refund requests</span><span>[2] Orders</span><span>[3] Payments</span></div>
             </div>
             <div className="brief-placeholder" aria-hidden="true"><i /><i /><i /><i /></div>
           </div>
-          <div className="brief-proof"><span className="output-status"><Icon name={phase === 3 ? "shield" : "file"} />{phase === 3 ? "Verified" : phase === 2 ? "Awaiting approval" : phase === 1 ? "Building the brief" : "Awaiting the work"}</span><span>{phase === 3 ? `${SOURCES.length} sources · Human approved` : "Sources stay attached"}</span></div>
+          <div className="brief-proof"><span className="output-status"><Icon name={phase === 3 ? "shield" : "file"} />{phase === 3 ? "Verified" : phase === 2 ? "Awaiting review" : phase === 1 ? "Proposing decisions" : "Awaiting the work"}</span><span>{phase === 3 ? `${SOURCES.length} sources · Human approved` : "Sources stay attached"}</span></div>
         </div>
       </div>
       <SceneControls playback={playback} labels={LABELS} durations={DURATIONS} name="connected work" />

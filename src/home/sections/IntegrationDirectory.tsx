@@ -48,7 +48,7 @@ export function IntegrationDirectory({ titleId }: { titleId: string }) {
       </ul>
       {matches.length === 0 ? <p className="connector-empty">No connector matches “{query.trim()}”.</p> : null}
       <div className="connector-footer">
-        <span>{AVAILABLE_LABEL}: {availableSummary()}. The rest connect through our integration layer on request.</span>
+        <span>{AVAILABLE_LABEL}: {availableSummary()}. {ON_REQUEST_LABEL}: we add an app’s connector for you.</span>
         {collapsible ? <button type="button" className="text-link" aria-expanded={expanded} onClick={() => setExpanded(!expanded)} data-component="integrationShowAll">{expanded ? "Show fewer" : `Show all ${formatCount(matches.length)} connectors`}</button> : null}
       </div>
     </div>

@@ -92,9 +92,10 @@ export const SUPPORT_SAMPLE_RUN: SupportDraftRun = {
   },
 };
 
-const SAMPLE_RUNS: Readonly<Record<string, SupportDraftRun>> = { "support-reply-drafter": SUPPORT_SAMPLE_RUN };
+/** Shown as an illustrative sample on the Support Inbox Triage listing; it is not that pack's exact output. */
+const SAMPLE_RUNS: Readonly<Record<string, SupportDraftRun>> = { "support-inbox-triage": SUPPORT_SAMPLE_RUN };
 
-/** The sample reviewer view for a listing, if it has one. */
+/** The illustrative reviewer view for a listing, if it has one. */
 export function sampleRunFor(slug: string): SupportDraftRun | undefined {
   return SAMPLE_RUNS[slug];
 }

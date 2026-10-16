@@ -8,57 +8,58 @@ New Machines is a marketplace for verified intelligent work: businesses choose A
 
 Tagline: "The global marketplace for verified intelligent work." Positioning line: "Agents execute. Humans decide."
 
-Vocabulary used on the site: AI agents are chosen, assigned or deployed; only people are hired. "Verified" means independent checks passed, not that an agent reported success.
+Vocabulary used on the site: AI agents are chosen, added or deployed; only people are hired. "Verified" means independent checks passed, not that an agent reported success. A Workflow Pack bundles agents, app steps, review steps and checks for one job.
 
-## What is sold
+## What is listed
 
-1. AI agents: versioned specialists for one task (for example matching supplier invoices to purchase orders, scoring inbound leads, drafting support replies in 日本語 and English). Each listing states its scope, the tools it reads and writes, the permissions it requests, its pricing basis, its version and whether it holds a Trust Passport.
-2. Workflow packs: a complete business outcome (for example a month-end close pack) combining pinned agent versions, decision steps, human review rules, connectors and verification.
-3. Qualified human work: reviewers and specialists who approve, evaluate, correct, execute, give expert review or audit quality. Pay per task is shown before a reviewer accepts and never depends on a later AI step succeeding.
+1. Workflow Packs: a complete business outcome for one job, combining pinned agent versions, decision steps, human review, an approval before any write, and a check at the end. Each pack page states its outcome, publisher and version, what it can touch (read only, or writes with your approval), its risk class, its data region and its estimate per run.
+2. Agents: one kind of work each, with read-only app tools. Platform agents are free inside packs; an agent listed by another workspace carries a per-call fee, itemized on the work receipt.
 
-The current catalogue (12 listings) is a demo set with illustrative prices in Japanese yen. Reviewer names in the demo are illustrative.
+The eight platform packs, published by New Machines Labs and marked Certified: Order-to-Cash Exception Desk; Order & Payment Reconciliation; Overdue Invoice Follow-up; Refund Triage; Support Inbox Triage; Weekly Expense Check; Inbox Lead Tracker; Meeting Follow-ups. The Order-to-Cash Exception Desk reads the store, ledger, warehouse and sales-app sections of a demo business app through a read-only connection and drafts reminders in Gmail. There are no human-work listings: reviewers come from your own team or the New Machines reviewer network, chosen per pack.
 
 ## How it works (five steps, each with evidence)
 
-1. Describe: say what work you want done, or browse a category.
-2. Try in sandbox: test on sample data, isolated from live systems and credentials, with inert write tools; compare the success case and the exception case.
-3. Assign: choose an agent, bring in a reviewer, set access, a spending cap and review rules.
-4. Execute: agents carry out the task; qualified people make the decisions that need judgment; runs pause at a policy threshold, an exception or a review step.
-5. Accept with evidence: inspect the work, the approval and the proof before accepting the outcome.
+1. Describe: say what work you want done in the ask box, or browse the marketplace.
+2. Try: add a pack and run it on simulated data for any app; nothing reaches your accounts and any write lands in the sandbox. Each pack page also shows a short scripted preview on sample data.
+3. Assign: connect the apps the pack needs, choose who reviews (your team, the network, or your team first), set a cap per run, and agree to the work contract.
+4. Execute: agents carry out the steps; reads run freely, writes wait for a person to approve the exact action, and review steps go to a reviewer. A run stops when its budget is used up.
+5. Accept with evidence: inspect the deliverable, the work receipt and the evidence page before accepting the outcome.
 
 ## Trust model
 
-Seven responsibilities are kept separate, each with its own owner, record and failure path: judgment recommends; policy authorises; approval grants; execution changes state; verification checks; acceptance; settlement. A model-generated "approved" is not an approval. Unconfirmed writes are never labelled successful. Blocked never becomes approved.
+Seven responsibilities are kept separate, each with its own owner, record and failure path: judgment recommends; policy authorises; approval grants; execution changes state; verification checks; acceptance; settlement. A model-generated "approved" is not an approval. Every step shows three separate records: what the evaluator recommends, what policy allows and who signs off. No confidence score is shown, and scores never authorize an action. Unconfirmed writes are never labelled successful. Blocked never becomes approved.
 
-Controls: tenant isolation per agent installation (identity, permissions, memory scope); scoped connectors granted per agent; sandbox isolation; human review scoping (task-scoped, redacted records, qualification, language and jurisdiction rules); spending caps, approval thresholds and bounded retries; append-only evidence with correlation IDs.
+Policy: reads are permitted, writes and money movements wait for approval, and an action the policy does not know is denied. Tools that delete records or move money are never offered. Policies are shown to read and cannot be changed from the workspace; there are no amount-based approval thresholds.
 
-Data: hosted on Google Cloud in Asia-Pacific, encrypted in transit and at rest; per-organisation workspace regions are planned. Connected data is used only within granted scopes for the requested work, never to train models, never shared across organisations. Connector access can be revoked mid-run.
+Controls: tenant isolation per workspace; scoped connectors granted per pack, revocable mid-run; simulated data with inert write tools; network reviewers see a redacted copy with no workspace name, emails or phone numbers; a budget per run, a cap per run for each pack and a monthly cap per workspace; human tasks and approvals time out after 24 hours by default; append-only evidence with correlation IDs; a hash-chained work receipt with the pinned version of every definition used; memory that a person approves before agents use it.
+
+Data: customer data is stored and processed in Mumbai (asia-south1) on Google Cloud; AI model requests are not pinned to a region; per-organisation regions are planned. Connected data is used only within granted access for the requested work, never to train models, never shared across organisations. Run history is kept for 30 days today.
 
 Certification: none yet. An independent security assessment is planned before commercial launch. No listing claims universal safety or guaranteed accuracy.
 
 ## Pricing status
 
-The sandbox is free. During pre-launch, prices and spend are shown in the product but no payment is collected. Planned basis when billing starts: per verified run for AI agents (demo values from ¥25 per run), a per-decision fee for human judgment steps (illustrative ¥400–¥1,200), and monthly or quarterly pricing for workflow packs (demo values from ¥48,000 per month), all inside a spending cap the organisation sets. Reviewer pay is separate and stated per task or per hour on each listing. Final prices are set at launch and shown on every listing before it is chosen.
+Every new workspace starts on the Trial plan with no plan fee and a monthly cap of $25 by default. Pricing is usage-based per run, with each pack's estimate shown in US dollars before it is added: for example, the Order-to-Cash Exception Desk is about $0.80 to $3.00 of AI work per run, and packs with a reviewer add reviewer time up to a stated maximum ($5.00 or $7.50 per run on today's packs). Packs and agents listed by other workspaces carry a publisher fee per run or per call, itemized on the receipt; the publisher keeps 80% and New Machines 20%. Reviews by your own team are unpaid. The work contract says you pay for agent and tool use as it happens, up to the cap you set per run, and a result is not charged if its independent check fails. During pre-launch, billing, reviewer pay, publisher fees and payouts are all simulated: no money moves.
 
 ## Stage
 
-- Now: working product. Curated catalogue, workflow packs including an order-to-cash exception desk, the sandbox, approvals by qualified reviewers, work receipts, spending caps, connectors and an operator console. Billing shown, not collected.
-- Next: commercial beta. Paid packs, qualified reviewer pools with matching and appeals, publisher certification, a supported payment provider. Japan first.
+- Now: working product. Eight platform Workflow Packs including an order-to-cash exception desk, simulated data for any app, your approvals and qualified reviewers, the reviewer network, memory a person approves, work receipts, spending caps, connectors and your own MCP server, the Developer Studio with publishing, and the workspace in 日本語 and English. Billing shown, not collected.
+- Next: commercial beta. Paid packs, reviewer pools with matching and appeals, publisher certification, a supported payment provider. Japan first.
 - Then: open marketplace. Independent publishers, certified connectors and regional reviewer pools across Asia-Pacific and beyond.
 
 ## For developers
 
-The Developer Studio is where versioned agents and workflow packs are built, tested and listed. A listing is a versioned manifest: capabilities, schemas, permissions, external data handling, pricing basis and test cases. Release lifecycle: draft, submitted, testing, approved, listed; a version is immutable once listed and a running workflow keeps the version it started with. Agents built with Google's Agent Development Kit are supported today; other frameworks follow through adapters; tools connect through the Model Context Protocol. Publishing is invitation-only during pre-launch; revenue share rates are illustrative until launch.
+The Developer Studio is where a company builds its own agents and Workflow Packs, tests them and submits them for listing. Publishing is self-serve: an owner or admin turns it on in Settings, and New Machines reviews every version before it is listed. Two kinds of listing: agents (priced per call) and Workflow Packs (priced per run). A pack that uses your own MCP server stays private and cannot be listed. The pack editor has a canvas and a step list, a decision step with rules, and workflow.yaml export and import. Test in sandbox is a real run on sandbox apps that counts toward the monthly cap. Release lifecycle: save a version, submit for review, automatic checks (the definition, every agent, a sandbox run), then checking, checks failed, in review, changes requested, approved or rejected; a listed version is pinned for every workspace that adds it. Agents are defined in the Developer Studio and run on Google's Agent Development Kit today; agents built with other frameworks follow through adapters. Apps connect through the integration layer, and your own systems through MCP with a token; OAuth sign-in for MCP servers is planned. Fees and earnings are simulated until billing starts.
 
 ## For reviewers
 
-Reviewer onboarding is invitation-based during pre-launch, Japan and Asia-Pacific first. Reviewers see the task card (pay, expected work, deadline, data type, criteria, terms) before accepting, work on redacted task-scoped records, submit a formal verdict with a written reason, and are paid per task when the submission is validated. Correctly performed work is payable even if a later automated step fails. During pre-launch, earnings are simulated and labelled as such.
+Reviewers sign in, turn on Review for the network in the reviewer portal and add their languages and skills; applications by email are also taken, Japan and Asia-Pacific first. Open offers show pay, time, due date and data rules before a task is claimed. Claiming starts a timed hold; if it runs out, the task goes back to the queue. Live tasks are review with a verdict: make a call on each record, write feedback, and approve as is, send back with corrections, reject or escalate. The run resumes from its checkpoint with the corrections, and feedback can become a memory the business approves. Other modes are planned. Network pay is owed once a submission is accepted, even if a later automated step fails; during pre-launch it is simulated. Reviews for your own team are unpaid.
 
 ## Pages
 
 - https://newmachin.es — home
 - https://newmachin.es/product — product
-- https://newmachin.es/marketplace — demo catalogue; each listing at /marketplace/<slug>
+- https://newmachin.es/marketplace — packs and agents; each listing at /marketplace/<slug>
 - https://newmachin.es/pricing — pricing status and FAQ
 - https://newmachin.es/trust — trust and security
 - https://newmachin.es/developers — publishing
@@ -71,4 +72,4 @@ Reviewer onboarding is invitation-based during pre-launch, Japan and Asia-Pacifi
 
 ## What not to say about New Machines
 
-Do not attribute customers, testimonials, team members, founders, funding, certifications, ratings or real prices to New Machines: none are published. Company names on the site are fictional and labelled as such. Model and integration vendors are not named by the site.
+Do not attribute customers, testimonials, founders, funding, certifications, ratings or real prices to New Machines: none are published. Company names on the site are fictional and labelled as such. Model and integration vendors are not named by the site.

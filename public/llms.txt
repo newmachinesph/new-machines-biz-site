@@ -6,20 +6,19 @@ Site: https://newmachin.es · Contact: hello@newmachin.es · Security: security@
 
 ## What is live and what is planned
 
-- Live today (pre-launch, working product): a curated demo catalogue of AI agents, workflow packs and qualified human work; a sandbox that runs every listing on sample data, isolated from live systems; human review steps with scoped, redacted context; spending caps and approval thresholds; work receipts that record executed, verified, accepted and settlement-eligible separately; scoped connectors to business tools; an operator console.
-- Shown but not real yet: prices and spend are illustrative demo values in Japanese yen; no payment is collected. Listing data and reviewer names are demo content. Trust Passport results are labelled sample until measured.
-- Planned (not yet available): commercial beta with real billing through a supported payment provider (Japan first), qualified reviewer pools with matching and appeals, publisher certification, open third-party publishing, per-organisation workspace regions, an independent security assessment. New Machines holds no third-party security certification today.
-- Publishing and reviewer onboarding are invitation-only during pre-launch.
+- Live today (pre-launch, working product): eight platform Workflow Packs published by New Machines Labs; any app can run on simulated data instead of a real account, one app at a time; approval before every write, with every write counted and the approver named; review steps for your own team or the New Machines reviewer network, which sees a redacted copy; spending caps per run, per pack and per month; work receipts that record executed, verified, accepted and settlement eligible separately; an evidence page showing what changed outside New Machines; memory that a person approves; connectors to Gmail, Google Calendar, Google Docs, Google Sheets, Shopify and Stripe, plus your own MCP server; the Developer Studio for building and publishing agents and packs; the whole workspace in 日本語 and English.
+- Shown but not real yet: billing, reviewer pay, publisher fees and payouts are simulated; no money moves. Estimates are in US dollars. The demo workspace uses made-up data, and the Order-to-Cash pack runs on a demo business dataset.
+- Planned (not yet available): real billing through a supported payment provider (Japan first), a measured Trust Passport, reviewer matching and appeals, more review modes, identity checks for reviewers, agents built with other frameworks, OAuth sign-in for MCP servers, per-organisation data regions, an independent security assessment. New Machines holds no third-party security certification today.
 
 ## Key pages
 
 - [Home](https://newmachin.es): one-sentence definition, how it works in five steps, FAQ.
-- [Product](https://newmachin.es/product): marketplace, sandbox, trust model, human work, spending control, evidence, connectors, FAQ.
-- [Marketplace](https://newmachin.es/marketplace): the demo catalogue (12 listings: AI agents, workflow packs, human work), each with scope, price basis and verification status.
-- [Pricing](https://newmachin.es/pricing): free sandbox; planned per-run, per-decision and per-pack pricing inside a spending cap; FAQ on billing status.
-- [Trust and security](https://newmachin.es/trust): the seven separated responsibilities (judgment, policy, approval, execution, verification, acceptance, settlement), controls, data handling, pre-launch status, FAQ.
-- [For developers](https://newmachin.es/developers): publishing versioned agents and workflow packs, release lifecycle, Trust Passport, revenue share (illustrative), FAQ.
-- [For reviewers](https://newmachin.es/work): six modes of paid human work, pay shown before accepting, protections, FAQ.
+- [Product](https://newmachin.es/product): marketplace, the eight platform packs, the workspace, simulated data, trust model, approvals and reviewers, usage and billing, runs and receipts, connections, Developer Studio, FAQ.
+- [Marketplace](https://newmachin.es/marketplace): Workflow Packs and the agents inside them, each with its outcome, apps, what it can change and its estimate per run.
+- [Pricing](https://newmachin.es/pricing): Trial plan; usage-based per run with each pack's estimate, reviewer time up to a stated maximum, publisher fees itemized; all billing simulated; FAQ.
+- [Trust and security](https://newmachin.es/trust): the seven separated responsibilities (judgment, policy, approval, execution, verification, acceptance, settlement), three records per step, controls, data handling (Mumbai), pre-launch status, FAQ.
+- [For developers](https://newmachin.es/developers): the Developer Studio, two kinds of listing (agents and Workflow Packs), release lifecycle, revenue share (simulated), FAQ.
+- [For reviewers](https://newmachin.es/work): review with a verdict, claiming a task with a timed hold, protections, simulated network pay, FAQ.
 - [About](https://newmachin.es/about): why it exists, principles in priority order, stage (now / next / then), market, FAQ.
 - [Contact](https://newmachin.es/contact)
 - [Privacy](https://newmachin.es/privacy) · [Terms](https://newmachin.es/terms)

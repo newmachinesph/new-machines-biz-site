@@ -1,160 +1,128 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { HOME_COPY } from "@/home/copy";
 import { accentViolations } from "@/home/mockups/accentViolations";
 import { ListingDetail } from "./ListingDetail";
-import { LEAD_QUALIFIER_SAMPLE, QUALIFIER_CHECKS, QUALIFIER_RUBRIC } from "./leadQualifierSample";
 import { findListing } from "./listings";
+import { O2C_SAMPLE, o2cTotals, peso } from "./o2cSample";
 
 const toolNames = (container: HTMLElement) => within(container.querySelector<HTMLElement>(".detail-apps")!).getAllByRole("img").map((img) => img.getAttribute("alt"));
+const facts = (container: HTMLElement) =>
+  Object.fromEntries([...container.querySelectorAll(".listing-facts > div")].map((row) => [row.querySelector("dt")!.textContent, row.querySelector("dd")!.textContent]));
 
 describe("ListingDetail", () => {
-  it("renders a certified pack with its scope, steps, evidence, tools and related listings", () => {
-    const listing = findListing("month-end-close-pack")!;
+  it("renders a certified pack with its outcome, facts, steps, evidence, tools and related listings", () => {
+    const listing = findListing("order-payment-reconciliation")!;
     const { container } = render(<ListingDetail listing={listing} />);
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Month-end close pack");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Order & Payment Reconciliation");
     expect(screen.getByRole("link", { name: "All listings" })).toHaveAttribute("href", "/marketplace");
-    expect(screen.getByRole("link", { name: "Try this pack" })).toHaveAttribute("href", "/#work-explorer");
-    expect(screen.getByRole("link", { name: "See it in the sandbox" })).toHaveAttribute("href", "/#sandbox");
-    expect(screen.getByText("Trust Passport")).toHaveAttribute("data-status", "verified");
-    expect(screen.getByText("¥48,000 / month")).toBeInTheDocument();
-    const reviewer = within(container.querySelector<HTMLElement>(".listing-reviewer")!);
-    expect(reviewer.getByText("Assigned reviewer")).toBeInTheDocument();
-    expect(reviewer.getByText("M. Tanaka")).toBeInTheDocument();
-    expect(reviewer.getByText("Finance reviewer · Tokyo")).toBeInTheDocument();
-    expect(container.querySelector(".listing-reviewer .portrait-human img")).not.toBeNull();
-    for (const item of listing.scope) expect(screen.getByText(item)).toBeInTheDocument();
-    expect(toolNames(container)).toEqual(listing.tools.map((tool) => tool.name));
-    expect(container.querySelectorAll(".work-guide li")).toHaveLength(5);
-    expect(container.querySelectorAll(".work-guide li .guide-step")).toHaveLength(5);
-    expect(screen.getByText("01")).toHaveClass("font-mono", "font-light");
-    expect(screen.getByText("Read inputs").nextElementSibling).toHaveTextContent("The specialist reads only the files and records in its scope.");
-    expect(screen.getByRole("table", { name: "Sample approval log · synthetic data" })).toBeInTheDocument();
-    expect(screen.getByText("Synthetic data · No real actions or charges")).toBeInTheDocument();
-    const related = within(screen.getByRole("list", { name: "Related listings" })).getAllByRole("link");
-    expect(related).toHaveLength(3);
-    for (const link of related) expect(link).not.toHaveAttribute("href", `/marketplace/${listing.slug}`);
-    expect(related[0]).toHaveAttribute("href", "/marketplace/quarterly-tax-pack");
-    expect(within(screen.getByRole("list", { name: "Related listings" })).getAllByRole("heading", { level: 3 })).toHaveLength(3);
-    const text = container.textContent ?? "";
-    expect(text).not.toMatch(/United States|\bUS\b|U\.S\./);
-    expect(accentViolations(container)).toEqual([]);
-  });
-
-  it("renders an uncertified human listing with an initials avatar for a reviewer without a photograph", () => {
-    const listing = findListing("payroll-exception-review")!;
-    const { container } = render(<ListingDetail listing={listing} />);
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Payroll exception review");
-    expect(screen.getByRole("link", { name: "Request this reviewer" })).toHaveAttribute("href", "/#work-explorer");
-    expect(screen.getByText("Not yet certified")).not.toHaveAttribute("data-status");
-    expect(screen.queryByText("Trust Passport")).toBeNull();
-    const reviewer = within(container.querySelector<HTMLElement>(".listing-reviewer")!);
-    expect(reviewer.getByText("J. Park")).toBeInTheDocument();
-    expect(reviewer.getByText("Operations reviewer · Seoul")).toBeInTheDocument();
-    expect(reviewer.getByText("JP")).toHaveClass("review-avatar");
-    expect(container.querySelector(".listing-reviewer img")).toBeNull();
-    const related = within(screen.getByRole("list", { name: "Related listings" })).getAllByRole("link");
-    expect(related.map((link) => link.getAttribute("href"))).toEqual(["/marketplace/bilingual-contract-review", "/marketplace/bilingual-support-review", "/marketplace/invoice-matcher"]);
-    expect(accentViolations(container)).toEqual([]);
-  });
-
-  it("omits the reviewer line for an agent and labels the CTA for it", () => {
-    const { container } = render(<ListingDetail listing={findListing("invoice-matcher")!} />);
+    expect(screen.getByRole("link", { name: "Add in the app" })).toHaveAttribute("href", HOME_COPY.nav.appUrl);
+    expect(screen.getByRole("link", { name: "See a preview" })).toHaveAttribute("href", "/#work-explorer");
+    expect(screen.getByText("Certified")).toHaveAttribute("data-status", "verified");
+    expect(container.querySelector(".listing-meta .listing-price")).toHaveTextContent("About $0.60–$2.40 / run");
+    expect(screen.getByText("New Machines Labs, version 1.0.0")).toBeInTheDocument();
     expect(container.querySelector(".listing-reviewer")).toBeNull();
-    expect(screen.queryByText("Assigned reviewer")).toBeNull();
-    expect(screen.getByRole("link", { name: "Try this agent" })).toBeInTheDocument();
-    expect(screen.getByText("Trust Passport")).toBeInTheDocument();
-    expect(toolNames(container)).toEqual(["Google Drive", "Google Sheets", "freee"]);
-    expect(container.querySelector('[data-component="listingDraftReview"]')).toBeNull();
-  });
-
-  it("shows the support reply drafter's reviewer view: routing, the draft, its facts and six checks", () => {
-    const { container } = render(<ListingDetail listing={findListing("support-reply-drafter")!} />);
-    const routing = within(container.querySelector<HTMLElement>('[data-component="draftRouting"]')!);
-    expect(routing.getByText("Ready")).toHaveAttribute("data-status", "verified");
-    expect(routing.getByText("Review")).toHaveAttribute("data-status", "waiting-for-human");
-    expect(routing.getByText("Blocked")).toHaveAttribute("data-status", "blocked");
-    const card = container.querySelector<HTMLElement>('[data-component="listingDraftReview"]')!;
-    const draft = within(card);
-    expect(card.querySelector(".draft-card-head [data-status]")).toHaveTextContent("Review");
-    expect(card.querySelector('.draft-reply[lang="ja"]')).toHaveTextContent("返金");
-    expect(card.querySelector('.draft-reply[lang="en"]')).toHaveTextContent("refund of the duplicate ¥12,800");
-    expect(draft.getByRole("table", { name: "Facts used in the draft and their source records" })).toBeInTheDocument();
-    expect(draft.getByText("payments/pay_7Q21, pay_7Q22")).toBeInTheDocument();
-    const checks = within(draft.getByRole("list", { name: "Checks" })).getAllByRole("listitem");
-    expect(checks.map((item) => item.querySelector("strong")?.textContent)).toEqual(["Identity", "Policy", "Factual accuracy", "Tone", "Privacy", "Escalation"]);
-    expect(checks[1].querySelector("[data-status]")).toHaveTextContent("Warn");
-    expect(draft.getByText("Approve the ¥12,800 refund in the billing system")).toBeInTheDocument();
-    expect(draft.getByText("Needs approval")).toBeInTheDocument();
+    expect(facts(container)).toMatchObject({
+      "Who does the work": "Finance Agent, Operations Agent",
+      "Who reviews": "A reviewer from your team, or the New Machines reviewer network if you allow it. The network sees a redacted copy.",
+      "What it costs": "About $0.60 to $2.40 of AI work per run, plus up to $7.50 of reviewer time when a mismatch needs a person.",
+      "Risk class": "Medium",
+      Function: "Finance operations",
+      "Processed in": "Mumbai (asia-south1)",
+    });
+    for (const item of listing.scope) expect(screen.getByText(item)).toBeInTheDocument();
+    expect(toolNames(container)).toEqual(["Shopify", "Stripe", "Google Sheets"]);
+    expect(container.querySelectorAll(".work-guide li")).toHaveLength(5);
+    expect(screen.getByText("01")).toHaveClass("font-mono", "font-light");
+    expect(screen.getByText("Check policy").nextElementSibling).toHaveTextContent("Every app action is checked: reads run, writes wait for your approval.");
+    const evidence = within(screen.getByRole("list", { name: "What the evidence page shows" })).getAllByRole("listitem");
+    expect(evidence.map((item) => item.querySelector("strong")?.textContent)).toEqual(["Work receipt", "What changed outside New Machines", "Approvals", "What is still open"]);
+    const related = within(screen.getByRole("list", { name: "Related listings" })).getAllByRole("link");
+    expect(related.map((link) => link.getAttribute("href"))).toEqual(["/marketplace/order-to-cash-exception-desk", "/marketplace/refund-triage", "/marketplace/support-inbox-triage"]);
+    expect(within(screen.getByRole("list", { name: "Related listings" })).getAllByRole("heading", { level: 3 })).toHaveLength(3);
+    expect(container.querySelector("[data-component='o2cReport']")).toBeNull();
+    expect(container.querySelector("[data-component='listingDraftReview']")).toBeNull();
+    const text = container.textContent ?? "";
+    expect(text).not.toMatch(/Trust Passport|Assigned reviewer|¥/);
     expect(accentViolations(container)).toEqual([]);
   });
 
-  it("shows the lead qualifier's sample run: evidence per criterion, intent apart from fit, every check, and the exclusions", () => {
-    const { container } = render(<ListingDetail listing={findListing("lead-qualifier")!} />);
-    const report = within(container.querySelector<HTMLElement>("[data-component=qualifierReport]")!);
-    expect(report.getByText("Recommends only. Never contacts an account, sends email or changes the CRM.")).toBeInTheDocument();
-    expect(toolNames(container)).not.toContain("Gmail");
-    const accounts = container.querySelectorAll<HTMLDetailsElement>(".qualifier-account");
-    expect(accounts).toHaveLength(3);
-    expect([...accounts].map((a) => a.open)).toEqual([true, false, false]);
-    const meridian = within(accounts[0]);
-    expect(meridian.getByText("Review")).toHaveAttribute("data-status", "waiting-for-human");
-    expect(meridian.getByText(/Enterprise tier/)).toBeInTheDocument();
-    expect(meridian.getAllByRole("row")).toHaveLength(6);
-    expect(meridian.getByText("Timing only. Not counted in the fit score.")).toBeInTheDocument();
-    expect(within(accounts[1]).getByText("Ready")).not.toHaveAttribute("data-status");
-    expect(within(accounts[2]).getAllByText("Could not check")).toHaveLength(1);
-    expect(within(accounts[2]).getByText("Warn")).toHaveAttribute("data-accent", "human");
-    expect(within(accounts[2]).getByText("No intent signals found.")).toBeInTheDocument();
-    const excluded = within(report.getByRole("list", { name: "Excluded" })).getAllByRole("listitem");
-    expect(excluded.map((li) => li.querySelector("strong")?.textContent)).toEqual(["Kanso Studio", "Toki Electric", "Sora Freight"]);
-    expect(report.getByText("crm.search_accounts, crm.check_suppression, web.fetch")).toBeInTheDocument();
+  it("says when a pack has no reviewer step", () => {
+    const { container } = render(<ListingDetail listing={findListing("inbox-lead-tracker")!} />);
+    expect(facts(container)).toMatchObject({
+      "Who does the work": "Lead Agent, A separate decision model",
+      "Where a person comes in": "No reviewer. You approve the rows before anything is added to your sheet.",
+      "Who reviews": "No reviewer step. You approve before anything is written.",
+      "Risk class": "Low",
+    });
+  });
+
+  it("shows the Order-to-Cash deliverable on labelled demo data, with totals that add up", () => {
+    const { container } = render(<ListingDetail listing={findListing("order-to-cash-exception-desk")!} />);
+    expect(toolNames(container)).toEqual(["Business app (read-only, over MCP)", "Gmail"]);
+    const report = within(container.querySelector<HTMLElement>("[data-component='o2cReport']")!);
+    expect(report.getByText("Kalumpang Demo Supply Co.")).toBeInTheDocument();
+    expect(report.getByText("Demo data")).toBeInTheDocument();
+    const totals = Object.fromEntries([...container.querySelectorAll(".o2c-facts > div")].map((row) => [row.querySelector("dt")!.textContent, row.querySelector("dd")!.textContent]));
+    expect(totals).toEqual({
+      Exceptions: "6",
+      "Payment pending confirmation": "1 · ₱62,000.00",
+      "Shipped, not paid": "3 · ₱263,450.00",
+      "Paid, not shipped": "1 · ₱34,900.00",
+      "Disputed invoice": "1 · ₱21,600.00",
+      "Reminders drafted": "2",
+      "Finance notes": "2",
+      "Warehouse notes": "1",
+    });
+    const table = within(report.getByRole("region", { name: "Exception desk report, one row per exception · demo data" }));
+    expect(table.getAllByRole("row")).toHaveLength(O2C_SAMPLE.rows.length + 1);
+    expect(table.getByText("SO-DEMO-1058").closest("tr")).toHaveTextContent("Listed only");
+    expect(screen.getByText(/Demo data for a fictional business\. Nothing is sent and no money moves/)).toBeInTheDocument();
+    expect(container.querySelector("[data-component='listingDraftReview']")).toBeNull();
     expect(accentViolations(container)).toEqual([]);
   });
 
-  it("keeps the sample run consistent with its own rules", () => {
-    expect(QUALIFIER_RUBRIC.reduce((sum, c) => sum + c.weight, 0)).toBe(100);
-    for (const account of LEAD_QUALIFIER_SAMPLE.shortlist) {
-      expect(account.criteria.map((c) => [c.criterion, c.max])).toEqual(QUALIFIER_RUBRIC.map((c) => [c.criterion, c.weight]));
-      expect(account.criteria.reduce((sum, c) => sum + c.score, 0)).toBe(account.fit_score);
-      for (const c of account.criteria) if (c.could_not_check) expect(c.score).toBe(0);
-      expect(account.checks.map((c) => c.check)).toEqual([...QUALIFIER_CHECKS]);
-      expect(account.checks.some((c) => c.status === "fail")).toBe(false);
-      if (account.status === "review") expect(account.review_reason).not.toBe("");
-      else expect(account.checks.every((c) => c.status === "pass")).toBe(true);
-      expect(account.domain).toMatch(/\.example$/);
+  it("keeps the demo report consistent with its own actions", () => {
+    const rows = O2C_SAMPLE.rows;
+    expect(rows.filter((row) => row.outcome === "drafted")).toHaveLength(O2C_SAMPLE.actions.remindersDrafted);
+    expect(rows.filter((row) => row.action.startsWith("Flag for finance"))).toHaveLength(O2C_SAMPLE.actions.financeNotes);
+    expect(rows.filter((row) => row.action === "Note for the warehouse")).toHaveLength(O2C_SAMPLE.actions.warehouseNotes);
+    for (const row of rows) {
+      expect(row.orderId).toMatch(/^SO-DEMO-\d{4}$/);
+      expect(row.customer).toMatch(/ Demo /);
     }
+    const shipped = rows.filter((row) => row.kind === "shipped_not_paid").map((row) => row.amountMinor);
+    const drafted = rows.filter((row) => row.outcome === "drafted").map((row) => row.amountMinor);
+    expect(Math.min(...drafted)).toBeGreaterThan(Math.max(...shipped.filter((amount) => !drafted.includes(amount))));
+    expect(o2cTotals(rows).shipped_not_paid.count).toBe(3);
+    expect(peso(14_850_000)).toBe("₱148,500.00");
   });
 
-  it("shows the invoice matcher's sample run: verdict, seven checks, three-way match and a diagnosed exception", () => {
-    const { container } = render(<ListingDetail listing={findListing("invoice-matcher")!} />);
-    const report = within(container.querySelector<HTMLElement>("[data-component='matchReport']")!);
-    expect(report.getByText("Run NM-2291")).toBeInTheDocument();
-    expect(report.getByText("Medium risk")).toHaveAttribute("data-status", "waiting-for-human");
-    expect(report.getByText("Review")).toBeInTheDocument();
-    expect(report.getByText(/A person clicks Approve/)).toBeInTheDocument();
-    expect(container.querySelectorAll(".match-checks li")).toHaveLength(7);
-    expect(report.getAllByText("Pass")).toHaveLength(7);
-    expect(report.getAllByText("Read from document")).toHaveLength(2);
-    expect(report.getAllByText("Verified in database")).toHaveLength(5);
-    const lines = within(report.getByRole("region", { name: /Three-way match|Purchase order, receiving report and invoice/ }));
-    expect(lines.getByText("¥76,177")).toBeInTheDocument();
-    expect(lines.getByText("¥76,264")).toBeInTheDocument();
-    const exceptionRows = lines.getAllByText("Exception").map((badge) => badge.closest("tr")!.textContent);
-    expect(exceptionRows).toEqual(["Interfolded Paper Towel Virgin Pulp646363Exception", "Jumbo Roll Tissue Virgin Pulp111212Exception"]);
-    for (const badge of lines.getAllByText("Exception")) expect(badge).toHaveAttribute("data-status", "waiting-for-human");
-    expect(lines.getAllByText("Match")).toHaveLength(2);
-    expect(report.getByText("¥87")).toBeInTheDocument();
-    const causes = within(report.getByRole("list", { name: "Likely causes, most likely first" })).getAllByRole("listitem");
-    expect(causes[0]).toHaveTextContent("PO not revised after a quantity change at dispatch");
-    expect(causes[0]).toHaveTextContent("High");
-    expect(report.getByText(/Revise the PO to 63 paper towels and 12 jumbo rolls, then approve ¥76,177/)).toBeInTheDocument();
-    expect(report.getByText("2026-10-09T09:14:02+08:00")).toBeInTheDocument();
-    expect(screen.getByText("Real invoices, names and dates changed · No real actions")).toBeInTheDocument();
+  it("labels the support sample as illustrative", () => {
+    const { container } = render(<ListingDetail listing={findListing("support-inbox-triage")!} />);
+    const section = container.querySelector<HTMLElement>(".draft-review-section")!;
+    expect(within(section).getByText("Illustrative sample")).toBeInTheDocument();
+    expect(within(section).getByText(/It is not this pack’s exact output|It is not this pack's exact output/)).toBeInTheDocument();
+    const card = container.querySelector<HTMLElement>('[data-component="listingDraftReview"]')!;
+    const checks = within(within(card).getByRole("list", { name: "Checks" })).getAllByRole("listitem");
+    expect(checks).toHaveLength(6);
+    expect(screen.getByText("Illustrative sample · Synthetic data · No replies sent, no refunds issued")).toBeInTheDocument();
     expect(accentViolations(container)).toEqual([]);
   });
 
-  it("shows the sample run only on the invoice matcher", () => {
-    const { container } = render(<ListingDetail listing={findListing("lead-qualifier")!} />);
-    expect(container.querySelector("[data-component='matchReport']")).toBeNull();
+  it("renders a platform agent: the packs it works in, no price of its own, and its own CTA", () => {
+    const { container } = render(<ListingDetail listing={findListing("retail-agent")!} />);
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Retail Agent");
+    expect(screen.getByRole("link", { name: "Use it in the app" })).toHaveAttribute("href", HOME_COPY.nav.appUrl);
+    expect(container.querySelector(".listing-meta .listing-price")).toHaveTextContent("Free in your packs");
+    expect(screen.getByText("New Machines Labs, version 1.1.0")).toBeInTheDocument();
+    expect(facts(container)).toMatchObject({
+      "Works in": "Not in a ready-made pack yet. Add it to your own pack in the Developer Studio.",
+      Model: "Reasoning model",
+    });
+    expect(toolNames(container)).toEqual(["Shopify"]);
+    const related = within(screen.getByRole("list", { name: "Related listings" })).getAllByRole("link");
+    expect(related.map((link) => link.getAttribute("href"))).toEqual(["/marketplace/order-to-cash-triage-agent", "/marketplace/finance-agent", "/marketplace/support-agent"]);
+    expect(accentViolations(container)).toEqual([]);
   });
 });

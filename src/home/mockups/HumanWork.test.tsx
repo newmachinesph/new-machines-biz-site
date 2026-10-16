@@ -12,16 +12,19 @@ describe("human work vignettes", () => {
     expect(screen.getByText("Two PO lines differ by ¥87 from Aster Supply’s receipt. The agent has paused settlement for your review.")).toBeInTheDocument();
     const rows = screen.getAllByRole("row").slice(1).map((row) => [...row.children].map((cell) => cell.textContent));
     expect(rows).toEqual([["Interfolded Paper Towel Virgin Pulp", "64", "63", "63"], ["Jumbo Roll Tissue Virgin Pulp", "11", "12", "12"], ["Amount", "¥76,264", "—", "¥76,177"]]);
-    await userEvent.click(screen.getByRole("button", { name: "Approve review" }));
-    expect(screen.getByText("Review approved")).toBeInTheDocument();
+    expect(screen.getByText("Claimed by you")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Approve as is" }));
+    expect(screen.getByText("Approved as is")).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Reset review" }));
-    await userEvent.click(screen.getByRole("button", { name: "Reject review" }));
-    expect(screen.getByText("Review rejected")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Send back" }));
+    expect(screen.getByText("Sent back with corrections")).toBeInTheDocument();
     expect(accentViolations(container)).toEqual([]);
   });
-  it("ScopedPermissions lists three scopes", () => {
-    render(<ScopedPermissions />);
+  it("ScopedPermissions lists three scopes under a timed hold, with no amount limit", () => {
+    const { container } = render(<ScopedPermissions />);
     expect(screen.getAllByRole("listitem")).toHaveLength(3);
+    expect(screen.getByText("Hold: 30 min")).toBeInTheDocument();
+    expect(container.textContent).not.toMatch(/up to ¥|Expires in/);
   });
   it("ApprovalLog keeps five legible, stable audit records", () => {
     const { container } = render(<ApprovalLog />);

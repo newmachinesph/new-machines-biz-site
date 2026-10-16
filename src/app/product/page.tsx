@@ -48,15 +48,20 @@ export default function Page() {
 
       <SectionCell labelledBy="product-packs-title">
         <Opener id="product-packs-title" eyebrow={C.packs.eyebrow} lead={C.packs.lead} tail={C.packs.tail} sub={C.packs.sub} />
-        <FeatureGrid items={C.packs.items} cols={4} label="Packs in the demo workspace" />
+        <FeatureGrid items={C.packs.items} cols={4} label="Platform packs" />
         <p className="story-note">{C.packs.note}</p>
+      </SectionCell>
+
+      <SectionCell labelledBy="product-workspace-title">
+        <Opener id="product-workspace-title" eyebrow={C.workspace.eyebrow} lead={C.workspace.lead} tail={C.workspace.tail} sub={C.workspace.sub} />
+        <FeatureGrid items={C.workspace.items} cols={4} label="In the workspace" />
       </SectionCell>
 
       <SectionCell labelledBy="product-sandbox-title">
         <SplitCell
           textSide="right"
           text={<SectionHeader id="product-sandbox-title" eyebrow={C.sandbox.eyebrow} lead={C.sandbox.lead} sub={C.sandbox.sub} />}
-          visual={<MockupStage presentation="scene"><SandboxRun /></MockupStage>}
+          visual={<MockupStage presentation="scene" caption={C.sandbox.caption}><SandboxRun /></MockupStage>}
         />
       </SectionCell>
 
@@ -96,12 +101,12 @@ export default function Page() {
 
       <SectionCell labelledBy="product-connected-title">
         <Opener id="product-connected-title" eyebrow={C.connected.eyebrow} lead={C.connected.lead} tail={C.connected.tail} sub={C.connected.sub} link={C.connected.link} />
-        <FeatureGrid items={C.connected.items} />
+        <FeatureGrid items={C.connected.items} cols={2} />
       </SectionCell>
 
       <SectionCell labelledBy="product-build-title">
         <Opener id="product-build-title" eyebrow={C.build.eyebrow} lead={C.build.lead} tail={C.build.tail} sub={C.build.sub} />
-        <FeatureGrid items={C.build.items} />
+        <FeatureGrid items={C.build.items} cols={2} />
       </SectionCell>
 
       <SectionCell labelledBy="product-how-title">

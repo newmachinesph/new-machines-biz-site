@@ -37,9 +37,6 @@
 .human-editorial .section-heading > div > p:not(.section-eyebrow) { font-size: 17px; margin-top: 24px; }
 .human-portrait { position: relative; height: 280px; overflow: hidden; border-radius: var(--radius-panel); background: var(--color-grey-100); }
 .human-portrait img { object-fit: cover; object-position: center 75%; filter: saturate(.7); }
-.integration-tool:nth-child(n + 5) .tool-mark { width: 112px; }
-.integration-tool:nth-child(n + 5) .tool-mark img { width: 112px; height: 28px; object-fit: contain; object-position: left center; }
-.integration-tool:nth-child(7) .tool-mark, .integration-tool:nth-child(7) .tool-mark img { width: 84px; }
 .human-portrait figcaption { position: absolute; bottom: 20px; left: 20px; color: var(--color-paper); background: var(--color-ink); padding: 7px 10px; border-radius: 4px; font: 10px var(--font-mono); }
 @media (hover: hover) { .globe-controls button:hover { background: var(--color-grey-50); } }
 @media (min-width: 768px) {

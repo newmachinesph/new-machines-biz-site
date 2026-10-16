@@ -1,4 +1,5 @@
 import { isKind, KIND_LABEL, type KindFilter } from "./kinds";
+import { factsSearchText } from "./listingFacts";
 import type { MarketplaceListing } from "./listings";
 
 export type CatalogueFilters = { kind: KindFilter; certified: boolean; q: string };
@@ -30,13 +31,15 @@ export function hasActiveFilters(filters: CatalogueFilters): boolean {
   return filters.kind !== "all" || filters.certified || filters.q.trim() !== "";
 }
 
-/** Kind and certification are AND-ed; the query is a case-insensitive substring over the listing's words. */
+/** Kind and certification are AND-ed; the query is a case-insensitive substring over the listing's words, its apps,
+ *  and its function, industries and agents (or, for an agent, the packs it works in). */
 export function matchListings(listings: readonly MarketplaceListing[], filters: CatalogueFilters): MarketplaceListing[] {
   const needle = filters.q.trim().toLowerCase();
   return listings.filter((listing) => {
     if (filters.kind !== "all" && listing.kind !== filters.kind) return false;
     if (filters.certified && !listing.certified) return false;
     if (!needle) return true;
-    return `${listing.title} ${listing.body} ${listing.summary} ${KIND_LABEL[listing.kind]}`.toLowerCase().includes(needle);
+    const tools = listing.tools.map((tool) => tool.name).join(" ");
+    return `${listing.title} ${listing.body} ${listing.summary} ${KIND_LABEL[listing.kind]} ${tools} ${factsSearchText(listing.slug)}`.toLowerCase().includes(needle);
   });
 }

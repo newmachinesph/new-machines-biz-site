@@ -397,3 +397,15 @@
 .document-checks-card strong { display: block; font-size: 11px; font-weight: 500; }
 .document-checks-card p { margin-top: 1px; font-size: 10px; line-height: 1.4; color: var(--color-grey-700); }
 .document-check-basis { display: block; margin-top: 2px; color: var(--color-grey-500); font: 8px/1.5 var(--font-mono); }
+
+/* Work explorer: the systems a pack reads, the approval card (every write counted) and a pack credit. */
+.task-systems { display: flex; flex-wrap: wrap; gap: 4px; }
+.task-systems > span { padding: 2px 6px; border: var(--rule-page); border-radius: 3px; background: var(--color-paper); font-size: 9px; color: var(--color-grey-700); }
+.approval-calls { gap: 8px; }
+.approval-calls-title { font-size: 12px; font-weight: 500; }
+.approval-calls ul { display: grid; gap: 6px; }
+.approval-calls li { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; font-size: 11px; line-height: 1.4; }
+.approval-calls li small { display: block; font-size: 10px; color: var(--color-grey-500); }
+.approval-calls li strong { flex-shrink: 0; font: 500 10px var(--font-mono); white-space: nowrap; }
+.approval-calls .scene-kicker { margin-top: 4px; }
+.workflow-chapter .workflow-description > .workflow-credit { margin-top: 8px; font-size: 11px; color: var(--color-grey-500); }

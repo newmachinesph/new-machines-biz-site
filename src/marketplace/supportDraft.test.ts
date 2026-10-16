@@ -36,8 +36,8 @@ describe("SUPPORT_SAMPLE_RUN", () => {
     }
   });
 
-  it("is only attached to the support reply drafter listing", () => {
-    expect(sampleRunFor("support-reply-drafter")).toBe(SUPPORT_SAMPLE_RUN);
-    expect(sampleRunFor("invoice-matcher")).toBeUndefined();
+  it("is only attached to the Support Inbox Triage listing", () => {
+    expect(sampleRunFor("support-inbox-triage")).toBe(SUPPORT_SAMPLE_RUN);
+    expect(sampleRunFor("order-to-cash-exception-desk")).toBeUndefined();
   });
 });

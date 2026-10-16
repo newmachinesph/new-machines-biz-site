@@ -35,6 +35,7 @@ export default function Page() {
         <ol className="stage-list" data-component="aboutStages">
           {C.stage.items.map((item) => <li key={item.label}><span className="stage-label">{item.label}</span><div><h3>{item.title}</h3><p>{item.body}</p></div></li>)}
         </ol>
+        <p className="story-note">{C.stage.credit}</p>
       </SectionCell>
 
       <SectionCell labelledBy="market-title">

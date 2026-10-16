@@ -43,7 +43,7 @@ export function SandboxRun({ className }: { className?: string }) {
           <div className="sandbox-result-footer"><Icon name="shield" /><span>{exception ? "No settlement until review" : "Evidence attached to the run"}</span></div>
         </div>
       </div>
-      <div className="sandbox-comparison-footer"><span>{R.dataNote}</span><span>Estimated run <strong>¥120</strong></span></div>
+      <div className="sandbox-comparison-footer"><span>{R.dataNote}</span><span>Illustrative preview</span></div>
     </div>
   );
 }

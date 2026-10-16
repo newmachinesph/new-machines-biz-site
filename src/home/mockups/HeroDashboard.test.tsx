@@ -16,7 +16,7 @@ describe("HeroDashboard", () => {
     expect(screen.getByText("Marketplace")).toBeInTheDocument();
     expect(screen.getByRole("table")).toBeInTheDocument();
     expect(screen.getAllByRole("row")).toHaveLength(7);
-    expect(screen.getByText("Invoices matched")).toBeInTheDocument();
+    expect(screen.getByText("Orders matched")).toBeInTheDocument();
     expect(accentViolations(container)).toEqual([]);
   });
 

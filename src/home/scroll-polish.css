@@ -36,7 +36,7 @@
 .workflow-chapter .workflow-description > p { max-width: 580px; margin-top: 12px; font-size: 15px; line-height: 1.6; }
 .workflow-chapter .task-preview { border-radius: 8px; box-shadow: none; }
 .workflow-chapter .task-output { padding: 20px 20px 0; }
-.workflow-chapter .task-preview-content { grid-template-columns: 1fr; }
+.workflow-chapter .task-preview-content { grid-template-columns: minmax(0, 1fr); }
 .workflow-chapter .task-output-document p { font-size: 12px; }
 .workflow-chapter .task-output-document dl > div { padding: 10px 0; font-size: 11px; }
 .workflow-chapter .task-output-document dl { margin-top: 18px; }
@@ -44,7 +44,7 @@
 .workflow-record-table th { text-align: left; color: var(--color-grey-500); font-size: 10px; font-weight: 400; padding: 9px 0; border-bottom: var(--rule-page); }
 .workflow-record-table td { padding: 11px 0; border-bottom: 1px solid var(--color-grey-100); }
 .workflow-record-table th:not(:first-child), .workflow-record-table td:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }
-.workflow-record-table td:first-child { white-space: nowrap; }
+.workflow-record-table td:first-child { overflow-wrap: anywhere; }
 .workflow-record-reason { display: block; max-width: 30ch; margin-top: 3px; color: var(--color-grey-500); font-size: 10px; line-height: 1.4; white-space: normal; }
 .workflow-record-table td { vertical-align: top; }
 .workflow-record-state { white-space: nowrap; }

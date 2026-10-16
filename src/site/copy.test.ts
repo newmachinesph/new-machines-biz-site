@@ -31,7 +31,7 @@ describe("site copy", () => {
   const text = strings(ALL_COPY).join("\n");
 
   it("never names a model vendor or an unfinished state", () => {
-    expect(text).not.toMatch(/model|provider|OpenAI|\bJev\b|TypeSafe|OpenRouter|GPT|lorem|coming soon|TODO|placeholder/i);
+    expect(text).not.toMatch(/model|provider|OpenAI|Gemini|Composio|\bJev\b|TypeSafe|OpenRouter|GPT|lorem|coming soon|TODO|placeholder/i);
   });
 
   it("reserves hiring for people", () => {
@@ -58,8 +58,20 @@ describe("site copy", () => {
     }
   });
 
-  it("labels demo pricing as illustrative", () => {
-    expect(PRICING_COPY.note).toMatch(/Illustrative/);
-    expect(PRICING_COPY.examples.note).toMatch(/demo/i);
+  it("labels pricing as simulated and in US dollars, with no yen, subscriptions or decision fees", () => {
+    expect(PRICING_COPY.note).toMatch(/simulated/);
+    expect(PRICING_COPY.note).toMatch(/US dollars/);
+    expect(PRICING_COPY.examples.note).toMatch(/simulated/i);
+    expect(strings(PRICING_COPY).join("\n")).not.toMatch(/¥|per month|Decision fee/i);
+  });
+
+  it("describes only what the product does: no approval thresholds, reviewer jurisdiction rules or approval reasons", () => {
+    const company = strings({ PRODUCT_COPY, PRICING_COPY, DEVELOPERS_COPY, TRUST_COPY, WORK_COPY, ABOUT_COPY, CONTACT_COPY }).join("\n");
+    expect(company).not.toMatch(/approval thresholds?|jurisdiction rules|with a reason|demo workspace today|Trust Passport for this version/i);
+  });
+
+  it("names one Developer Studio, never a separate Studio", () => {
+    const company = strings({ PRODUCT_COPY, DEVELOPERS_COPY, ABOUT_COPY }).join("\n");
+    expect(company.match(/\bStudio\b/g)?.length).toBe(company.match(/Developer Studio\b/g)?.length);
   });
 });

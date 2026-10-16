@@ -78,6 +78,11 @@ export function Catalogue({ initial }: CatalogueProps) {
           <Button variant="secondary" size="md" onClick={() => update(DEFAULT_FILTERS)} data-component="marketplaceEmptyClearFilters">{C.clear}</Button>
         </div>
       )}
+      <div className="catalogue-sources" data-component="marketplaceSources">
+        <h2 className="scene-kicker">{C.sources.heading}</h2>
+        <ul>{C.sources.items.map((item) => <li key={item.title}><strong>{item.title}</strong><p>{item.body}</p></li>)}</ul>
+        <p className="catalogue-sources-note">{C.sources.priceNote}</p>
+      </div>
     </>
   );
 }

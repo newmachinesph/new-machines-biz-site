@@ -16,7 +16,7 @@ export default function Page() {
 
       <SectionCell labelledBy="modes-title">
         <Opener id="modes-title" eyebrow={C.modes.eyebrow} lead={C.modes.lead} tail={C.modes.tail} sub={C.modes.sub} />
-        <FeatureGrid items={C.modes.items} />
+        <FeatureGrid items={C.modes.items} cols={4} />
       </SectionCell>
 
       <SectionCell labelledBy="reviewer-steps-title">

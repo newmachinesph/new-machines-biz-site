@@ -32,6 +32,11 @@ export default function Page() {
         <FeatureGrid items={C.separation.items} cols={4} numbered label="The seven responsibilities" />
       </SectionCell>
 
+      <SectionCell labelledBy="records-title">
+        <Opener id="records-title" eyebrow={C.records.eyebrow} lead={C.records.lead} tail={C.records.tail} sub={C.records.sub} />
+        <FeatureGrid items={C.records.items} />
+      </SectionCell>
+
       <SectionCell labelledBy="controls-title">
         <Opener id="controls-title" eyebrow={C.controls.eyebrow} lead={C.controls.lead} tail={C.controls.tail} sub={C.controls.sub} />
         <FeatureGrid items={C.controls.items} />
