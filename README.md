@@ -9,6 +9,9 @@ documents the trust model. The working product (workspaces, runs, approvals, bil
 application; this site describes it and links to it conceptually but does not contain or call it. All
 figures, listings and customer examples here are labelled demo or synthetic data.
 
+**Related repository:** the working product (the demo application this site describes) is
+[newmachinesph/new-machines-prototype](https://github.com/newmachinesph/new-machines-prototype).
+
 Status: pre-launch. The site is deployed but hidden from search engines (see "Pre-launch noindex" below).
 
 ## Stack
