@@ -43,8 +43,6 @@ test("marketplace filters and search live in the URL and survive a reload", asyn
   await page.getByRole("searchbox", { name: "Search listings" }).fill("calendar");
   await expect(page.locator(".listing-card")).toHaveCount(1);
   await expect(page).toHaveURL(/\/marketplace\?q=calendar$/);
-  await page.getByRole("button", { name: "Certified only", exact: true }).click();
-  await expect(page).toHaveURL(/\/marketplace\?certified=1&q=calendar$/);
   await page.getByRole("button", { name: "Agents", exact: true }).click();
   await expect(page.getByText("No listings match.")).toBeVisible();
   await page.getByRole("button", { name: "Clear filters", exact: true }).click();
@@ -79,8 +77,8 @@ test("on desktop the toolbar and a complete first row of cards fit a short viewp
   const width = page.viewportSize()?.width ?? 0;
   test.skip(width < 1024, "Desktop-only layout: below 1024 the catalogue is a scrolling column.");
   // A short desktop window: the search typed, the toolbar scrolled to the top, the first row must still end above the fold.
-  // 420 is a regression bound, not the fold (640 - 120 sticky nav = 520): the old cards measured 489px at 1024 / 467px
-  // at 1440 from toolbar top to first-card bottom, the compact ones 382 / 360, so 420 leaves ~40px headroom at 1024.
+  // 470 is a regression bound, not the fold (640 - 120 sticky nav = 520): the original cards measured 489px at 1024 / 467px
+  // at 1440 from toolbar top to first-card bottom; the real-pack cards measure ~445 at 1024, so 470 leaves ~25px headroom.
   await page.setViewportSize({ width, height: 640 });
   await page.goto("/marketplace");
   await expect(page.locator(".listing-card")).toHaveCount(14);
@@ -93,7 +91,7 @@ test("on desktop the toolbar and a complete first row of cards fit a short viewp
   const firstCard = page.locator(".listing-card").first();
   const cardBox = await firstCard.boundingBox();
   if (!toolbarBox || !cardBox) throw new Error("Toolbar or first card has no bounding box.");
-  expect(cardBox.y + cardBox.height - toolbarBox.y).toBeLessThanOrEqual(420);
+  expect(cardBox.y + cardBox.height - toolbarBox.y).toBeLessThanOrEqual(470);
   await expect(firstCard.locator(".listing-card-foot")).toBeInViewport({ ratio: 1 });
 });
 
@@ -106,7 +104,7 @@ test("listing page shows the pack with its demo report, steps and Certified badg
   await expect(page.locator("[data-component='o2cReport']")).toContainText("Demo data");
   await expect(page.getByRole("list", { name: "Related listings" }).locator(".listing-card")).toHaveCount(3);
   await expect(page.getByRole("link", { name: "Add in the app" })).toHaveAttribute("href", /^https:\/\//);
-  await expect(page.getByRole("link", { name: "See a preview" })).toHaveAttribute("href", "/#work-explorer");
+  await expect(page.getByRole("link", { name: "See a preview" })).toHaveAttribute("href", "/?workflow=finance#work-explorer");
   await audit();
   await expect(page).toHaveScreenshot("listing.png", { fullPage: true, maxDiffPixelRatio: 0.01 });
 });

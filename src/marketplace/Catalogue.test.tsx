@@ -40,13 +40,6 @@ describe("Catalogue", () => {
     expect(cards()).toHaveLength(14);
     expect(replaceState).toHaveBeenLastCalledWith(null, "", "/marketplace");
 
-    await userEvent.click(screen.getByRole("button", { name: "Certified only" }));
-    expect(cards()).toHaveLength(14);
-    pressed("Certified only");
-    expect(replaceState).toHaveBeenLastCalledWith(null, "", "/marketplace?certified=1");
-    await userEvent.click(screen.getByRole("button", { name: "Certified only" }));
-    expect(cards()).toHaveLength(14);
-
     await userEvent.type(search(), "calendar");
     expect(cards()).toHaveLength(1);
     expect(screen.getByText("1 listing")).toBeInTheDocument();
@@ -124,12 +117,11 @@ describe("Catalogue", () => {
   });
 
   it("reads its first state from the URL, ignores unknown kinds and follows later URL changes", () => {
-    url.params = new URLSearchParams("kind=pack&certified=1&q=calendar");
+    url.params = new URLSearchParams("kind=pack&q=calendar");
     const first = render(<CatalogueFromUrl />);
     expect(cards()).toHaveLength(1);
     expect(cards()[0]).toHaveTextContent("Meeting Follow-ups");
     pressed("Packs");
-    pressed("Certified only");
     expect(search()).toHaveValue("calendar");
     expect(replaceState).not.toHaveBeenCalled();
     first.unmount();

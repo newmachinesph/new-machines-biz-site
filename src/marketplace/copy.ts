@@ -18,7 +18,6 @@ export const MARKETPLACE_COPY = {
     lead: "The right fit.",
     tail: "For every kind of work.",
     sub: "Workflow Packs for a complete outcome, and the agents inside them. Every listing states its outcome, the apps it uses, where a person checks the work and its estimated price per run.",
-    certifiedOnly: "Certified only",
     searchLabel: "Search listings",
     searchPlaceholder: "Refund, invoice, Gmail…",
     listingsLabel: "Marketplace listings",

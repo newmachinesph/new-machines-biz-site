@@ -5,9 +5,6 @@
 .catalogue-toolbar { display: grid; gap: 20px; padding: 0 24px 28px; }
 .catalogue-toolbar .directory-filters { padding: 0; }
 .catalogue-controls { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 24px; }
-.catalogue-certified { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border: var(--rule-page); border-radius: 999px; font-size: 12px; font-weight: 500; white-space: nowrap; flex-shrink: 0; color: var(--color-grey-500); background: var(--color-paper); cursor: pointer; transition: color var(--dur-quick), border-color var(--dur-quick); }
-.catalogue-certified svg { width: 10px; height: 10px; }
-.catalogue-certified[aria-pressed="true"] { color: var(--color-ink); border-color: var(--color-ink); }
 .catalogue-search { flex: 0 1 320px; min-width: 180px; width: 100%; max-width: 320px; }
 .catalogue-search label { font-size: 12px; }
 .catalogue-count { display: flex; align-items: center; min-height: 40px; white-space: nowrap; flex-shrink: 0; }
@@ -106,7 +103,7 @@
 .related-section .catalogue-grid { padding-top: 0; }
 
 @media (hover: hover) {
-  .catalogue-certified:hover, .catalogue-clear:hover { color: var(--color-ink); }
+  .catalogue-clear:hover { color: var(--color-ink); }
   .listing-back:hover .nm-icon { transform: scaleX(-1) translateX(3px); }
 }
 

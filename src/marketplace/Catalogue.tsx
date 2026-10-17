@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/design-system/components/Button";
 import { Input } from "@/design-system/components/Input";
-import { Check } from "@/home/mockups/parts";
 import { MARKETPLACE_COPY } from "./copy";
 import { DEFAULT_FILTERS, filtersFromParams, filtersToQuery, hasActiveFilters, matchListings, type CatalogueFilters } from "./filters";
 import { KIND_FILTER_GROUP_LABEL, KIND_FILTERS } from "./kinds";
@@ -62,7 +61,6 @@ export function Catalogue({ initial }: CatalogueProps) {
           ))}
         </div>
         <div className="catalogue-controls">
-          <button type="button" className="catalogue-certified" aria-pressed={filters.certified} onClick={() => update({ certified: !filters.certified })} data-component="marketplaceCertifiedOnly"><Check />{C.certifiedOnly}</button>
           <Input className="catalogue-search" label={C.searchLabel} type="search" placeholder={C.searchPlaceholder} value={filters.q} onChange={(event) => update({ q: event.target.value })} data-component="marketplaceSearch" />
           <p className="micro-label catalogue-count" aria-live="polite">{results.length} {results.length === 1 ? "listing" : "listings"}</p>
           {active ? <button type="button" className="text-link catalogue-clear" onClick={() => update(DEFAULT_FILTERS)} data-component="marketplaceClearFilters">{C.clearInline}</button> : null}
