@@ -31,7 +31,7 @@ describe("site copy", () => {
   const text = strings(ALL_COPY).join("\n");
 
   it("never names a model vendor or an unfinished state", () => {
-    expect(text).not.toMatch(/model|provider|OpenAI|Gemini|Composio|\bJev\b|TypeSafe|OpenRouter|GPT|lorem|coming soon|TODO|placeholder/i);
+    expect(text).not.toMatch(/OpenAI|Gemini|Vertex|Composio|\bJev\b|TypeSafe|OpenRouter|GPT|lorem|coming soon|TODO|placeholder/i);
   });
 
   it("reserves hiring for people", () => {

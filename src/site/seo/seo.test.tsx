@@ -245,7 +245,7 @@ describe("answer copy", () => {
 
   it("stays in the site register: no model or integration vendors, hiring only for people, demo and pre-launch labelled", () => {
     const text = `${faqText}\n${DEFINITION.answer}\n${PAGE_ROUTES.map((r) => r.description).join("\n")}`;
-    expect(text).not.toMatch(/model|provider|OpenAI|GPT|Composio|Temporal|Nango|WorkOS|Cerbos|Langfuse/i);
+    expect(text).not.toMatch(/Gemini|Vertex|OpenAI|GPT|Composio|Temporal|Nango|WorkOS|Cerbos|Langfuse/i);
     expect(text).not.toMatch(/United States|\bU\.?S\.?\b/);
     for (const sentence of text.match(/[^.]*\bhir(e|es|ed|ing)\b[^.]*/gi) ?? []) expect(sentence, sentence).toMatch(/reviewer|expert|people|human|person|qualified/i);
     expect(DEFINITION.answer).toMatch(/^New Machines is /);

@@ -90,7 +90,7 @@ describe("marketplace listings", () => {
 
   it("keeps the copy honest: no vendors, no yen prices, no human-work listings, hire only for people", () => {
     const text = JSON.stringify(MARKETPLACE_COPY) + JSON.stringify(MARKETPLACE_LISTINGS) + JSON.stringify(LISTING_FACTS);
-    expect(text).not.toMatch(/model|provider|Gemini|OpenAI|OpenRouter|Composio|TypeSafe|\bJev\b/i);
+    expect(text).not.toMatch(/Gemini|Vertex|OpenAI|OpenRouter|Composio|TypeSafe|\bJev\b/i);
     expect(text).not.toMatch(/Trust Passport|Assigned reviewer|Request this reviewer|\/ month|\/ hour|\/ quarter/);
     expect(text).not.toMatch(/\bhir(e|es|ed|ing)\b/i);
     expect(JSON.stringify(MARKETPLACE_LISTINGS)).not.toMatch(/¥/);

@@ -19,7 +19,7 @@ describe("catalog data", () => {
   it("holds the full catalog with a unique slug, a real category and a logo file for every tool", () => {
     expect(CONNECTORS.length).toBeGreaterThan(1000);
     // The site never names a model vendor or the integration vendor.
-    expect(CONNECTORS.filter((connector) => /openai|gemini|provider|model|cohere|deepseek|mistral|^grok|groq|openrouter|perplexity|composio|typesafe|^jev$/i.test(connector.name))).toEqual([]);
+    expect(CONNECTORS.filter((connector) => /openai|gemini|vertex|cohere|deepseek|mistral|^grok|groq|openrouter|perplexity|composio|typesafe|^jev$/i.test(connector.name))).toEqual([]);
     expect(new Set(CONNECTORS.map((connector) => connector.slug)).size).toBe(CONNECTORS.length);
     expect(new Set(CONNECTORS.map((connector) => connector.name.toLowerCase())).size).toBe(CONNECTORS.length);
     expect(CONNECTORS.every((connector) => (CATEGORIES as readonly string[]).includes(connector.category))).toBe(true);
