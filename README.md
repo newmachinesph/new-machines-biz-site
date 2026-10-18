@@ -183,3 +183,7 @@ default site (it is disabled on purpose).
 
 Release checklist: `pnpm lint && pnpm typecheck && pnpm test`, run `pnpm test:e2e` for visual changes,
 then build and deploy from `firebase-hosting/`.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
